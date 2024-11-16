@@ -1,7 +1,5 @@
 # EdwardMarecos-AkemiSai-PYCO
 
-# PYCO: Fashion Outfit Collaboration App
-
 ## Project Overview
 **PYCO** is an innovative social platform that enables users to inventory their clothing items, request outfit suggestions, and participate in a vibrant community that celebrates fashion creativity. Users can create outfit requests centered around specific items or events and receive responses from fashion enthusiasts.
 
