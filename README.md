@@ -11,10 +11,7 @@
 3. [Key Features](#key-features)
 4. [APIs and Libraries Used](#apis-and-libraries-used)
 5. [Database Schema](#database-schema)
-6. [Installation and Setup](#installation-and-setup)
-7. [Contributing](#contributing)
-8. [License](#license)
-
+6. 
 ## Tech Stack
 - **Frontend**: Jetpack Compose (Kotlin)
 - **Backend**: Firebase Firestore, Room Database for offline storage
@@ -38,6 +35,7 @@
 
 ## Database Schema
 Our current plan for the database structure:
+def tbd and will be better organized soon :3 
 
 ### User Table
 - `user_id` (Primary Key)
@@ -69,9 +67,3 @@ Our current plan for the database structure:
 - `color`
 - `brand`
 - `tags`
-
-## Installation and Setup
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/pyco.git
-   cd pyco
