@@ -11,7 +11,7 @@
 3. [Key Features](#key-features)
 4. [APIs and Libraries Used](#apis-and-libraries-used)
 5. [Database Schema](#database-schema)
-6. 
+
 ## Tech Stack
 - **Frontend**: Jetpack Compose (Kotlin)
 - **Backend**: Firebase Firestore, Room Database for offline storage
