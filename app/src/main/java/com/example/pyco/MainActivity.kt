@@ -38,10 +38,44 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PycoTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(
+//    name = "Pixel 6 Pro Preview",
+//    widthDp = 411,
+//    heightDp = 890, showSystemUi = true,
+//    device = "id:pixel_6_pro"
+//)
+//@Composable
+//fun GreetingPreview() {
+//    PycoTheme {
+//        Scaffold(
+//            modifier = Modifier.fillMaxSize()
+//        ) {
+//            Greeting(
+//                name = "Android",
+//                modifier = Modifier.padding(it)
+//            )
+//        }
+//    }
+//}
+
+//the preview is wonky will test on emulator
+//@Preview(
+//    name = "Pixel 6 Pro Landscape Preview",
+//    showBackground = true,
+//    widthDp = 890,
+//    heightDp = 411, device = "spec:parent=pixel_6_pro,orientation=landscape",
+//    showSystemUi = true
+//)
+//@Composable
+//fun GreetingLandscapePreview() {
+//    PycoTheme {
+//        Scaffold(
+//            modifier = Modifier.fillMaxSize()
+//        ) {
+//            Greeting(
+//                name = "Android",
+//                modifier = Modifier.padding(it)
+//            )
+//        }
+//    }
+//}
