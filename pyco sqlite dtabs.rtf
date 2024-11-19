@@ -1,0 +1,154 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0 sqlite> .tables\
+sqlite> -- Create the user table\
+CREATE TABLE user (\
+    user_id UUID PRIMARY KEY,\
+    username TEXT NOT NULL,\
+    email TEXT NOT NULL UNIQUE,\
+    profile_picture TEXT,\
+    bio TEXT,\
+    top_fit_1_id UUID,\
+    top_fit_2sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> _id UUID,\
+    top_fit_3_id UUID,\
+    follower_count INTEGER DEFAULT 0,\
+    following_count INTEGER DEFAULT 0,\
+    total_likes INTEGER DEFAULT 0,\
+    total_bookmarks INTEGER DEFAULT 0,\
+    total_awards INTEGER DEFAULT 0,\
+    date_joined TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
+);\
+\
+-- Create the closet table\
+CREATE TABLE closet (\
+    closet_id UUID PRIMARY KEY,\
+    user_id UUID NOT NULL,\
+    category TEXT CHECK(category IN ('Shirt', 'Pants', 'Shoes', 'Accessories', 'Other')),\
+    ite(x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> m_name TEXT NOT NULL,\
+    description TEXT,\
+    image_url TEXT,\
+    brand TEXT,\
+    color TEXT,\
+    size TEXT,\
+    material TEXT,\
+    pattern TEXT,\
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    FOREIGN KEY (user_id) REFERENCES user(user_id)\
+);\
+\
+-- Create the outfit table\
+CREATE TABLE outfit (\
+    outfit_id UUID PRIMARYsqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> sqlite> sqlite> sqlite> (x1...>  KEY,\
+    user_id UUID NOT NULL,\
+    request_i(x1...> (x1...> d UUID,\
+    name TEXT,\
+    description TEXT,\
+    visibility TEXT (x1...> (x1...> (x1...> CHECK(visibility IN ('Public', 'Private')),\
+(x1...>     items_used TEXT,\
+    image_(x1...> url TEXT,\
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    updated_at TIMESTAMP DEFAULT (x1...> C(x1...> URRENT_TIMESTAMP,\
+    rating (x1...> FLOAT,\
+    like_count INTEGER DEFAULT 0(x1...> ,\
+    bookmark_count INTEGER DEFAULT 0,\
+    FOR(x1...> (x1...> EIGN KEY (user_id) REFERENCES user(user_id),\
+    FOREIGN KEY (request_id) REFERENCES request(request_id)\
+);\
+\
+-- Create the r(x1...> (x1...> equest table\
+CREATE TABLE request (\
+    request_id UUID PRIMARY KEY,\
+    user_id UUID NOT NULL,\
+    event_name TEXT,\
+    tags TEXT,\
+    description TEXT,\
+    date_needed DATE,\
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    status TEXT CHECK(status IN ('Active', 'Expired', 'Completed')),\
+    visibility TEXT CHECK(visibility IN ('Public', 'Private')),\
+    FOREIGN KEY (user_id) REFERENCES user(user_id)\
+);\
+\
+-- Create the interactions table\
+CREATE TABLE interactions (\
+    interaction_id UUID sqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> sqlite> sqlite> sqlite> (x1...> PRIMARY KEY,\
+    user_id UU(x1...> ID NOT NULL,\
+    outfit_id UUID NOT NULL,\
+    type TEXT CHECK(type IN ('Like', 'Bookmar(x1...> (x1...> k', 'Comment')),\
+    co(x1...> mment_text TEXT,\
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    FOREIGN KEY (user_id) REFERENCES user(user_(x1...> (x1...> id),\
+    FOREIGN KEY (outfit_id) REFERENCES outfit(outfit_id)\
+);\
+\
+-(x1...> (x1...> - Create the medals/awards table\
+CREATE TABLE medals_awards (\
+    award_id UUID PRIMARY KEY,\
+    user_id UUID NOT NULL,\
+    outfit_id UUID,\
+    award_type TEXT CHECK(award_type IN ('Gold', 'Silver', 'Bronze')),\
+    date_awarded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    request_id UUID,\
+    description TEXT,\
+    FOREIGN KEY (user_id) REFERENCES user(user_id),\
+    FOREIGN KEY (outfit_id) REFERENCES outfit(outfit_id),\
+    FOREIGN KEY (request_id) REFERENCES request(request_id)\
+);\
+\
+-- Create the follower table\
+CREATE TABLE follower (\
+    follower_id UUID PRIMARY KEY,\
+    user_id UUID NOT NULL,\
+    follower_user_id UUID NOT NULL,\
+    followed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    FOREIGN KEY (usqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> sqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> ser_id) REFERENCES user(user_id),\
+ (x1...>    FOREIGN KEY (follower_user_id) REFERENCES user(user_id)\
+);\
+\
+-- Create the following table\
+CREATE TABLE following (\
+    following_id UUID PRIMARY KE(x1...> Y,\
+    user_id UUID NOT NULL,\
+    following_user_id UUID NOT NULL,\
+    following_since TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
+    FOREIGN KEY (user_id) REFERENCES user(user_id),\
+    FOREIGN KEY (following_user_id) REFERENCES user(user_id)\
+);\
+\
+-- Create the friend table\
+CREATE TABLE friend (\
+    friend_id UUID PRIMARY KEY,\
+    user_id UUID NOT NULL,\
+    friend_user_id UUID NOT NULL,\
+    status TEXT CHECK(status IN ('Accepted', 'Pending', 'Rejected')),\
+    friendship_started TIMESTAMP,\
+    last_interaction TIMESTAMP,\
+    FOREIGN KEY (user_id) REFERENCES user(user_id),\
+    FOREIGN KEY (friend_user_id) REFERENCES user(user_id)\
+);\
+sqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> sqlite> sqlite> sqlite> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> (x1...> sqlite> .tables\
+closet         following      interactions   outfit         user         \
+follower       friend         medals_awards  request      \
+sqlite> PRAGMA table_info(user);\
+0|user_id|UUID|0||1\
+1|username|TEXT|1||0\
+2|email|TEXT|1||0\
+3|profile_picture|TEXT|0||0\
+4|bio|TEXT|0||0\
+5|top_fit_1_id|UUID|0||0\
+6|top_fit_2_id|UUID|0||0\
+7|top_fit_3_id|UUID|0||0\
+8|follower_count|INTEGER|0|0|0\
+9|following_count|INTEGER|0|0|0\
+10|total_likes|INTEGER|0|0|0\
+11|total_bookmarks|INTEGER|0|0|0\
+12|total_awards|INTEGER|0|0|0\
+13|date_joined|TIMESTAMP|0|CURRENT_TIMESTAMP|0\
+sqlite> .tables\
+closet         following      interactions   outfit         user         \
+follower       friend         medals_awards  request      }
