@@ -41,8 +41,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pyco.ui.theme.PycoTheme
-import com.example.roomdemo.MainViewModel
-import com.example.roomdemo.Product
+import com.example.pyco.MainViewModel
+import com.example.pyco.Product
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
