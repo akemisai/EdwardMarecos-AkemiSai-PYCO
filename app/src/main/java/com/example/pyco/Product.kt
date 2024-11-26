@@ -1,4 +1,4 @@
-package com.example.roomdemo
+package com.example.pyco
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
