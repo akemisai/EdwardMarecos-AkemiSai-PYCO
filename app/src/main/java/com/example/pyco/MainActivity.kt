@@ -42,7 +42,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pyco.ui.theme.PycoTheme
 import com.example.pyco.MainViewModel
-import com.example.pyco.Product
+import com.example.pyco.User
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,33 +77,37 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ScreenSetup(viewModel: MainViewModel) {
-    val allProducts by viewModel.allProducts.observeAsState(listOf())
+    val allUsers by viewModel.allUsers.observeAsState(listOf())
     val searchResults by viewModel.searchResults.observeAsState(listOf())
 
     MainScreen(
-        allProducts = allProducts,
+        allUsers = allUsers,
         searchResults = searchResults,
         viewModel = viewModel
     )
-
 }
 
 @Composable
 fun MainScreen(
-    allProducts: List<Product>,
-    searchResults: List<Product>,
+    allUsers: List<User>,
+    searchResults: List<User>,
     viewModel: MainViewModel
 ) {
-    var productName by remember { mutableStateOf("") }
-    var productQuantity by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var bio by remember { mutableStateOf("") }
     var searching by remember { mutableStateOf(false) }
 
-    val onProductTextChange = { text : String ->
-        productName = text
+    val onUsernameTextChange = { text: String ->
+        username = text
     }
 
-    val onQuantityTextChange = { text : String ->
-        productQuantity = text
+    val onEmailTextChange = { text: String ->
+        email = text
+    }
+
+    val onBioTextChange = { text: String ->
+        bio = text
     }
 
     Column(
@@ -112,17 +116,24 @@ fun MainScreen(
             .fillMaxWidth()
     ) {
         CustomTextField(
-            title = "Product Name",
-            textState = productName,
-            onTextChange = onProductTextChange,
+            title = "Username",
+            textState = username,
+            onTextChange = onUsernameTextChange,
             keyboardType = KeyboardType.Text
         )
 
         CustomTextField(
-            title = "Quantity",
-            textState = productQuantity,
-            onTextChange = onQuantityTextChange,
-            keyboardType = KeyboardType.Number
+            title = "Email",
+            textState = email,
+            onTextChange = onEmailTextChange,
+            keyboardType = KeyboardType.Email
+        )
+
+        CustomTextField(
+            title = "Bio",
+            textState = bio,
+            onTextChange = onBioTextChange,
+            keyboardType = KeyboardType.Text
         )
 
         Row(
@@ -132,11 +143,12 @@ fun MainScreen(
                 .padding(10.dp)
         ) {
             Button(onClick = {
-                if (productQuantity.isNotEmpty()) {
-                    viewModel.insertProduct(
-                        Product(
-                            productName,
-                            productQuantity.toInt()
+                if (email.isNotEmpty()) {
+                    viewModel.insertUser(
+                        User(
+                            username = username,
+                            email = email,
+                            bio = bio
                         )
                     )
                     searching = false
@@ -147,22 +159,23 @@ fun MainScreen(
 
             Button(onClick = {
                 searching = true
-                viewModel.findProduct(productName)
+                viewModel.findUser(username)
             }) {
                 Text("Search")
             }
 
             Button(onClick = {
                 searching = false
-                viewModel.deleteProduct(productName)
+                viewModel.deleteUser(username)
             }) {
                 Text("Delete")
             }
 
             Button(onClick = {
                 searching = false
-                productName = ""
-                productQuantity = ""
+                username = ""
+                email = ""
+                bio = ""
             }) {
                 Text("Clear")
             }
@@ -173,50 +186,50 @@ fun MainScreen(
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            val list = if (searching) searchResults else allProducts
+            val list = if (searching) searchResults else allUsers
 
             item {
-                TitleRow(head1 = "ID", head2 = "Product", head3 = "Quantity")
+                TitleRow(head1 = "ID", head2 = "Username", head3 = "Email", head4 = "Bio")
             }
 
-            items(list) { product ->
-                ProductRow(id = product.id, name = product.productName,
-                    quantity = product.quantity)
+            items(list) { user ->
+                UserRow(
+                    id = user.userId,
+                    username = user.username,
+                    email = user.email,
+                    bio = user.bio
+                )
             }
         }
     }
 }
 
 @Composable
-fun TitleRow(head1: String, head2: String, head3: String) {
+fun TitleRow(head1: String, head2: String, head3: String, head4: String) {
     Row(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primary)
             .fillMaxWidth()
             .padding(5.dp)
     ) {
-        Text(head1, color = Color.White,
-            modifier = Modifier
-                .weight(0.1f))
-        Text(head2, color = Color.White,
-            modifier = Modifier
-                .weight(0.2f))
-        Text(head3, color = Color.White,
-            modifier = Modifier.weight(0.2f))
+        Text(head1, color = Color.White, modifier = Modifier.weight(0.1f))
+        Text(head2, color = Color.White, modifier = Modifier.weight(0.2f))
+        Text(head3, color = Color.White, modifier = Modifier.weight(0.3f))
+        Text(head4, color = Color.White, modifier = Modifier.weight(0.4f))
     }
 }
 
 @Composable
-fun ProductRow(id: Int, name: String, quantity: Int) {
+fun UserRow(id: Int, username: String, email: String, bio: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)
     ) {
-        Text(id.toString(), modifier = Modifier
-            .weight(0.1f))
-        Text(name, modifier = Modifier.weight(0.2f))
-        Text(quantity.toString(), modifier = Modifier.weight(0.2f))
+        Text(id.toString(), modifier = Modifier.weight(0.1f))
+        Text(username, modifier = Modifier.weight(0.2f))
+        Text(email, modifier = Modifier.weight(0.3f))
+        Text(bio, modifier = Modifier.weight(0.4f))
     }
 }
 
@@ -235,10 +248,9 @@ fun CustomTextField(
             keyboardType = keyboardType
         ),
         singleLine = true,
-        label = { Text(title)},
+        label = { Text(title) },
         modifier = Modifier.padding(10.dp),
-        textStyle = TextStyle(fontWeight = FontWeight.Bold,
-            fontSize = 30.sp)
+        textStyle = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
     )
 }
 
