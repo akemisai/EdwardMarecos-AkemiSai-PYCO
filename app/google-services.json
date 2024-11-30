@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "862613621685",
+    "project_id": "pyco-9a1ed",
+    "storage_bucket": "pyco-9a1ed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862613621685:android:3d6a4920e968bffe9767fc",
+        "android_client_info": {
+          "package_name": "com.pyco.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862613621685-ujsj2icu9tk8oghp14nfbpm6s6os10io.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pyco.app",
+            "certificate_hash": "8324c787691011e988154c3f8840c38af7185b98"
+          }
+        },
+        {
+          "client_id": "862613621685-0pk56fonv5pf657baoot1djfehtdic7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCefTw7oRmx7-j1SSVtL0WKHeAIwz0mYzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862613621685-0pk56fonv5pf657baoot1djfehtdic7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

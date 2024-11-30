@@ -1,4 +1,4 @@
-package com.example.pyco
+package com.pyco.app
 
 import org.junit.Test
 
