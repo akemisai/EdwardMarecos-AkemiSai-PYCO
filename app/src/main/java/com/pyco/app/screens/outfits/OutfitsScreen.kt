@@ -1,4 +1,4 @@
-package com.pyco.app.screens
+package com.pyco.app.screens.outfits
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,11 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
-import com.pyco.app.viewmodels.AuthViewModel
 
 @Composable
-fun AccountScreen(
-    authViewModel: AuthViewModel,
+fun OutfitsScreen(
     navController: NavHostController
 ) {
     Column(
@@ -30,23 +28,22 @@ fun AccountScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Account Page")
+        Text("Welcome to the Outfits Screen!")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Display user info using the exposed property
-        val email = authViewModel.userEmail
-        if (email != null) {
-            Text("Logged in as: $email")
-        } else {
-            Text("User not logged in.")
+        Button(
+            onClick = { navController.navigate("closet") }
+        ) {
+            Text("Go to Closet")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Navigate to Settings
-        Button(onClick = { navController.navigate("settings") }) {
-            Text("Go to Settings")
+        Button(
+            onClick = { navController.navigate("home") }
+        ) {
+            Text("Back to Home")
         }
     }
     Column(
@@ -62,9 +59,8 @@ fun AccountScreen(
 
 @Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
 @Composable
-fun AccountScreenPreview() {
-    AccountScreen(
-        authViewModel = AuthViewModel(),
+fun OutfitsScreenPreview() {
+    OutfitsScreen(
         navController = NavHostController(LocalContext.current)
     )
 }

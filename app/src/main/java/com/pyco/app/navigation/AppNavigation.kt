@@ -8,7 +8,10 @@ import com.pyco.app.screens.AccountScreen
 import com.pyco.app.screens.SettingsScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
+import com.pyco.app.screens.closet.ClosetScreen
 import com.pyco.app.screens.home.HomeScreen
+import com.pyco.app.screens.outfits.OutfitsScreen
+import com.pyco.app.screens.upload.UploadScreen
 import com.pyco.app.viewmodels.AuthViewModel
 
 @Composable
@@ -44,6 +47,21 @@ fun AppNavigation(
         composable("settings") {
             SettingsScreen(
                 authViewModel = authViewModel,
+                navController = navController
+            )
+        }
+        composable("closet") {
+            ClosetScreen(
+                navController = navController
+            )
+        }
+        composable("upload") {
+            UploadScreen(
+                navController = navController
+            )
+        }
+        composable("outfits") {
+            OutfitsScreen(
                 navController = navController
             )
         }
