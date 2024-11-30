@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 class AuthViewModel : ViewModel() {
 
@@ -28,6 +29,8 @@ class AuthViewModel : ViewModel() {
     val userEmail: String?
         get() = auth.currentUser?.email
 
+    // email sign in ------------------------------------------------------------------------------------
+
     // Updates _authState to Authenticated on success
     fun login(email: String, password: String) {
         if (email.isBlank() || password.isBlank()) {
@@ -46,6 +49,8 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    // signup with email and password -----------------------------------------------------------------
+
     fun signup(email: String, password: String) {
         if (email.isBlank() || password.isBlank()) {
             _authState.value = AuthState.Error("Email and password cannot be empty")
@@ -63,6 +68,23 @@ class AuthViewModel : ViewModel() {
             }
     }
 
+    // Google sign-in ---------------------------------------------------------------------------------
+
+    fun signInWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        _authState.value = AuthState.Loading
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _authState.value = AuthState.Authenticated
+                } else {
+                    _authState.value = AuthState.Error(task.exception?.message ?: "Unknown error")
+                }
+            }
+    }
+
+    // sign out ---------------------------------------------------------------------------------
+
     fun logOut() {
         auth.signOut()
         _authState.value = AuthState.Unauthenticated
@@ -71,8 +93,8 @@ class AuthViewModel : ViewModel() {
 
 
 sealed class AuthState {
-    object Unauthenticated : AuthState()
-    object Authenticated : AuthState()
-    object Loading : AuthState()
+    data object Unauthenticated : AuthState()
+    data object Authenticated : AuthState()
+    data object Loading : AuthState()
     data class Error(val message: String) : AuthState()
 }

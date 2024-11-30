@@ -1,5 +1,9 @@
-package com.pyco.app.screens
+@file:Suppress("DEPRECATION")
 
+package com.pyco.app.screens.authentication
+
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,28 +22,60 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.pyco.app.R
 import com.pyco.app.viewmodels.AuthState
 import com.pyco.app.viewmodels.AuthViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
     authViewModel: AuthViewModel,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
+    val authState by authViewModel.authState.observeAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope() // Remember a coroutine scope
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Observe authState
-    val authState by authViewModel.authState.observeAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
-    // Handle navigation and snackbar
+    // Google Sign-In launcher
+    val googleSignInLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val idToken = account.idToken
+            if (idToken != null) {
+                authViewModel.signInWithGoogle(idToken)
+            } else {
+                // Launch a coroutine to show the snackbar
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar("Failed to get ID Token")
+                }
+            }
+        } catch (e: ApiException) {
+            // Launch a coroutine to show the snackbar
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar("Google Sign-In failed: ${e.message}")
+            }
+        }
+    }
+
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Authenticated -> {
@@ -54,7 +90,6 @@ fun LoginScreen(
         }
     }
 
-    // UI Layout
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,10 +97,8 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Snackbar Host
         SnackbarHost(hostState = snackbarHostState)
 
-        // Email Input
         TextField(
             value = email,
             onValueChange = { email = it },
@@ -73,7 +106,6 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Password Input
         TextField(
             value = password,
             onValueChange = { password = it },
@@ -84,16 +116,30 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Login Button
         Button(onClick = { authViewModel.login(email, password) }) {
             Text("Log In")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Sign-Up Button
         Button(onClick = { navController.navigate("signup") }) {
             Text("Sign Up")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Google Sign-In Button
+        Button(onClick = {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            val googleSignInClient = GoogleSignIn.getClient(context, gso)
+            val signInIntent = googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }) {
+            Text("Sign in with Google")
         }
     }
 }

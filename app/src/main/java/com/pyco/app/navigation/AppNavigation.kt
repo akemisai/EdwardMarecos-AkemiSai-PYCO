@@ -1,21 +1,19 @@
 package com.pyco.app.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pyco.app.screens.AccountScreen
-import com.pyco.app.screens.HomeScreen
-import com.pyco.app.screens.LoginScreen
 import com.pyco.app.screens.SettingsScreen
-import com.pyco.app.screens.SignUpScreen
+import com.pyco.app.screens.authentication.LoginScreen
+import com.pyco.app.screens.authentication.SignUpScreen
+import com.pyco.app.screens.home.HomeScreen
 import com.pyco.app.viewmodels.AuthViewModel
 
 @Composable
 fun AppNavigation(
-    modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
 ) {
     val navController = rememberNavController()
 
@@ -23,7 +21,7 @@ fun AppNavigation(
         composable("login") {
             LoginScreen(
                 authViewModel = authViewModel,
-                navController = navController
+                navController = navController,
             )
         }
         composable("signup") {
@@ -39,14 +37,14 @@ fun AppNavigation(
         }
         composable("account") {
             AccountScreen(
-                navController = navController,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                navController = navController
             )
         }
         composable("settings") {
             SettingsScreen(
-                navController = navController,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                navController = navController
             )
         }
     }

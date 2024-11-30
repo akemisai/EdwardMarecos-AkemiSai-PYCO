@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.pyco.app"
-        minSdk = 24
+        minSdk = 34
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -79,5 +79,6 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.google.firebase.auth)
     implementation(libs.play.services.auth)
+    implementation(libs.play.services.auth.v2070)
 
 }

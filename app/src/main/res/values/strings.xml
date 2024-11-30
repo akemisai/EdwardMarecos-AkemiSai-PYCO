@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pyco</string>
+    <string name="default_web_client_id">862613621685-8a41h8t925rpq4pif3bn0nt2r6v79vki.apps.googleusercontent.com</string>
+
 </resources>
