@@ -1,17 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.example.pyco"
-    compileSdk = 34
+    namespace = "com.pyco.app"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.pyco"
+        applicationId = "com.pyco.app"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -60,7 +60,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.lifecycle.viewmodel.compose.android)
+    implementation(libs.firebase.auth)
+    implementation(libs.identity.credential)
+    implementation(libs.googleid)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -70,8 +74,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.play.services.auth)
+
 }

@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pyco"
+rootProject.name = "pyco"
 include(":app")
+ 
