@@ -51,9 +51,12 @@ class AuthViewModel : ViewModel() {
 
     // signup with email and password -----------------------------------------------------------------
 
-    fun signup(email: String, password: String) {
+    fun signup(email: String, password: String, confirmPassword: String) {
         if (email.isBlank() || password.isBlank()) {
             _authState.value = AuthState.Error("Email and password cannot be empty")
+            return
+        } else if (password != confirmPassword) {
+            _authState.value = AuthState.Error("Passwords do not match")
             return
         }
         _authState.value = AuthState.Loading
