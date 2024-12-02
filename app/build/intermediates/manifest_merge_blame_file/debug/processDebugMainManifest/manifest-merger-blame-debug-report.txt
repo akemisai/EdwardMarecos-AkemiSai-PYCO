@@ -8,6 +8,7 @@
 8        android:minSdkVersion="34"
 9        android:targetSdkVersion="35" />
 10
+<<<<<<< Updated upstream
 11    <uses-permission android:name="android.permission.CAMERA" />
 11-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:5-64
 11-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:22-62
@@ -431,3 +432,410 @@
 239
 240</manifest> <!-- android:icon="@mipmap/ic_launcher" -->
 241<!-- android:roundIcon="@mipmap/ic_launcher_round" -->
+=======
+11    <!-- Internet permission for Firestore -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:5-67
+12-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:22-64
+13    <!-- Camera Permissions -->
+14    <uses-feature android:name="android.permission.CAMERA" />
+14-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:8:5-62
+14-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:8:19-59
+15
+16    <!-- Permission to access the device camera -->
+17    <uses-permission android:name="android.permission.CAMERA" />
+17-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:5-65
+17-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:22-62
+18
+19    <!-- Declare camera hardware as an optional feature -->
+20    <uses-feature
+20-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:5-85
+21        android:name="android.hardware.camera"
+21-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:19-57
+22        android:required="false" />
+22-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:58-82
+23
+24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+24-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:26:5-79
+24-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:26:22-76
+25
+26    <queries>
+26-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:22:5-26:15
+27        <intent>
+27-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:23:9-25:18
+28            <action android:name="androidx.camera.extensions.action.VENDOR_ACTION" />
+28-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:24:13-86
+28-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:24:21-83
+29        </intent>
+30    </queries>
+31
+32    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+32-->[com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:9:5-98
+32-->[com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:9:22-95
+33
+34    <permission
+34-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+35        android:name="com.pyco.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+35-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+36        android:protectionLevel="signature" />
+36-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+37
+38    <uses-permission android:name="com.pyco.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+38-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+38-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+39
+40    <application
+40-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:16:5-37:19
+41        android:allowBackup="true"
+41-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:17:9-35
+42        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+42-->[androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+43        android:dataExtractionRules="@xml/data_extraction_rules"
+43-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:18:9-65
+44        android:debuggable="true"
+45        android:extractNativeLibs="false"
+46        android:fullBackupContent="@xml/backup_rules"
+46-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:19:9-54
+47        android:icon="@drawable/ic_launcher"
+47-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:20:9-45
+48        android:label="@string/app_name"
+48-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:9-41
+49        android:roundIcon="@drawable/ic_launcher_round"
+49-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:9-56
+50        android:supportsRtl="true"
+50-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:23:9-35
+51        android:testOnly="true"
+52        android:theme="@style/Theme.Pyco" >
+52-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:24:9-42
+53        <activity
+53-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:26:9-36:20
+54            android:name="com.pyco.app.MainActivity"
+54-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:27:13-41
+55            android:exported="true"
+55-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:28:13-36
+56            android:label="@string/app_name"
+56-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:29:13-45
+57            android:theme="@style/Theme.Pyco" >
+57-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:30:13-46
+58            <intent-filter>
+58-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:31:13-35:29
+59                <action android:name="android.intent.action.MAIN" />
+59-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:17-69
+59-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:25-66
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+61-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:17-77
+61-->/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:27-74
+62            </intent-filter>
+63        </activity>
+64        <activity
+64-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:29:9-46:20
+65            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+65-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:30:13-80
+66            android:excludeFromRecents="true"
+66-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:31:13-46
+67            android:exported="true"
+67-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:32:13-36
+68            android:launchMode="singleTask"
+68-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:33:13-44
+69            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+69-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:34:13-72
+70            <intent-filter>
+70-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:35:13-45:29
+71                <action android:name="android.intent.action.VIEW" />
+71-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
+71-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
+72
+73                <category android:name="android.intent.category.DEFAULT" />
+73-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
+73-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
+74                <category android:name="android.intent.category.BROWSABLE" />
+74-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
+74-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
+75
+76                <data
+76-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
+77                    android:host="firebase.auth"
+77-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
+78                    android:path="/"
+78-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
+79                    android:scheme="genericidp" />
+79-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
+80            </intent-filter>
+81        </activity>
+82        <activity
+82-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:47:9-64:20
+83            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+83-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:48:13-79
+84            android:excludeFromRecents="true"
+84-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:49:13-46
+85            android:exported="true"
+85-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:50:13-36
+86            android:launchMode="singleTask"
+86-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:51:13-44
+87            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+87-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:52:13-72
+88            <intent-filter>
+88-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:53:13-63:29
+89                <action android:name="android.intent.action.VIEW" />
+89-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
+89-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
+90
+91                <category android:name="android.intent.category.DEFAULT" />
+91-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
+91-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
+92                <category android:name="android.intent.category.BROWSABLE" />
+92-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
+92-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
+93
+94                <data
+94-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
+95                    android:host="firebase.auth"
+95-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
+96                    android:path="/"
+96-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
+97                    android:scheme="recaptcha" />
+97-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
+98            </intent-filter>
+99        </activity>
+100
+101        <service
+101-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:66:9-72:19
+102            android:name="com.google.firebase.components.ComponentDiscoveryService"
+102-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:67:13-84
+103            android:directBootAware="true"
+103-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:32:13-43
+104            android:exported="false" >
+104-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:68:13-37
+105            <meta-data
+105-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:69:13-71:85
+106                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+106-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:70:17-109
+107                android:value="com.google.firebase.components.ComponentRegistrar" />
+107-->[com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:71:17-82
+108            <meta-data
+108-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:17:13-19:85
+109                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+109-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:18:17-122
+110                android:value="com.google.firebase.components.ComponentRegistrar" />
+110-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:19:17-82
+111            <meta-data
+111-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:20:13-22:85
+112                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+112-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:21:17-111
+113                android:value="com.google.firebase.components.ComponentRegistrar" />
+113-->[com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:22:17-82
+114            <meta-data
+114-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:12:13-14:85
+115                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+115-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:13:17-116
+116                android:value="com.google.firebase.components.ComponentRegistrar" />
+116-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:14:17-82
+117            <meta-data
+117-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:35:13-37:85
+118                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+118-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:36:17-109
+119                android:value="com.google.firebase.components.ComponentRegistrar" />
+119-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:37:17-82
+120        </service>
+121        <service
+121-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:24:9-32:19
+122            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+122-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:25:13-94
+123            android:enabled="true"
+123-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:26:13-35
+124            android:exported="false" >
+124-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:27:13-37
+125            <meta-data
+125-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:29:13-31:104
+126                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+126-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:30:17-76
+127                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+127-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:31:17-101
+128        </service>
+129
+130        <activity
+130-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:34:9-41:20
+131            android:name="androidx.credentials.playservices.HiddenActivity"
+131-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:35:13-76
+132            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+132-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:36:13-87
+133            android:enabled="true"
+133-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:37:13-35
+134            android:exported="false"
+134-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:38:13-37
+135            android:fitsSystemWindows="true"
+135-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:39:13-45
+136            android:theme="@style/Theme.Hidden" >
+136-->[androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:40:13-48
+137        </activity>
+138
+139        <uses-library
+139-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:29:9-31:40
+140            android:name="androidx.camera.extensions.impl"
+140-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:30:13-59
+141            android:required="false" />
+141-->[androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:31:13-37
+142
+143        <service
+143-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:24:9-33:19
+144            android:name="androidx.camera.core.impl.MetadataHolderService"
+144-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:25:13-75
+145            android:enabled="false"
+145-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:26:13-36
+146            android:exported="false" >
+146-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:27:13-37
+147            <meta-data
+147-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:30:13-32:89
+148                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+148-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:31:17-103
+149                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+149-->[androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:32:17-86
+150        </service>
+151
+152        <activity
+152-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:23:9-27:75
+153            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+153-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:24:13-93
+154            android:excludeFromRecents="true"
+154-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:25:13-46
+155            android:exported="false"
+155-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:26:13-37
+156            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+156-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:27:13-72
+157        <!--
+158            Service handling Google Sign-In user revocation. For apps that do not integrate with
+159            Google Sign-In, this service will never be started.
+160        -->
+161        <service
+161-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:33:9-37:51
+162            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+162-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:34:13-89
+163            android:exported="true"
+163-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:35:13-36
+164            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+164-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:36:13-107
+165            android:visibleToInstantApps="true" />
+165-->[com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:37:13-48
+166
+167        <provider
+167-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:23:9-28:39
+168            android:name="com.google.firebase.provider.FirebaseInitProvider"
+168-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:24:13-77
+169            android:authorities="com.pyco.app.firebaseinitprovider"
+169-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:25:13-72
+170            android:directBootAware="true"
+170-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:26:13-43
+171            android:exported="false"
+171-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:27:13-37
+172            android:initOrder="100" />
+172-->[com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:28:13-36
+173
+174        <activity
+174-->[com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+175            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+175-->[com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+176            android:exported="false"
+176-->[com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+177            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+177-->[com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+178        <activity
+178-->[androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:23:9-25:39
+179            android:name="androidx.activity.ComponentActivity"
+179-->[androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:24:13-63
+180            android:exported="true" />
+180-->[androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:25:13-36
+181        <activity
+181-->[androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+182            android:name="androidx.compose.ui.tooling.PreviewActivity"
+182-->[androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+183            android:exported="true" />
+183-->[androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+184
+185        <provider
+185-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+186            android:name="androidx.startup.InitializationProvider"
+186-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+187            android:authorities="com.pyco.app.androidx-startup"
+187-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+188            android:exported="false" >
+188-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+189            <meta-data
+189-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+190                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+190-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+191                android:value="androidx.startup" />
+191-->[androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+192            <meta-data
+192-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+193                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+193-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+194                android:value="androidx.startup" />
+194-->[androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+195            <meta-data
+195-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+196                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+196-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+197                android:value="androidx.startup" />
+197-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+198        </provider>
+199
+200        <meta-data
+200-->[com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+201            android:name="com.google.android.gms.version"
+201-->[com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+202            android:value="@integer/google_play_services_version" />
+202-->[com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+203
+204        <receiver
+204-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+205            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+205-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+206            android:directBootAware="false"
+206-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+207            android:enabled="true"
+207-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+208            android:exported="true"
+208-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+209            android:permission="android.permission.DUMP" >
+209-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+210            <intent-filter>
+210-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+211                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+211-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+211-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+212            </intent-filter>
+213            <intent-filter>
+213-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+214                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+214-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+214-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+215            </intent-filter>
+216            <intent-filter>
+216-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+217                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+217-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+217-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+218            </intent-filter>
+219            <intent-filter>
+219-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+220                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+220-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+220-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+221            </intent-filter>
+222        </receiver> <!-- The activities will be merged into the manifest of the hosting app. -->
+223        <activity
+223-->[com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:14:9-18:65
+224            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+224-->[com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:15:13-93
+225            android:exported="false"
+225-->[com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:16:13-37
+226            android:stateNotNeeded="true"
+226-->[com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:17:13-42
+227            android:theme="@style/Theme.PlayCore.Transparent" />
+227-->[com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:18:13-62
+228    </application>
+229
+230</manifest> <!-- android:icon="@mipmap/ic_launcher" -->
+231<!-- android:roundIcon="@mipmap/ic_launcher_round" -->
+>>>>>>> Stashed changes

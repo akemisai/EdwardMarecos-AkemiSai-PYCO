@@ -8,21 +8,27 @@
         android:minSdkVersion="34"
         android:targetSdkVersion="35" />
 
+<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
+=======
+>>>>>>> Stashed changes
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera Permissions -->
     <uses-feature android:name="android.permission.CAMERA" />
 
+<<<<<<< Updated upstream
     <uses-permission
         android:name="android.hardware.camera"
         android:required="false" />
 
+=======
+>>>>>>> Stashed changes
     <!-- Permission to access the device camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
