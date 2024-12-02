@@ -83,6 +83,10 @@ dependencies {
     //firestore
     implementation(libs.firebase.firestore)
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> cd1ff3b8e945d177e4d5560828fde2267b6d2a4a
     // camerax
     // CameraX core library using the camera2 implementation
     implementation(libs.androidx.camera.core.v150alpha03)
@@ -95,4 +99,8 @@ dependencies {
     implementation(libs.androidx.camera.mlkit.vision)
     // If you want to additionally use the CameraX Extensions library
     implementation(libs.androidx.camera.extensions.v150alpha03)
+<<<<<<< HEAD
+=======
+    }
+>>>>>>> cd1ff3b8e945d177e4d5560828fde2267b6d2a4a
 }

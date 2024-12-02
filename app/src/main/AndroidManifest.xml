@@ -2,12 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera Permissions -->
     <uses-feature android:name="android.permission.CAMERA" />
     <uses-permission
         android:name="android.hardware.camera" android:required="false" />
+
+    <!-- Permission to access the device camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Declare camera hardware as an optional feature -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
