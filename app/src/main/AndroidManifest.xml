@@ -5,6 +5,12 @@
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Permission to access the device camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Declare camera hardware as an optional feature -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
