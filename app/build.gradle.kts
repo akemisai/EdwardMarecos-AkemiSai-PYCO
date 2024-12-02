@@ -83,22 +83,9 @@ dependencies {
     //firestore
     implementation(libs.firebase.firestore)
 
-<<<<<<< Updated upstream
-    // camera x
-    implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.video)
-
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.extensions)
-=======
+    
     // camerax
-<<<<<<< Updated upstream
-    // The following line is optional, as the core library is included indirectly by camera-camera2
-=======
     // CameraX core library using the camera2 implementation
->>>>>>> Stashed changes
     implementation(libs.androidx.camera.core.v150alpha03)
     implementation(libs.androidx.camera.camera2.v150alpha03)
     // If you want to additionally use the CameraX Lifecycle library
@@ -109,9 +96,5 @@ dependencies {
     implementation(libs.androidx.camera.mlkit.vision)
     // If you want to additionally use the CameraX Extensions library
     implementation(libs.androidx.camera.extensions.v150alpha03)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-    
->>>>>>> Stashed changes
+    }
 }

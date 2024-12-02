@@ -48,49 +48,34 @@ fun UploadScreen(
                     text = "Welcome to the Upload Screen!",
                     color = customColor
                 )
-
-<<<<<<< Updated upstream
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        },
-        containerColor = backgroundColor
-    ) { paddingValues ->
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            color = backgroundColor
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (permissionGranted) {
-                    CameraPreview()
-                } else {
-                    Button(onClick = { context.handleCameraPermission() }) {
-                        Text("Request Camera Permission", color = customColor)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-=======
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Informative Text
->>>>>>> Stashed changes
-                Text(
-                    text = "Use the navigation bar to go to other sections.",
-                    color = customColor
-                )
-            }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (permissionGranted) {
+            CameraPreview()
+        } else {
+            Button(onClick = { context.handleCameraPermission() }) {
+                Text("Request Camera Permission")            }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Use the navigation bar to go to other sections.")
     }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        BottomNavigationBar(navController = navController)
+    }
+
 }
 
 @Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
