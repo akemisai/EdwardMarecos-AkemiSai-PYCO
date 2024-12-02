@@ -81,4 +81,16 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.play.services.auth.v2070)
 
+    // camerax
+    // CameraX core library using the camera2 implementation
+    implementation(libs.androidx.camera.core.v150alpha03)
+    implementation(libs.androidx.camera.camera2.v150alpha03)
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation(libs.androidx.camera.lifecycle.v150alpha03)
+    // If you want to additionally use the CameraX View class
+    implementation(libs.androidx.camera.view.v150alpha03)
+    // If you want to additionally add CameraX ML Kit Vision Integration
+    implementation(libs.androidx.camera.mlkit.vision)
+    // If you want to additionally use the CameraX Extensions library
+    implementation(libs.androidx.camera.extensions.v150alpha03)
 }
