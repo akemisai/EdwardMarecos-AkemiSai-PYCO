@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera Permissions -->
     <uses-feature android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.hardware.camera" android:required="false" />
 
     <!-- Permission to access the device camera -->
     <uses-permission android:name="android.permission.CAMERA" />

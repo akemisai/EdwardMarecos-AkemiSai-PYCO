@@ -83,20 +83,18 @@ dependencies {
     //firestore
     implementation(libs.firebase.firestore)
 
+    
     // camerax
-    dependencies {
-        // CameraX core library using the camera2 implementation
-        val camerax_version = "1.5.0-alpha03"
-        // The following line is optional, as the core library is included indirectly by camera-camera2
-        implementation("androidx.camera:camera-core:${camerax_version}")
-        implementation("androidx.camera:camera-camera2:${camerax_version}")
-        // If you want to additionally use the CameraX Lifecycle library
-        implementation("androidx.camera:camera-lifecycle:${camerax_version}")
-        // If you want to additionally use the CameraX View class
-        implementation("androidx.camera:camera-view:${camerax_version}")
-        // If you want to additionally add CameraX ML Kit Vision Integration
-        implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
-        // If you want to additionally use the CameraX Extensions library
-        implementation("androidx.camera:camera-extensions:${camerax_version}")
+    // CameraX core library using the camera2 implementation
+    implementation(libs.androidx.camera.core.v150alpha03)
+    implementation(libs.androidx.camera.camera2.v150alpha03)
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation(libs.androidx.camera.lifecycle.v150alpha03)
+    // If you want to additionally use the CameraX View class
+    implementation(libs.androidx.camera.view.v150alpha03)
+    // If you want to additionally add CameraX ML Kit Vision Integration
+    implementation(libs.androidx.camera.mlkit.vision)
+    // If you want to additionally use the CameraX Extensions library
+    implementation(libs.androidx.camera.extensions.v150alpha03)
     }
 }
