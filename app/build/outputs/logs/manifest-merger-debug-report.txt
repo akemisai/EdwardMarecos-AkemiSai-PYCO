@@ -1,0 +1,784 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:17:1-75:12
+MERGED from [androidx.credentials:credentials:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/c8769515d4c7cadb5a6c7538fa945d7a/transformed/credentials-1.3.0-beta01/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/50879e28acd2f5ce7db56eedc6c51410/transformed/googleid-1.1.1/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:2:1-26:12
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:2:1-18:12
+MERGED from [androidx.camera:camera-video:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/9c4348b87b38c339bf1189089df68212/transformed/camera-video-1.5.0-alpha03/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:17:1-34:12
+MERGED from [androidx.camera:camera-mlkit-vision:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/d478b018cc316a71cd81fd29636638c3/transformed/camera-mlkit-vision-1.5.0-alpha03/AndroidManifest.xml:14:1-22:12
+MERGED from [androidx.camera:camera-view:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/05368d70434d2b6ab40493915ec817b7/transformed/camera-view-1.5.0-alpha03/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-lifecycle:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/28cbcbe3a8270f2fce86c800aea70a1f/transformed/camera-lifecycle-1.5.0-alpha03/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:17:1-36:12
+MERGED from [androidx.navigation:navigation-common:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/d657d76f6784d16fbcb59409cd45703b/transformed/navigation-common-2.8.4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/6c92b26da86094b6ea7b5003265ea0ac/transformed/navigation-runtime-2.8.4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/728e46ba09937b7d849c9ddd8e1cd0b6/transformed/navigation-common-ktx-2.8.4/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/998e6d20de3425b94c68471467f2908c/transformed/navigation-runtime-ktx-2.8.4/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/5877fc3d9f5a5d38ce94b02d6675963d/transformed/navigation-compose-2.8.4/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a80d61b84b5f54d24ed2a032648f04d6/transformed/play-services-auth-api-phone-18.0.2/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.play:integrity:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/0ad9cd0a72432209e753e0f0fbd54138/transformed/integrity-1.3.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/34668b25af136ebce3ffbfd3afcefbf3/transformed/firebase-appcheck-interop-17.0.0/AndroidManifest.xml:15:1-25:12
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/9b2e3e5d4f31666f9ce05e364308ecab/transformed/firebase-auth-interop-20.0.0/AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:15:1-41:12
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/edwardmarecos/.gradle/caches/transforms-4/fd205bab78439803e18c6373cc5bfda4/transformed/play-services-auth-base-18.0.10/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/fcced9ed43fde60b91e1b26cfa8b1722/transformed/firebase-database-collection-18.0.1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5695692cd1e4dcc5bdad501b979ed2c2/transformed/play-services-fido-21.0.0/AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.mlkit:vision-interfaces:16.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/da1b520d6386b49c9680434de9c40954/transformed/vision-interfaces-16.0.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3-android:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/a7af3fa28b5499d30a9f47847e8ec6d5/transformed/material3-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/0d3355be4dbb4e7493a7536647494a59/transformed/foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f7059a7a210640de3aa6273004f2c9e7/transformed/foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/47dbacc8405aa6dbc207425bd68abc0d/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/57686221be6264d2e1ee9330ddf437ba/transformed/ui-tooling-data-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f3c51df65547588bb9949fcfc2014a9f/transformed/ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ce3cf9859d94f28962d779b83a0fb2a3/transformed/ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/08b53dfaef7631a0b5fc4b917cc73897/transformed/ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-util-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/356acd4291ac8a9400a3224bc649b21e/transformed/ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/05bf48a84d0773bdd11fde35acb17d20/transformed/ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ec964a7e6cb6642917043e468104185b/transformed/ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.material:material-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/7dbbbcc5cd605813e8b9c6b514dcdaf4/transformed/material-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/725273e29aaaf433e070df2437b440a9/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/8be68a936104b5cde9c5a7e56e1860a9/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/bb5ed3bad2ac8dc762be6bbb1ad34182/transformed/animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.loader:loader:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6cd54c5832067be588a84ff12c4c75e4/transformed/loader-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/1548d3956c7a9a2b8b9aa0d43e11eb89/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/85df986ad66c4b77b48ef2547d815231/transformed/core-ktx-1.15.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.browser:browser:1.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e1aa085a4b8229f56bbb99761817ba13/transformed/browser-1.4.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6190df1dd1fa2b3e42beddf9f8426f8c/transformed/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6362e47c1f65e47663a0cfe5d8756fc4/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e0e96332229e7a86fd97c7840dfba3a0/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e27ee550cd8e8a07d7775c6b49ff3237/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e101a6c4e58bf4048fc537ae48f12497/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a3378f2e4565c97a8cc2f46500ce9b03/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6819e99e0c9ac0263930c2d9b8547569/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a309025df1f45ab09001068f8f44e7a5/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/40e1aab05b28e5ee19c4cfe0fd2efcd8/transformed/graphics-path-1.0.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/bcf02701af10ca45d04ce02f5338681a/transformed/lifecycle-viewmodel-2.8.7/AndroidManifest.xml:2:1-5:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/e3fdf4ec05e76219ca604cabd72bba0a/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/ce5b3823aa13661fc270e8f67f5f8803/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2b6cf02aac700bc49301589f54586b82/transformed/lifecycle-livedata-core-ktx-2.8.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/5f28b4d31cb095a4459363d5553a8da2/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/2a7e64c69a4ec472dbc37fc0759a5f47/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/22f7226328622c5f725def149b7e3aad/transformed/lifecycle-runtime-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/652733fa42127d0bdadcbcf613f2fe55/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1804bfab6323d13670a17347b65eec57/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/5a3bb552b55f04875bd6b5b586ce4169/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/6dfa222416721757ba37965624f4f771/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ccf29baded245a2e05753d166dec1308/transformed/ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/106944d11eadcd77cd391b129d01d17a/transformed/runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/ef0ef434cc637b1ddf2c67e0d73e829f/transformed/runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-livedata:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/15324674e6bd5d3b8effca080cac6f63/transformed/runtime-livedata-1.7.5/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/adece33ad280dfdf2098b7af82c1e8e3/transformed/lifecycle-livedata-2.8.7/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/cdc810e0f5d562967da57d56d3700f86/transformed/play-services-tasks-18.2.0/AndroidManifest.xml:2:1-5:12
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.fragment:fragment:1.5.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1fa6fb55354a043323bb22aba1cb8a43/transformed/fragment-1.5.7/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/8faf152d2a33f2d57d57877ade907e3c/transformed/activity-1.9.3/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-compose:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/dfffe88c952a3d6f3fc5b554b56d1dc8/transformed/activity-compose-1.9.3/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/ac8dac2986132c501c5217a81c4c08b0/transformed/activity-ktx-1.9.3/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/d96cfbe8f4c1f1d0919befe65082f1df/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/edwardmarecos/.gradle/caches/transforms-4/20050bf40d3db8d323243ce7ff818b77/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b4f51fa5e48667e6c809c79f031e1bf/transformed/tracing-1.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.tracing:tracing-ktx:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/205250ad636c753bfe9887cd451e0f0b/transformed/tracing-ktx-1.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/d2a0fb4b1b6f5409c1ed96c37972bf69/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:firebase-components:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/48947c5bb5fce71a8d705436007349c2/transformed/firebase-components-18.0.0/AndroidManifest.xml:15:1-20:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/edwardmarecos/.gradle/caches/transforms-4/decc9dcf43792ff7df1ea2a686b260a8/transformed/exifinterface-1.3.2/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/c08b22f524b8a70cd5fe32bb97e741d6/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/e07a406f2636ed3fc9adc983c3517fc2/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3baaa97b728ddc60dc5e5c148860da8c/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/68f2d8a93e7bcb2c25383ccbd0ec8903/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/7388bf9f6b10b7c27b9c9510294948e9/transformed/protolite-well-known-types-18.0.0/AndroidManifest.xml:2:1-11:12
+MERGED from [io.grpc:grpc-android:1.62.2] /Users/edwardmarecos/.gradle/caches/transforms-4/3d33ff1589336a5da45b4d7551c600dd/transformed/grpc-android-1.62.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:2:1-21:12
+	package
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:5-64
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:22-62
+uses-feature#android.hardware.camera
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:5-85
+	android:required
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:58-82
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:19-57
+uses-permission#android.permission.INTERNET
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:9:5-67
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:25:5-67
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:25:5-67
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:11:5-67
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:7:5-67
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:7:5-67
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:9:22-64
+uses-feature#android.permission.CAMERA
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:5-62
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:19-59
+uses-permission#android.hardware.camera
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:12:5-13:75
+	android:required
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:13:48-72
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:13:9-47
+application
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:5-42:19
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:5-42:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:28:5-73:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:28:5-73:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:23:5-42:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:23:5-42:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:13:5-24:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:13:5-24:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
+MERGED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:28:5-32:19
+MERGED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:28:5-32:19
+MERGED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:23:5-34:19
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:23:5-34:19
+MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.play:integrity:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/0ad9cd0a72432209e753e0f0fbd54138/transformed/integrity-1.3.0/AndroidManifest.xml:5:5-6:19
+MERGED from [com.google.android.play:integrity:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/0ad9cd0a72432209e753e0f0fbd54138/transformed/integrity-1.3.0/AndroidManifest.xml:5:5-6:19
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/34668b25af136ebce3ffbfd3afcefbf3/transformed/firebase-appcheck-interop-17.0.0/AndroidManifest.xml:23:5-20
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/34668b25af136ebce3ffbfd3afcefbf3/transformed/firebase-appcheck-interop-17.0.0/AndroidManifest.xml:23:5-20
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/9b2e3e5d4f31666f9ce05e364308ecab/transformed/firebase-auth-interop-20.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/9b2e3e5d4f31666f9ce05e364308ecab/transformed/firebase-auth-interop-20.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5695692cd1e4dcc5bdad501b979ed2c2/transformed/play-services-fido-21.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5695692cd1e4dcc5bdad501b979ed2c2/transformed/play-services-fido-21.0.0/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:19:5-23:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:23:5-33:19
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/cdc810e0f5d562967da57d56d3700f86/transformed/play-services-tasks-18.2.0/AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/cdc810e0f5d562967da57d56d3700f86/transformed/play-services-tasks-18.2.0/AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:5:5-7:19
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:5:5-7:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/e07a406f2636ed3fc9adc983c3517fc2/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/e07a406f2636ed3fc9adc983c3517fc2/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:11:5-19:19
+MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:11:5-19:19
+	android:extractNativeLibs
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:28:9-35
+	android:label
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:26:9-41
+	android:fullBackupContent
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:24:9-54
+	android:roundIcon
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:27:9-56
+	tools:targetApi
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:30:9-29
+	android:icon
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:25:9-45
+	android:allowBackup
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:9-35
+	android:theme
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:29:9-42
+	android:dataExtractionRules
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:23:9-65
+activity#com.pyco.app.MainActivity
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:31:9-41:20
+	android:label
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:13-45
+	android:exported
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:33:13-36
+	android:theme
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:35:13-46
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:36:13-40:29
+action#android.intent.action.MAIN
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:37:17-69
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:37:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:39:17-77
+	android:name
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:39:27-74
+uses-sdk
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:21:5-23:151
+MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:21:5-23:151
+MERGED from [androidx.credentials:credentials:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/c8769515d4c7cadb5a6c7538fa945d7a/transformed/credentials-1.3.0-beta01/AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/c8769515d4c7cadb5a6c7538fa945d7a/transformed/credentials-1.3.0-beta01/AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:21:5-44
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:21:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/50879e28acd2f5ce7db56eedc6c51410/transformed/googleid-1.1.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/50879e28acd2f5ce7db56eedc6c51410/transformed/googleid-1.1.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-video:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/9c4348b87b38c339bf1189089df68212/transformed/camera-video-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-video:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/9c4348b87b38c339bf1189089df68212/transformed/camera-video-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:20:5-44
+MERGED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:20:5-44
+MERGED from [androidx.camera:camera-mlkit-vision:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/d478b018cc316a71cd81fd29636638c3/transformed/camera-mlkit-vision-1.5.0-alpha03/AndroidManifest.xml:18:5-20:70
+MERGED from [androidx.camera:camera-mlkit-vision:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/d478b018cc316a71cd81fd29636638c3/transformed/camera-mlkit-vision-1.5.0-alpha03/AndroidManifest.xml:18:5-20:70
+MERGED from [androidx.camera:camera-view:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/05368d70434d2b6ab40493915ec817b7/transformed/camera-view-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-view:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/05368d70434d2b6ab40493915ec817b7/transformed/camera-view-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/28cbcbe3a8270f2fce86c800aea70a1f/transformed/camera-lifecycle-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-lifecycle:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/28cbcbe3a8270f2fce86c800aea70a1f/transformed/camera-lifecycle-1.5.0-alpha03/AndroidManifest.xml:5:5-44
+MERGED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:21:5-44
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:21:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/d657d76f6784d16fbcb59409cd45703b/transformed/navigation-common-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/d657d76f6784d16fbcb59409cd45703b/transformed/navigation-common-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/6c92b26da86094b6ea7b5003265ea0ac/transformed/navigation-runtime-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/6c92b26da86094b6ea7b5003265ea0ac/transformed/navigation-runtime-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/728e46ba09937b7d849c9ddd8e1cd0b6/transformed/navigation-common-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/728e46ba09937b7d849c9ddd8e1cd0b6/transformed/navigation-common-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/998e6d20de3425b94c68471467f2908c/transformed/navigation-runtime-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/998e6d20de3425b94c68471467f2908c/transformed/navigation-runtime-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/5877fc3d9f5a5d38ce94b02d6675963d/transformed/navigation-compose-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.4] /Users/edwardmarecos/.gradle/caches/transforms-4/5877fc3d9f5a5d38ce94b02d6675963d/transformed/navigation-compose-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a80d61b84b5f54d24ed2a032648f04d6/transformed/play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a80d61b84b5f54d24ed2a032648f04d6/transformed/play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.play:integrity:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/0ad9cd0a72432209e753e0f0fbd54138/transformed/integrity-1.3.0/AndroidManifest.xml:4:5-44
+MERGED from [com.google.android.play:integrity:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/0ad9cd0a72432209e753e0f0fbd54138/transformed/integrity-1.3.0/AndroidManifest.xml:4:5-44
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/34668b25af136ebce3ffbfd3afcefbf3/transformed/firebase-appcheck-interop-17.0.0/AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/34668b25af136ebce3ffbfd3afcefbf3/transformed/firebase-appcheck-interop-17.0.0/AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/9b2e3e5d4f31666f9ce05e364308ecab/transformed/firebase-auth-interop-20.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/9b2e3e5d4f31666f9ce05e364308ecab/transformed/firebase-auth-interop-20.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:19:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:19:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/edwardmarecos/.gradle/caches/transforms-4/fd205bab78439803e18c6373cc5bfda4/transformed/play-services-auth-base-18.0.10/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/edwardmarecos/.gradle/caches/transforms-4/fd205bab78439803e18c6373cc5bfda4/transformed/play-services-auth-base-18.0.10/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/fcced9ed43fde60b91e1b26cfa8b1722/transformed/firebase-database-collection-18.0.1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/fcced9ed43fde60b91e1b26cfa8b1722/transformed/firebase-database-collection-18.0.1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5695692cd1e4dcc5bdad501b979ed2c2/transformed/play-services-fido-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5695692cd1e4dcc5bdad501b979ed2c2/transformed/play-services-fido-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.mlkit:vision-interfaces:16.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/da1b520d6386b49c9680434de9c40954/transformed/vision-interfaces-16.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.mlkit:vision-interfaces:16.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/da1b520d6386b49c9680434de9c40954/transformed/vision-interfaces-16.0.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/a7af3fa28b5499d30a9f47847e8ec6d5/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/a7af3fa28b5499d30a9f47847e8ec6d5/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/0d3355be4dbb4e7493a7536647494a59/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/0d3355be4dbb4e7493a7536647494a59/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f7059a7a210640de3aa6273004f2c9e7/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f7059a7a210640de3aa6273004f2c9e7/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/47dbacc8405aa6dbc207425bd68abc0d/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/47dbacc8405aa6dbc207425bd68abc0d/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/57686221be6264d2e1ee9330ddf437ba/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/57686221be6264d2e1ee9330ddf437ba/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f3c51df65547588bb9949fcfc2014a9f/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/f3c51df65547588bb9949fcfc2014a9f/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ce3cf9859d94f28962d779b83a0fb2a3/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ce3cf9859d94f28962d779b83a0fb2a3/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/08b53dfaef7631a0b5fc4b917cc73897/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/08b53dfaef7631a0b5fc4b917cc73897/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/356acd4291ac8a9400a3224bc649b21e/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/356acd4291ac8a9400a3224bc649b21e/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/05bf48a84d0773bdd11fde35acb17d20/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/05bf48a84d0773bdd11fde35acb17d20/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ec964a7e6cb6642917043e468104185b/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ec964a7e6cb6642917043e468104185b/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/7dbbbcc5cd605813e8b9c6b514dcdaf4/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/7dbbbcc5cd605813e8b9c6b514dcdaf4/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/725273e29aaaf433e070df2437b440a9/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/725273e29aaaf433e070df2437b440a9/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/8be68a936104b5cde9c5a7e56e1860a9/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.6] /Users/edwardmarecos/.gradle/caches/transforms-4/8be68a936104b5cde9c5a7e56e1860a9/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/bb5ed3bad2ac8dc762be6bbb1ad34182/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/bb5ed3bad2ac8dc762be6bbb1ad34182/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.loader:loader:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6cd54c5832067be588a84ff12c4c75e4/transformed/loader-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.loader:loader:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6cd54c5832067be588a84ff12c4c75e4/transformed/loader-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/1548d3956c7a9a2b8b9aa0d43e11eb89/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/1548d3956c7a9a2b8b9aa0d43e11eb89/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/85df986ad66c4b77b48ef2547d815231/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/85df986ad66c4b77b48ef2547d815231/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e1aa085a4b8229f56bbb99761817ba13/transformed/browser-1.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e1aa085a4b8229f56bbb99761817ba13/transformed/browser-1.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6190df1dd1fa2b3e42beddf9f8426f8c/transformed/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6190df1dd1fa2b3e42beddf9f8426f8c/transformed/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6362e47c1f65e47663a0cfe5d8756fc4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6362e47c1f65e47663a0cfe5d8756fc4/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e0e96332229e7a86fd97c7840dfba3a0/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e0e96332229e7a86fd97c7840dfba3a0/transformed/appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e27ee550cd8e8a07d7775c6b49ff3237/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e27ee550cd8e8a07d7775c6b49ff3237/transformed/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e101a6c4e58bf4048fc537ae48f12497/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/e101a6c4e58bf4048fc537ae48f12497/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a3378f2e4565c97a8cc2f46500ce9b03/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a3378f2e4565c97a8cc2f46500ce9b03/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6819e99e0c9ac0263930c2d9b8547569/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/6819e99e0c9ac0263930c2d9b8547569/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a309025df1f45ab09001068f8f44e7a5/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/a309025df1f45ab09001068f8f44e7a5/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/40e1aab05b28e5ee19c4cfe0fd2efcd8/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/edwardmarecos/.gradle/caches/transforms-4/40e1aab05b28e5ee19c4cfe0fd2efcd8/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/bcf02701af10ca45d04ce02f5338681a/transformed/lifecycle-viewmodel-2.8.7/AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/bcf02701af10ca45d04ce02f5338681a/transformed/lifecycle-viewmodel-2.8.7/AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/e3fdf4ec05e76219ca604cabd72bba0a/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/e3fdf4ec05e76219ca604cabd72bba0a/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/ce5b3823aa13661fc270e8f67f5f8803/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/ce5b3823aa13661fc270e8f67f5f8803/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2b6cf02aac700bc49301589f54586b82/transformed/lifecycle-livedata-core-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2b6cf02aac700bc49301589f54586b82/transformed/lifecycle-livedata-core-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/5f28b4d31cb095a4459363d5553a8da2/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/5f28b4d31cb095a4459363d5553a8da2/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/2a7e64c69a4ec472dbc37fc0759a5f47/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/edwardmarecos/.gradle/caches/transforms-4/2a7e64c69a4ec472dbc37fc0759a5f47/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/22f7226328622c5f725def149b7e3aad/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/22f7226328622c5f725def149b7e3aad/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/652733fa42127d0bdadcbcf613f2fe55/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/652733fa42127d0bdadcbcf613f2fe55/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1804bfab6323d13670a17347b65eec57/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1804bfab6323d13670a17347b65eec57/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/5a3bb552b55f04875bd6b5b586ce4169/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/5a3bb552b55f04875bd6b5b586ce4169/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/6dfa222416721757ba37965624f4f771/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/6dfa222416721757ba37965624f4f771/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ccf29baded245a2e05753d166dec1308/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/ccf29baded245a2e05753d166dec1308/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/106944d11eadcd77cd391b129d01d17a/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/106944d11eadcd77cd391b129d01d17a/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/ef0ef434cc637b1ddf2c67e0d73e829f/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/ef0ef434cc637b1ddf2c67e0d73e829f/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-livedata:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/15324674e6bd5d3b8effca080cac6f63/transformed/runtime-livedata-1.7.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-livedata:1.7.5] /Users/edwardmarecos/.gradle/caches/transforms-4/15324674e6bd5d3b8effca080cac6f63/transformed/runtime-livedata-1.7.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/adece33ad280dfdf2098b7af82c1e8e3/transformed/lifecycle-livedata-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/adece33ad280dfdf2098b7af82c1e8e3/transformed/lifecycle-livedata-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/cdc810e0f5d562967da57d56d3700f86/transformed/play-services-tasks-18.2.0/AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/cdc810e0f5d562967da57d56d3700f86/transformed/play-services-tasks-18.2.0/AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:3:5-44
+MERGED from [androidx.fragment:fragment:1.5.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1fa6fb55354a043323bb22aba1cb8a43/transformed/fragment-1.5.7/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.7] /Users/edwardmarecos/.gradle/caches/transforms-4/1fa6fb55354a043323bb22aba1cb8a43/transformed/fragment-1.5.7/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/8faf152d2a33f2d57d57877ade907e3c/transformed/activity-1.9.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/8faf152d2a33f2d57d57877ade907e3c/transformed/activity-1.9.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/dfffe88c952a3d6f3fc5b554b56d1dc8/transformed/activity-compose-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/dfffe88c952a3d6f3fc5b554b56d1dc8/transformed/activity-compose-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/ac8dac2986132c501c5217a81c4c08b0/transformed/activity-ktx-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Users/edwardmarecos/.gradle/caches/transforms-4/ac8dac2986132c501c5217a81c4c08b0/transformed/activity-ktx-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/d96cfbe8f4c1f1d0919befe65082f1df/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/d96cfbe8f4c1f1d0919befe65082f1df/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/edwardmarecos/.gradle/caches/transforms-4/20050bf40d3db8d323243ce7ff818b77/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /Users/edwardmarecos/.gradle/caches/transforms-4/20050bf40d3db8d323243ce7ff818b77/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b4f51fa5e48667e6c809c79f031e1bf/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b4f51fa5e48667e6c809c79f031e1bf/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing-ktx:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/205250ad636c753bfe9887cd451e0f0b/transformed/tracing-ktx-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing-ktx:1.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/205250ad636c753bfe9887cd451e0f0b/transformed/tracing-ktx-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/d2a0fb4b1b6f5409c1ed96c37972bf69/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/d2a0fb4b1b6f5409c1ed96c37972bf69/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-components:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/48947c5bb5fce71a8d705436007349c2/transformed/firebase-components-18.0.0/AndroidManifest.xml:18:5-44
+MERGED from [com.google.firebase:firebase-components:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/48947c5bb5fce71a8d705436007349c2/transformed/firebase-components-18.0.0/AndroidManifest.xml:18:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/edwardmarecos/.gradle/caches/transforms-4/decc9dcf43792ff7df1ea2a686b260a8/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.2] /Users/edwardmarecos/.gradle/caches/transforms-4/decc9dcf43792ff7df1ea2a686b260a8/transformed/exifinterface-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/c08b22f524b8a70cd5fe32bb97e741d6/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/c08b22f524b8a70cd5fe32bb97e741d6/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/e07a406f2636ed3fc9adc983c3517fc2/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/e07a406f2636ed3fc9adc983c3517fc2/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3baaa97b728ddc60dc5e5c148860da8c/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3baaa97b728ddc60dc5e5c148860da8c/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/68f2d8a93e7bcb2c25383ccbd0ec8903/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/68f2d8a93e7bcb2c25383ccbd0ec8903/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/7388bf9f6b10b7c27b9c9510294948e9/transformed/protolite-well-known-types-18.0.0/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/7388bf9f6b10b7c27b9c9510294948e9/transformed/protolite-well-known-types-18.0.0/AndroidManifest.xml:7:5-9:41
+MERGED from [io.grpc:grpc-android:1.62.2] /Users/edwardmarecos/.gradle/caches/transforms-4/3d33ff1589336a5da45b4d7551c600dd/transformed/grpc-android-1.62.2/AndroidManifest.xml:5:5-44
+MERGED from [io.grpc:grpc-android:1.62.2] /Users/edwardmarecos/.gradle/caches/transforms-4/3d33ff1589336a5da45b4d7551c600dd/transformed/grpc-android-1.62.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:23:9-148
+	android:targetSdkVersion
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:26:5-79
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:10:5-79
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:8:5-79
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:8:5-79
+MERGED from [io.grpc:grpc-android:1.62.2] /Users/edwardmarecos/.gradle/caches/transforms-4/3d33ff1589336a5da45b4d7551c600dd/transformed/grpc-android-1.62.2/AndroidManifest.xml:7:5-79
+MERGED from [io.grpc:grpc-android:1.62.2] /Users/edwardmarecos/.gradle/caches/transforms-4/3d33ff1589336a5da45b4d7551c600dd/transformed/grpc-android-1.62.2/AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:26:22-76
+activity#com.google.firebase.auth.internal.GenericIdpActivity
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:29:9-46:20
+	android:excludeFromRecents
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:31:13-46
+	android:launchMode
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:33:13-44
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:32:13-36
+	android:theme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:34:13-72
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:30:13-80
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:firebase.auth+data:path:/+data:scheme:genericidp
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:35:13-45:29
+action#android.intent.action.VIEW
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:17-69
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:36:25-66
+category#android.intent.category.DEFAULT
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:17-76
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:38:27-73
+category#android.intent.category.BROWSABLE
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:17-78
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:39:27-75
+data
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:41:17-44:51
+	android:path
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:43:21-37
+	android:host
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:42:21-49
+	android:scheme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:44:21-48
+activity#com.google.firebase.auth.internal.RecaptchaActivity
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:47:9-64:20
+	android:excludeFromRecents
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:49:13-46
+	android:launchMode
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:51:13-44
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:50:13-36
+	android:theme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:52:13-72
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:48:13-79
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:firebase.auth+data:path:/+data:scheme:recaptcha
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:53:13-63:29
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:66:9-72:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:14:9-23:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:14:9-23:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:30:9-38:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:30:9-38:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:68:13-37
+	tools:targetApi
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:34:13-32
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:32:13-43
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:67:13-84
+meta-data#com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar
+ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:69:13-71:85
+	android:value
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:71:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:70:17-109
+service#androidx.credentials.playservices.CredentialProviderMetadataHolder
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:24:9-32:19
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:26:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:28:13-60
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:25:13-94
+meta-data#androidx.credentials.CREDENTIAL_PROVIDER_KEY
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:29:13-31:104
+	android:value
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:31:17-101
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:30:17-76
+activity#androidx.credentials.playservices.HiddenActivity
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:34:9-41:20
+	android:fitsSystemWindows
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:39:13-45
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:38:13-37
+	android:configChanges
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:36:13-87
+	android:theme
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:40:13-48
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:35:13-76
+meta-data#com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar
+ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:17:13-19:85
+	android:value
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:19:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:18:17-122
+meta-data#com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar
+ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:20:13-22:85
+	android:value
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:22:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:21:17-111
+meta-data#com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
+ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:12:13-14:85
+	android:value
+		ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:14:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/ff33c9014c323f89ef0ec2727e6c4162/transformed/firebase-common-ktx-21.0.0/AndroidManifest.xml:13:17-116
+queries
+ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:22:5-26:15
+intent#action:name:androidx.camera.extensions.action.VENDOR_ACTION
+ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:23:9-25:18
+action#androidx.camera.extensions.action.VENDOR_ACTION
+ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:24:13-86
+	android:name
+		ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:24:21-83
+uses-library#androidx.camera.extensions.impl
+ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:29:9-31:40
+	android:required
+		ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:31:13-37
+	android:name
+		ADDED from [androidx.camera:camera-extensions:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/1b6a04f16c89a2c6d095d192b7327bf2/transformed/camera-extensions-1.5.0-alpha03/AndroidManifest.xml:30:13-59
+service#androidx.camera.core.impl.MetadataHolderService
+ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:24:9-33:19
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:29:9-33:78
+MERGED from [androidx.camera:camera-core:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/581dd3348e2ea2b1b8905982b1910d91/transformed/camera-core-1.5.0-alpha03/AndroidManifest.xml:29:9-33:78
+	tools:node
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:29:13-31
+	android:enabled
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:26:13-36
+	android:exported
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:28:13-75
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:25:13-75
+meta-data#androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER
+ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:30:13-32:89
+	android:value
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:32:17-86
+	android:name
+		ADDED from [androidx.camera:camera-camera2:1.5.0-alpha03] /Users/edwardmarecos/.gradle/caches/transforms-4/196fdba6898c7a0be28bbac5d8d3dc49/transformed/camera-camera2-1.5.0-alpha03/AndroidManifest.xml:31:17-103
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:23:9-27:75
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:25:13-46
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:27:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:24:13-93
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:33:9-37:51
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:35:13-36
+	android:visibleToInstantApps
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:37:13-48
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:36:13-107
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b8b08c97bdcd4f9cb65d702302327c6/transformed/play-services-auth-21.2.0/AndroidManifest.xml:34:13-89
+uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
+ADDED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:9:5-98
+	android:name
+		ADDED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:9:22-95
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:23:9-28:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:25:13-72
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:27:13-37
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:26:13-43
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:28:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:24:13-77
+meta-data#com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar
+ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:35:13-37:85
+	android:value
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:37:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-common:21.0.0] /Users/edwardmarecos/.gradle/caches/transforms-4/299f27fcf8252714bc01e951a3efc241/transformed/firebase-common-21.0.0/AndroidManifest.xml:36:17-109
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/3f7f85825a53bf7f639d86014f597cb3/transformed/play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/a35912a53abd932415d58dcd22e8c319/transformed/ui-test-manifest-1.7.2/AndroidManifest.xml:24:13-63
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.2] /Users/edwardmarecos/.gradle/caches/transforms-4/4ff0189658e8a8465cfd3c9c3ec645ab/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/adf2ff35b667f3caeb1c3d1faf54f01d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/edwardmarecos/.gradle/caches/transforms-4/78345c330ac5df5a6e5f08a6b0e6b1b3/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+permission#com.pyco.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+uses-permission#com.pyco.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /Users/edwardmarecos/.gradle/caches/transforms-4/2d6ddade447e17183471a16a88b361ec/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] /Users/edwardmarecos/.gradle/caches/transforms-4/037b30cf91fb93c2103916b25c7e312d/transformed/play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/edwardmarecos/.gradle/caches/transforms-4/efc3af91bf517e6add1f35764de1c59d/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+activity#com.google.android.play.core.common.PlayCoreDialogWrapperActivity
+ADDED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:14:9-18:65
+	android:stateNotNeeded
+		ADDED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:17:13-42
+	android:exported
+		ADDED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:16:13-37
+	android:theme
+		ADDED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:18:13-62
+	android:name
+		ADDED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gradle/caches/transforms-4/4b6a7f6b6907a1ac5f41dda5a10ee3f5/transformed/core-common-2.0.3/AndroidManifest.xml:15:13-93
