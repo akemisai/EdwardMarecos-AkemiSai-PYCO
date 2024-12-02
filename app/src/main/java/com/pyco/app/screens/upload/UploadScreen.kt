@@ -6,8 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+<<<<<<< HEAD
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+=======
+import androidx.compose.material3.Button
+>>>>>>> parent of c85938c (merge changes)
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,8 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
-import com.pyco.app.components.backgroundColor
-import com.pyco.app.components.customColor
 
 @Composable
 fun UploadScreen(
@@ -75,7 +77,6 @@ fun UploadScreen(
     ) {
         BottomNavigationBar(navController = navController)
     }
-
 }
 
 @Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")

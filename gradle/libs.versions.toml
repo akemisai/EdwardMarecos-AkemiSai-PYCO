@@ -1,12 +1,14 @@
 [versions]
-accompanistNavigationAnimation = "0.36.0"
 agp = "8.6.0"
+<<<<<<< HEAD
 cameraCamera2 = "1.5.0-alpha03"
 cameraCore = "1.4.0"
 cameraCoreVersion = "1.5.0-alpha03"
 cameraExtensions = "1.5.0-alpha03"
 cameraLifecycle = "1.5.0-alpha03"
 cameraView = "1.5.0-alpha03"
+=======
+>>>>>>> parent of c85938c (merge changes)
 credentials = "1.3.1"
 firebaseBom = "33.6.0"
 googleid = "1.1.1"
@@ -26,9 +28,9 @@ navigationRuntimeKtx = "2.8.4"
 navigationCompose = "2.8.4"
 playServicesAuthVersion = "20.7.0"
 runtimeLivedata = "1.7.5"
-firebaseFirestore = "25.1.1"
 
 [libraries]
+<<<<<<< HEAD
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
 androidx-camera-camera2-v150alpha03 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
@@ -42,6 +44,8 @@ androidx-camera-mlkit-vision = { module = "androidx.camera:camera-mlkit-vision",
 androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraCore" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCore" }
 androidx-camera-view-v150alpha03 = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
+=======
+>>>>>>> parent of c85938c (merge changes)
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services = { module = "androidx.credentials:credentials-play-services", version.ref = "credentials" }
@@ -68,7 +72,6 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 play-services-auth-v2070 = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

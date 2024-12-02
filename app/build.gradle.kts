@@ -80,8 +80,6 @@ dependencies {
     implementation(libs.google.firebase.auth)
     implementation(libs.play.services.auth)
     implementation(libs.play.services.auth.v2070)
-    //firestore
-    implementation(libs.firebase.firestore)
 
     
     // camerax
