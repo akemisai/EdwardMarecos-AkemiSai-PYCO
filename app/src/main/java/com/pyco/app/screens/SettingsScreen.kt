@@ -37,6 +37,7 @@ fun SettingsScreen(
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 @Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
@@ -46,6 +47,8 @@ fun SettingsScreenPreview() {
         authViewModel = AuthViewModel(),
         navController = NavHostController(LocalContext.current)
     )
+=======
+>>>>>>> parent of c85938c (merge changes)
 =======
 >>>>>>> parent of c85938c (merge changes)
 }

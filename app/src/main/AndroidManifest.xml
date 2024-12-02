@@ -6,6 +6,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera Permissions -->
@@ -19,6 +20,8 @@
     <!-- Declare camera hardware as an optional feature -->
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+=======
+>>>>>>> parent of c85938c (merge changes)
 =======
 >>>>>>> parent of c85938c (merge changes)
     <application

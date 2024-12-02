@@ -1,12 +1,15 @@
 [versions]
 agp = "8.6.0"
 <<<<<<< HEAD
+<<<<<<< HEAD
 cameraCamera2 = "1.5.0-alpha03"
 cameraCore = "1.4.0"
 cameraCoreVersion = "1.5.0-alpha03"
 cameraExtensions = "1.5.0-alpha03"
 cameraLifecycle = "1.5.0-alpha03"
 cameraView = "1.5.0-alpha03"
+=======
+>>>>>>> parent of c85938c (merge changes)
 =======
 >>>>>>> parent of c85938c (merge changes)
 credentials = "1.3.1"
@@ -31,6 +34,7 @@ runtimeLivedata = "1.7.5"
 
 [libraries]
 <<<<<<< HEAD
+<<<<<<< HEAD
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
 androidx-camera-camera2-v150alpha03 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
@@ -44,6 +48,8 @@ androidx-camera-mlkit-vision = { module = "androidx.camera:camera-mlkit-vision",
 androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraCore" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCore" }
 androidx-camera-view-v150alpha03 = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
+=======
+>>>>>>> parent of c85938c (merge changes)
 =======
 >>>>>>> parent of c85938c (merge changes)
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
