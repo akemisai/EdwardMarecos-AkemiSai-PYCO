@@ -4,6 +4,8 @@
 
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Camera Permissions -->
+    <uses-feature android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
