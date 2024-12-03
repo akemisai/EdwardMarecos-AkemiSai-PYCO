@@ -13,15 +13,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.screens.home.components.requests.RequestsFeed
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
+import com.pyco.app.viewmodels.HomeViewModel
 
 @Composable
-fun HomeTopSection() {
+fun HomeTopSection(
+    navController: NavHostController? = null,
+    homeViewModel: HomeViewModel = viewModel()
+) {
+
+    val publicOutfits by homeViewModel.publicOutfits.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,7 +106,7 @@ fun HomeTopSection() {
         // Display Content Based on Selected Tab
         when (selectedTabIndex) {
             0 -> RequestsFeed()
-            1 -> TopOutfitsFeed()
+            1 -> TopOutfitsFeed(outfits = publicOutfits)
             2 -> ResponsesFeed()
         }
     }

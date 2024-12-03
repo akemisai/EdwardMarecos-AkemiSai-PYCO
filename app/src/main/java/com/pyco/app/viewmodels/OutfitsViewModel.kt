@@ -68,39 +68,57 @@ class OutfitsViewModel : ViewModel() {
             }
     }
 
-
     // Function to add an outfit
     fun addOutfit(
         name: String,
+        createdBy: String,
         topRef: DocumentReference,
         bottomRef: DocumentReference,
         shoeRef: DocumentReference,
-        accessoryRef: DocumentReference? // Allow null for optional fields
+        accessoryRef: DocumentReference?, // Allow null for optional fields
+        isPublic: Boolean // Use this value to indicate if the outfit should be public
     ) {
         if (userId == null) {
             Log.e("OutfitsViewModel", "User not authenticated")
             return
         }
 
-        val outfitsRef = firestore.collection("users").document(userId).collection("outfits")
-        val docRef = outfitsRef.document() // Create new document
         val outfit = Outfit(
-            id = docRef.id,
+            id = "", // Firestore will generate this
             name = name,
+            createdBy = createdBy,
             top = topRef,
             bottom = bottomRef,
             shoe = shoeRef,
-            accessory = accessoryRef
+            accessory = accessoryRef,
+            isPublic = isPublic
         )
 
-        docRef.set(outfit)
+        // Add to the user's collection
+        val userOutfitsRef = firestore.collection("users").document(userId).collection("outfits")
+        val newDocRef = userOutfitsRef.document()
+
+        newDocRef.set(outfit.copy(id = newDocRef.id))
             .addOnSuccessListener {
-                Log.d("OutfitsViewModel", "Outfit added successfully: $outfit")
+                Log.d("OutfitsViewModel", "Outfit added successfully to user's collection")
+
+                // Add to public feed if it's public
+                if (isPublic) {
+                    val publicOutfitsRef = firestore.collection("public_outfits")
+                    publicOutfitsRef.document(newDocRef.id).set(outfit.copy(id = newDocRef.id))
+                        .addOnSuccessListener {
+                            Log.d("OutfitsViewModel", "Outfit added successfully to public feed")
+                        }
+                        .addOnFailureListener { error ->
+                            Log.e("OutfitsViewModel", "Error adding outfit to public feed", error)
+                        }
+                }
             }
-            .addOnFailureListener { exception ->
-                Log.e("OutfitsViewModel", "Error adding outfit", exception)
+            .addOnFailureListener { error ->
+                Log.e("OutfitsViewModel", "Error adding outfit to user's collection", error)
             }
     }
+
 
     // Optional: Function to delete an outfit
     fun deleteOutfit(outfitId: String) {
@@ -111,9 +129,19 @@ class OutfitsViewModel : ViewModel() {
             .delete()
             .addOnSuccessListener {
                 Log.d("OutfitsViewModel", "Outfit deleted successfully")
+
+                // Delete from public feed if it exists there
+                firestore.collection("public_outfits").document(outfitId).delete()
+                    .addOnSuccessListener {
+                        Log.d("OutfitsViewModel", "Outfit removed from public feed")
+                    }
+                    .addOnFailureListener { error ->
+                        Log.e("OutfitsViewModel", "Error removing outfit from public feed", error)
+                    }
             }
-            .addOnFailureListener { exception ->
-                Log.e("OutfitsViewModel", "Error deleting outfit", exception)
+            .addOnFailureListener { error ->
+                Log.e("OutfitsViewModel", "Error deleting outfit", error)
             }
     }
 }
+
