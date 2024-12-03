@@ -6,17 +6,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pyco.app.models.ClothingItem
 import coil.compose.rememberAsyncImagePainter
-import androidx.compose.ui.res.painterResource
 import com.pyco.app.R
 
 @Composable
 fun ClothingItemThumbnail(item: ClothingItem) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.width(80.dp) // Fixed width for uniform thumbnails
+        modifier = Modifier
+            .size(80.dp) // Adjust size as needed
+            .padding(4.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(
@@ -26,13 +28,12 @@ fun ClothingItemThumbnail(item: ClothingItem) {
             ),
             contentDescription = item.name,
             modifier = Modifier
-                .size(64.dp)
-                .padding(4.dp)
+                .size(48.dp)
         )
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = item.name,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1
         )
     }
