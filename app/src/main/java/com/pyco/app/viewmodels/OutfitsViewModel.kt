@@ -43,28 +43,11 @@ class OutfitsViewModel : ViewModel() {
                     val outfitsList = snapshot.documents.mapNotNull { doc ->
                         doc.toObject(Outfit::class.java)?.copy(id = doc.id)
                     }
-
-                    // Resolve clothing references
-                    resolveClothingReferences(outfitsList)
+                    Log.d("OutfitsViewModel", "Fetched outfits: $outfitsList")
+                    _outfits.value = outfitsList
                 }
             }
     }
-
-    // Function to resolve DocumentReferences
-    private fun resolveClothingReferences(outfits: List<Outfit>) {
-        val resolvedOutfits = outfits.map { outfit ->
-            val topItem = outfit.top?.get()?.addOnSuccessListener { it.toObject(ClothingItem::class.java) }
-            val bottomItem = outfit.bottom?.get()?.addOnSuccessListener { it.toObject(ClothingItem::class.java) }
-            val shoeItem = outfit.shoe?.get()?.addOnSuccessListener { it.toObject(ClothingItem::class.java) }
-            val accessoryItem = outfit.accessory?.get()?.addOnSuccessListener { it.toObject(ClothingItem::class.java) }
-
-            Log.d("OutfitResolution", "Resolved Outfit: top=$topItem, bottom=$bottomItem, shoe=$shoeItem, accessory=$accessoryItem")
-            outfit // You can also add the resolved items to another map for UI use
-        }
-
-        _outfits.value = resolvedOutfits
-    }
-
 
     // Fetch wardrobe items from Firestore and map them
     private fun fetchWardrobe() {
@@ -93,17 +76,20 @@ class OutfitsViewModel : ViewModel() {
     // Function to add an outfit
     fun addOutfit(
         name: String,
-        topRef: DocumentReference?,
-        bottomRef: DocumentReference?,
-        shoeRef: DocumentReference?,
-        accessoryRef: DocumentReference?
+        topRef: DocumentReference,
+        bottomRef: DocumentReference,
+        shoeRef: DocumentReference,
+        accessoryRef: DocumentReference? // Allow null for optional fields
     ) {
-        if (userId == null || topRef == null || bottomRef == null || shoeRef == null || accessoryRef == null) {
-            Log.e("OutfitsViewModel", "Missing references or user ID")
+        if (userId == null) {
+            Log.e("OutfitsViewModel", "User not authenticated")
             return
         }
 
+        val outfitsRef = firestore.collection("users").document(userId).collection("outfits")
+        val docRef = outfitsRef.document() // Create new document
         val outfit = Outfit(
+            id = docRef.id,
             name = name,
             top = topRef,
             bottom = bottomRef,
@@ -111,13 +97,9 @@ class OutfitsViewModel : ViewModel() {
             accessory = accessoryRef
         )
 
-        val outfitsRef = firestore.collection("users").document(userId).collection("outfits")
-        val docRef = outfitsRef.document()
-        val outfitWithId = outfit.copy(id = docRef.id)
-
-        docRef.set(outfitWithId)
+        docRef.set(outfit)
             .addOnSuccessListener {
-                Log.d("OutfitsViewModel", "Outfit added successfully: $outfitWithId")
+                Log.d("OutfitsViewModel", "Outfit added successfully: $outfit")
             }
             .addOnFailureListener { exception ->
                 Log.e("OutfitsViewModel", "Error adding outfit", exception)

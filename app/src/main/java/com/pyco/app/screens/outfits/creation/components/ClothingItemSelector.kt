@@ -1,6 +1,8 @@
 package com.pyco.app.screens.outfits.creation.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,10 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.pyco.app.models.ClothingItem
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.R
-import android.util.Log
+import com.pyco.app.models.ClothingItem
 
 @Composable
 fun ClothingItemSelector(
@@ -29,13 +30,21 @@ fun ClothingItemSelector(
         modifier = Modifier.fillMaxWidth()
     ) {
         items(items) { item ->
+            // Log item details for debugging
+            Log.d("ClothingItemSelector", "Item: ${item.id}, Name: ${item.name}")
+
+            // Highlight the selected item with a background
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .size(100.dp)
+                    .background(
+                        if (selectedItem == item) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        else MaterialTheme.colorScheme.background
+                    )
                     .clickable {
                         onItemSelected(item)
-                        Log.d("ClothingItemSelector", "Selected Item: ${item.id}")
+                        Log.d("ClothingItemSelector", "Selected Item: ${item.id}, Name: ${item.name}")
                     }
                     .padding(4.dp)
             ) {

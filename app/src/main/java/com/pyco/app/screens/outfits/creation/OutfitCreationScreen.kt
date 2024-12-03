@@ -10,17 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -60,7 +50,6 @@ fun OutfitCreationScreen(
     var selectedShoe by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedAccessory by remember { mutableStateOf<ClothingItem?>(null) }
 
-    // Snackbar state for feedback
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -88,6 +77,15 @@ fun OutfitCreationScreen(
                         if (userId != null) {
                             val wardrobePath = "users/$userId/wardrobe"
 
+                            // Debugging logs for path
+                            Log.d("OutfitCreation", "Top Path: $wardrobePath/${selectedTop!!.id}")
+                            Log.d("OutfitCreation", "Bottom Path: $wardrobePath/${selectedBottom!!.id}")
+                            Log.d("OutfitCreation", "Shoe Path: $wardrobePath/${selectedShoe!!.id}")
+                            selectedAccessory?.let {
+                                Log.d("OutfitCreation", "Accessory Path: $wardrobePath/${it.id}")
+                            }
+
+                            // Correctly construct DocumentReferences
                             val newOutfit = Outfit(
                                 name = outfitName,
                                 top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
@@ -108,14 +106,13 @@ fun OutfitCreationScreen(
                             )
                         }
 
-                        // Show success message and navigate back after delay
+                        // Feedback & Navigation
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
-                            delay(1500L) // 1.5 seconds delay
+                            delay(1500L) // Delay to show message before navigation
                             navController.navigateUp()
                         }
                     } else {
-                        // Show error message
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Please fill in all required fields.")
                         }
