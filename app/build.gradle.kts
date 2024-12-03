@@ -74,6 +74,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // material designs
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
+
     // firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
@@ -95,4 +99,7 @@ dependencies {
     implementation(libs.androidx.camera.mlkit.vision)
     // If you want to additionally use the CameraX Extensions library
     implementation(libs.androidx.camera.extensions.v150alpha03)
+
+    // coil for image loading
+    implementation(libs.coil.compose)
 }

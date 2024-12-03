@@ -7,6 +7,7 @@ cameraCoreVersion = "1.5.0-alpha03"
 cameraExtensions = "1.5.0-alpha03"
 cameraLifecycle = "1.5.0-alpha03"
 cameraView = "1.5.0-alpha03"
+coilCompose = "2.1.0"
 credentials = "1.3.1"
 firebaseBom = "33.6.0"
 googleid = "1.1.1"
@@ -20,6 +21,7 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
+materialIconsCore = "1.7.5"
 playServicesAuth = "21.2.0"
 identityCredential = "20231002"
 navigationRuntimeKtx = "2.8.4"
@@ -45,6 +47,9 @@ androidx-camera-view-v150alpha03 = { module = "androidx.camera:camera-view", ver
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services = { module = "androidx.credentials:credentials-play-services", version.ref = "credentials" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
