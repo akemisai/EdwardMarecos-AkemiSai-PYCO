@@ -95,4 +95,7 @@ dependencies {
     implementation(libs.androidx.camera.mlkit.vision)
     // If you want to additionally use the CameraX Extensions library
     implementation(libs.androidx.camera.extensions.v150alpha03)
+
+    // coil for image loading
+    implementation(libs.coil.compose)
 }

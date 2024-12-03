@@ -1,4 +1,4 @@
-package com.pyco.app.base
+package com.pyco.app.screens.upload.components
 
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView

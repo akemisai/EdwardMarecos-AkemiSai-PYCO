@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pyco.app.screens.AccountScreen
-import com.pyco.app.screens.SettingsScreen
+import com.pyco.app.screens.account.AccountScreen
+import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
 import com.pyco.app.screens.closet.ClosetScreen
