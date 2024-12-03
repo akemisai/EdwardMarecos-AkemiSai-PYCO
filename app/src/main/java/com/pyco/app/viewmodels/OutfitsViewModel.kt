@@ -52,26 +52,22 @@ class OutfitsViewModel : ViewModel() {
     // Fetch wardrobe items from Firestore and map them
     private fun fetchWardrobe() {
         if (userId == null) return
-
         firestore.collection("users").document(userId).collection("wardrobe")
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Log.e("OutfitsViewModel", "Error fetching wardrobe items", error)
+                    Log.e("OutfitsViewModel", "Error fetching wardrobe", error)
                     return@addSnapshotListener
                 }
-                if (snapshot != null) {
-                    val map = snapshot.documents.mapNotNull { doc ->
-                        val clothingItem = doc.toObject(ClothingItem::class.java)
-                        if (clothingItem != null) {
-                            clothingItem.id to clothingItem
-                        } else {
-                            null
-                        }
+
+                snapshot?.let {
+                    _wardrobeMap.value = it.documents.mapNotNull { doc ->
+                        val item = doc.toObject(ClothingItem::class.java)
+                        item?.copy(id = doc.id)?.let { it.id to it }
                     }.toMap()
-                    _wardrobeMap.value = map
                 }
             }
     }
+
 
     // Function to add an outfit
     fun addOutfit(

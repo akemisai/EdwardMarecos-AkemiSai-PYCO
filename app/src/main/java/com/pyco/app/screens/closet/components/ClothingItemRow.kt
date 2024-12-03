@@ -45,7 +45,7 @@ fun ClothingItemRow(item: ClothingItem) {
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Color: ${item.color}",
+                text = "Color: ${item.colors}",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.LightGray
             )

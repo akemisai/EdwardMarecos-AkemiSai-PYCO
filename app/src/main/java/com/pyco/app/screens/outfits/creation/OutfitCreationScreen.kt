@@ -99,9 +99,9 @@ fun OutfitCreationScreen(
                             Log.d("OutfitCreation", "Saving Outfit: $newOutfit")
                             outfitsViewModel.addOutfit(
                                 name = outfitName,
-                                topRef = newOutfit.top,
-                                bottomRef = newOutfit.bottom,
-                                shoeRef = newOutfit.shoe,
+                                topRef = newOutfit.top!!,
+                                bottomRef = newOutfit.bottom!!,
+                                shoeRef = newOutfit.shoe!!,
                                 accessoryRef = newOutfit.accessory
                             )
                         }
@@ -109,7 +109,6 @@ fun OutfitCreationScreen(
                         // Feedback & Navigation
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
-                            delay(1500L) // Delay to show message before navigation
                             navController.navigateUp()
                         }
                     } else {
