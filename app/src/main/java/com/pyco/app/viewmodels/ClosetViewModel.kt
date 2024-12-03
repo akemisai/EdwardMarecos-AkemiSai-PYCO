@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.ClothingItem
+import com.pyco.app.models.ClothingType
+import com.pyco.app.models.Color
+import com.pyco.app.models.Material
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import android.util.Log
 
 class ClosetViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
@@ -34,30 +38,69 @@ class ClosetViewModel : ViewModel() {
         firestore.collection("users").document(userId).collection("wardrobe")
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    // Handle error
+                    Log.e("ClosetViewModel", "Error fetching wardrobe items", error)
                     return@addSnapshotListener
                 }
-                val items = snapshot?.toObjects(ClothingItem::class.java).orEmpty()
-                // Organize items by type
-                _tops.value = items.filter { it.type == "top" }
-                _bottoms.value = items.filter { it.type == "bottom" }
-                _shoes.value = items.filter { it.type == "shoe" }
-                _accessories.value = items.filter { it.type == "accessory" }
+                if (snapshot != null) {
+                    val items = snapshot.documents.mapNotNull { doc ->
+                        try {
+                            val clothingItem = doc.toObject(ClothingItem::class.java)
+                            if (clothingItem != null) {
+                                clothingItem
+                            } else {
+                                Log.w("ClosetViewModel", "Document ${doc.id} is null")
+                                null
+                            }
+                        } catch (e: Exception) {
+                            Log.e("ClosetViewModel", "Error deserializing document ${doc.id}", e)
+                            null
+                        }
+                    }.orEmpty()
+                    // Organize items by type
+                    _tops.value = items.filter { it.type == ClothingType.TOP }
+                    _bottoms.value = items.filter { it.type == ClothingType.BOTTOM }
+                    _shoes.value = items.filter { it.type == ClothingType.SHOE }
+                    _accessories.value = items.filter { it.type == ClothingType.ACCESSORY }
+                }
             }
     }
-    fun addClothingItem(item: ClothingItem) {
+
+    // Function to add clothing item with custom ID
+    fun addClothingItemWithCustomId(item: ClothingItem, customId: String) {
         if (userId == null) return
 
         val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
-        val docRef = wardrobeRef.document()
+        val docRef = wardrobeRef.document(customId) // Set custom ID
+        val itemWithId = item.copy(id = customId)
+
+        firestore.runTransaction { transaction ->
+            transaction.set(docRef, itemWithId)
+        }.addOnSuccessListener {
+            Log.d("ClosetViewModel", "ClothingItem added successfully")
+        }.addOnFailureListener { exception ->
+            Log.e("ClosetViewModel", "Error adding ClothingItem", exception)
+        }
+    }
+
+    // Optional: Modify existing addClothingItem to accept custom ID
+    fun addClothingItem(item: ClothingItem, customId: String? = null) {
+        if (userId == null) return
+
+        val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
+        val docRef = if (customId != null) {
+            wardrobeRef.document(customId)
+        } else {
+            wardrobeRef.document()
+        }
+
         val itemWithId = item.copy(id = docRef.id)
 
-        docRef.set(itemWithId)
-            .addOnSuccessListener {
-                // Optionally notify success
-            }
-            .addOnFailureListener {
-                // Handle error (e.g., log it)
-            }
+        firestore.runTransaction { transaction ->
+            transaction.set(docRef, itemWithId)
+        }.addOnSuccessListener {
+            Log.d("ClosetViewModel", "ClothingItem added successfully")
+        }.addOnFailureListener { exception ->
+            Log.e("ClosetViewModel", "Error adding ClothingItem", exception)
+        }
     }
 }
