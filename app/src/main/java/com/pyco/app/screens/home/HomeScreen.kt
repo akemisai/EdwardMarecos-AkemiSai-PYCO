@@ -1,6 +1,8 @@
 package com.pyco.app.screens.home
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,57 +16,41 @@ import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.screens.home.components.HomeTopSection
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
+import com.pyco.app.screens.outfits.creation.components.OutfitCard
+import com.pyco.app.viewmodels.HomeViewModel
 
 val backgroundColor = Color(0xFF333333) // Dark background color
 
 @Composable
-fun HomeScreen(
-    navController: NavHostController
-) {
+fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
+    val publicOutfits by homeViewModel.publicOutfits.collectAsState()
+
     Scaffold(
-        containerColor = backgroundColor, // Set the background color
-        bottomBar = {
-            BottomNavigationBar(navController = navController)
-        }
+        containerColor = backgroundColor,
+        bottomBar = { BottomNavigationBar(navController = navController) }
     ) { innerPadding ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            color = Color.Transparent // Make Surface transparent to use Scaffold's background
+            color = Color.Transparent
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                // Top Section
                 HomeTopSection()
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Welcome to Your Home!",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Manage and organize your clothing items effortlessly.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-                    )
-                }
             }
         }
     }
 }
+
+
 
 @Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "HomeScreen Preview")
 @Composable

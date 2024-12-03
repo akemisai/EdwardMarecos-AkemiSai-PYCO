@@ -1,11 +1,13 @@
 package com.pyco.app.screens.outfits.creation
 
 import android.util.Log
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -45,6 +48,8 @@ fun OutfitCreationScreen(
     val accessories by closetViewModel.accessories.collectAsState()
 
     var outfitName by remember { mutableStateOf("") }
+    var createdBy by remember { mutableStateOf("") } // User-inputted name
+    var isPublic by remember { mutableStateOf(false) } // Toggle for public outfit
     var selectedTop by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedBottom by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedShoe by remember { mutableStateOf<ClothingItem?>(null) }
@@ -69,44 +74,35 @@ fun OutfitCreationScreen(
                 onClick = {
                     // Validate inputs
                     if (outfitName.isNotBlank() &&
+                        createdBy.isNotBlank() &&
                         selectedTop != null &&
                         selectedBottom != null &&
                         selectedShoe != null
                     ) {
-                        val userId = FirebaseAuth.getInstance().currentUser?.uid
-                        if (userId != null) {
-                            val wardrobePath = "users/$userId/wardrobe"
+                        val wardrobePath = "users/${FirebaseAuth.getInstance().currentUser?.uid}/wardrobe"
 
-                            // Debugging logs for path
-                            Log.d("OutfitCreation", "Top Path: $wardrobePath/${selectedTop!!.id}")
-                            Log.d("OutfitCreation", "Bottom Path: $wardrobePath/${selectedBottom!!.id}")
-                            Log.d("OutfitCreation", "Shoe Path: $wardrobePath/${selectedShoe!!.id}")
-                            selectedAccessory?.let {
-                                Log.d("OutfitCreation", "Accessory Path: $wardrobePath/${it.id}")
-                            }
+                        val newOutfit = Outfit(
+                            name = outfitName,
+                            createdBy = createdBy,
+                            top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
+                            bottom = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedBottom!!.id}"),
+                            shoe = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedShoe!!.id}"),
+                            accessory = selectedAccessory?.let {
+                                FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
+                            },
+                            isPublic = isPublic // Pass the value here
+                        )
 
-                            // Correctly construct DocumentReferences
-                            val newOutfit = Outfit(
-                                name = outfitName,
-                                top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
-                                bottom = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedBottom!!.id}"),
-                                shoe = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedShoe!!.id}"),
-                                accessory = selectedAccessory?.let {
-                                    FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
-                                }
-                            )
+                        outfitsViewModel.addOutfit(
+                            name = newOutfit.name,
+                            createdBy = newOutfit.createdBy,
+                            topRef = newOutfit.top!!,
+                            bottomRef = newOutfit.bottom!!,
+                            shoeRef = newOutfit.shoe!!,
+                            accessoryRef = newOutfit.accessory,
+                            isPublic = newOutfit.isPublic
+                        )
 
-                            Log.d("OutfitCreation", "Saving Outfit: $newOutfit")
-                            outfitsViewModel.addOutfit(
-                                name = outfitName,
-                                topRef = newOutfit.top!!,
-                                bottomRef = newOutfit.bottom!!,
-                                shoeRef = newOutfit.shoe!!,
-                                accessoryRef = newOutfit.accessory
-                            )
-                        }
-
-                        // Feedback & Navigation
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
                             navController.navigateUp()
@@ -141,6 +137,31 @@ fun OutfitCreationScreen(
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     )
+                }
+
+                item {
+                    OutlinedTextField(
+                        value = createdBy,
+                        onValueChange = { createdBy = it },
+                        label = { Text("Your Name") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
+                }
+
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = isPublic,
+                            onCheckedChange = { isPublic = it }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Make this outfit public")
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 item {
