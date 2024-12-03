@@ -140,6 +140,9 @@ fun AddWardrobeItemScreen(
 
             Button(
                 onClick = {
+                    Log.d("AddWardrobeItem", "Save Button Clicked")
+                    Log.d("AddWardrobeItem", "Name: $name, Type: $type, Color: $colors, Material: $material, ImageUrl: $imageUrl")
+
                     if (name.isNotBlank() && imageUrl != null) {
                         val newItem = ClothingItem(
                             name = name,
@@ -149,13 +152,17 @@ fun AddWardrobeItemScreen(
                             imageUrl = imageUrl!!
                         )
                         closetViewModel.addClothingItem(newItem)
+                        Log.d("AddWardrobeItem", "Item Added: $newItem")
                         navController.navigateUp()
+                    } else {
+                        Log.e("AddWardrobeItem", "Validation failed: Ensure all fields are filled.")
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("Save Item", color = Color.White)
             }
+
         }
     }
 }

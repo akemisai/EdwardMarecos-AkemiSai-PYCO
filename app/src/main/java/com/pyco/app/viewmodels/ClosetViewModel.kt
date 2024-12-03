@@ -87,21 +87,22 @@ class ClosetViewModel : ViewModel() {
     }
 
     // Function to add a clothing item with an optional custom ID
-    fun addClothingItem(item: ClothingItem, customId: String? = null) {
+    fun addClothingItem(item: ClothingItem) {
+        val userId = auth.currentUser?.uid
         if (userId == null) {
-            Log.e("ClosetViewModel", "User not authenticated")
+            Log.e("ClosetViewModel", "User not authenticated. Cannot add item.")
             return
         }
 
         val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
-        val docRef = if (customId != null) wardrobeRef.document(customId) else wardrobeRef.document()
+        val docRef = wardrobeRef.document()
 
         val itemWithId = item.copy(id = docRef.id)
 
         firestore.runTransaction { transaction ->
             transaction.set(docRef, itemWithId)
         }.addOnSuccessListener {
-            Log.d("ClosetViewModel", "ClothingItem added successfully")
+            Log.d("ClosetViewModel", "ClothingItem added successfully: $itemWithId")
         }.addOnFailureListener { exception ->
             Log.e("ClosetViewModel", "Error adding ClothingItem", exception)
         }
