@@ -1,18 +1,10 @@
-package com.pyco.app.components
+package com.pyco.app.screens.home.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pyco.app.R
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
+import com.pyco.app.screens.home.components.requests.RequestsFeed
+import com.pyco.app.screens.home.components.responses.ResponsesFeed
+import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 
 @Composable
 fun HomeTopSection() {
@@ -30,6 +27,7 @@ fun HomeTopSection() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
+        // Header Row with App Name and Icons
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -68,36 +66,45 @@ fun HomeTopSection() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Request Tabs
+        // Tab Navigation
+        var selectedTabIndex by remember { mutableIntStateOf(0) }
+        val tabs = listOf("Requests", "Top Outfits", "Responses")
+
         TabRow(
-            selectedTabIndex = 0, // This should be dynamic based on which tab is selected
+            selectedTabIndex = selectedTabIndex,
             containerColor = backgroundColor,
-            contentColor = customColor
+            contentColor = customColor,
+            indicator = { tabPositions ->
+                SecondaryIndicator(
+                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         ) {
-            Tab(
-                selected = true,
-                onClick = { /*TODO: Update selected tab*/ },
-                text = { Text("Requests") }
-            )
-            Tab(
-                selected = false,
-                onClick = { /*TODO: Update selected tab*/ },
-                text = { Text("Top Outfits") }
-            )
-            Tab(
-                selected = false,
-                onClick = { /*TODO: Update selected tab*/ },
-                text = { Text("Responses") }
-            )
+            tabs.forEachIndexed { index, title ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = { selectedTabIndex = index },
+                    text = { Text(title) },
+                    selectedContentColor = MaterialTheme.colorScheme.primary,
+                    unselectedContentColor = customColor.copy(alpha = 0.6f)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Display Content Based on Selected Tab
+        when (selectedTabIndex) {
+            0 -> RequestsFeed()
+            1 -> TopOutfitsFeed()
+            2 -> ResponsesFeed()
         }
     }
 }
 
-@Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone",
-    backgroundColor = 0xFF1F2123
-)
+@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "HomeTopSection Preview")
 @Composable
 fun HomeTopSectionPreview() {
-    HomeTopSection(
-    )
+    HomeTopSection()
 }
