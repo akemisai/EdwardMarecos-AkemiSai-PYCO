@@ -11,8 +11,11 @@ import com.pyco.app.screens.authentication.SignUpScreen
 import com.pyco.app.screens.closet.ClosetScreen
 import com.pyco.app.screens.home.HomeScreen
 import com.pyco.app.screens.outfits.OutfitsScreen
+import com.pyco.app.screens.outfits.creation.OutfitCreationScreen
 import com.pyco.app.screens.upload.UploadScreen
 import com.pyco.app.viewmodels.AuthViewModel
+import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.viewmodels.OutfitsViewModel
 
 @Composable
 fun AppNavigation(
@@ -21,48 +24,55 @@ fun AppNavigation(
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "login") {
-        composable("login") {
+        composable(Routes.LOGIN) {
             LoginScreen(
                 authViewModel = authViewModel,
                 navController = navController,
             )
         }
-        composable("signup") {
+        composable(Routes.SIGNUP) {
             SignUpScreen(
                 authViewModel = authViewModel,
                 navController = navController
             )
         }
-        composable("home") {
+        composable(Routes.HOME) {
             HomeScreen(
                 navController = navController
             )
         }
-        composable("account") {
+        composable(Routes.ACCOUNT) {
             AccountScreen(
                 authViewModel = authViewModel,
                 navController = navController
             )
         }
-        composable("settings") {
+        composable(Routes.SETTINGS) {
             SettingsScreen(
                 authViewModel = authViewModel,
                 navController = navController
             )
         }
-        composable("closet") {
+        composable(Routes.CLOSET) {
             ClosetScreen(
                 navController = navController
             )
         }
-        composable("upload") {
+        composable(Routes.UPLOAD) {
             UploadScreen(
                 navController = navController
             )
         }
-        composable("outfits") {
+        composable(Routes.OUTFITS) {
             OutfitsScreen(
                 navController = navController
+            )
+        }
+        composable(Routes.CREATE_OUTFIT) {
+            OutfitCreationScreen(
+                navController = navController,
+                closetViewModel = ClosetViewModel(),
+                outfitsViewModel = OutfitsViewModel()
             )
         }
     }
