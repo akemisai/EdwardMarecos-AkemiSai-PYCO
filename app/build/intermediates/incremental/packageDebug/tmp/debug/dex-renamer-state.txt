@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-#Mon Dec 02 18:47:14 EST 2024
-=======
-#Mon Dec 02 18:51:44 EST 2024
->>>>>>> Stashed changes
+#Mon Dec 02 19:56:56 EST 2024
 base.0=/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.10=/Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex

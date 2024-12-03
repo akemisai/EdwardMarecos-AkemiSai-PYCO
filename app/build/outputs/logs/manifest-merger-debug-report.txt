@@ -1,16 +1,9 @@
 -- Merging decision tree log ---
 manifest
-<<<<<<< Updated upstream
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-44:12
-=======
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-39:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-39:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-39:12
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:1-39:12
->>>>>>> Stashed changes
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:1-45:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:1-45:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:1-45:12
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:1-45:12
 MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:17:1-75:12
 MERGED from [androidx.credentials:credentials:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/c8769515d4c7cadb5a6c7538fa945d7a/transformed/credentials-1.3.0-beta01/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:17:1-44:12
@@ -117,28 +110,23 @@ MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gr
 	android:versionName
 		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
 	xmlns:tools
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:5-51
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:4:5-51
 	android:versionCode
 		INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:2:11-69
-<<<<<<< Updated upstream
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:3:11-69
 uses-permission#android.permission.CAMERA
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:5-64
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:5-64
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:5:22-62
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:22-62
 uses-feature#android.hardware.camera
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:5-85
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:7:5-85
 	android:required
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:58-82
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:7:58-82
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:19-57
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:7:19-57
 uses-permission#android.permission.INTERNET
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:9:5-67
-=======
-uses-permission#android.permission.INTERNET
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:5-67
->>>>>>> Stashed changes
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:10:5-67
 MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:25:5-67
 MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:25:5-67
 MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos/.gradle/caches/transforms-4/eb2ce6dd57146fbbcb9648da972b4524/transformed/firebase-firestore-25.1.1/AndroidManifest.xml:11:5-67
@@ -146,41 +134,20 @@ MERGED from [com.google.firebase:firebase-firestore:25.1.1] /Users/edwardmarecos
 MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:7:5-67
 MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] /Users/edwardmarecos/.gradle/caches/transforms-4/cdce63560a2f9b2c3747893e4c756947/transformed/recaptcha-18.5.1/AndroidManifest.xml:7:5-67
 	android:name
-<<<<<<< Updated upstream
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:9:22-64
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:10:22-64
 uses-feature#android.permission.CAMERA
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:5-62
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:12:5-62
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:19-59
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:12:19-59
 uses-permission#android.hardware.camera
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:12:5-13:75
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:13:5-14:75
 	android:required
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:13:48-72
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:48-72
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:13:9-47
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:9-47
 application
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:5-42:19
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:5-42:19
-=======
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:6:22-64
-uses-feature#android.permission.CAMERA
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:8:5-62
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:8:19-59
-uses-permission#android.permission.CAMERA
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:5-65
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:11:22-62
-uses-feature#android.hardware.camera
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:5-85
-	android:required
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:58-82
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:14:19-57
-application
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:16:5-37:19
-INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:16:5-37:19
->>>>>>> Stashed changes
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:5-43:19
+INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:5-43:19
 MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-auth:23.1.0] /Users/edwardmarecos/.gradle/caches/transforms-4/8c9a043e8a9f4a01d9180ffc4a27d08b/transformed/firebase-auth-23.1.0/AndroidManifest.xml:28:5-73:19
 MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0-beta01] /Users/edwardmarecos/.gradle/caches/transforms-4/27a2cbdde3a1151c57b9313d1b28edf1/transformed/credentials-play-services-auth-1.3.0-beta01/AndroidManifest.xml:23:5-42:19
@@ -236,83 +203,43 @@ MERGED from [com.google.android.play:core-common:2.0.3] /Users/edwardmarecos/.gr
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.15.0] /Users/edwardmarecos/.gradle/caches/transforms-4/5b9977f05f853090552d913e914a1499/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-<<<<<<< Updated upstream
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:28:9-35
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:29:9-35
 	android:label
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:26:9-41
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:27:9-41
 	android:fullBackupContent
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:24:9-54
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:25:9-54
 	android:roundIcon
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:27:9-56
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:28:9-56
 	tools:targetApi
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:30:9-29
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:31:9-29
 	android:icon
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:25:9-45
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:26:9-45
 	android:allowBackup
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:9-35
-	android:theme
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:29:9-42
-	android:dataExtractionRules
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:23:9-65
-activity#com.pyco.app.MainActivity
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:31:9-41:20
-	android:label
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:13-45
-	android:exported
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:33:13-36
-	android:theme
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:35:13-46
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:13-41
-intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:36:13-40:29
-action#android.intent.action.MAIN
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:37:17-69
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:37:25-66
-category#android.intent.category.LAUNCHER
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:39:17-77
-	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:39:27-74
-=======
 		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:23:9-35
-	android:label
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:21:9-41
-	android:fullBackupContent
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:19:9-54
-	android:roundIcon
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:22:9-56
-	tools:targetApi
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:25:9-29
-	android:icon
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:20:9-45
-	android:allowBackup
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:17:9-35
 	android:theme
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:24:9-42
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:30:9-42
 	android:dataExtractionRules
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:18:9-65
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:24:9-65
 activity#com.pyco.app.MainActivity
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:26:9-36:20
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:9-42:20
 	android:label
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:29:13-45
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:35:13-45
 	android:exported
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:28:13-36
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:13-36
 	android:theme
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:30:13-46
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:36:13-46
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:27:13-41
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:33:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:31:13-35:29
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:37:13-41:29
 action#android.intent.action.MAIN
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:17-69
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:38:17-69
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:32:25-66
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:38:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:17-77
+ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:40:17-77
 	android:name
-		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:34:27-74
->>>>>>> Stashed changes
+		ADDED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml:40:27-74
 uses-sdk
 INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/edwardmarecos/Documents/GitHub/EdwardMarecos-AkemiSai-PYCO/app/src/main/AndroidManifest.xml
