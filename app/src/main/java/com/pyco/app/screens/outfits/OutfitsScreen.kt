@@ -36,7 +36,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.navigation.Routes
-import com.pyco.app.screens.outfits.components.OutfitItemCard
+import com.pyco.app.screens.outfits.components.OutfitRow
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 
@@ -103,9 +103,12 @@ fun OutfitsScreen(
                         .padding(16.dp)
                 ) {
                     items(outfits) { outfit ->
-                        OutfitItemCard(
+                        OutfitRow(
                             outfit = outfit,
-                            resolveClothingItem = resolveClothingItem
+                            resolveClothingItem = resolveClothingItem,
+                            onClick = { selectedOutfit ->
+                                navController.navigate("${Routes.OUTFIT_DETAIL}/${selectedOutfit.id}")
+                            }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -114,7 +117,6 @@ fun OutfitsScreen(
         }
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable

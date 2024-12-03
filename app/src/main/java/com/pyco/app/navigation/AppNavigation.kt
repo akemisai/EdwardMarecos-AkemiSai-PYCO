@@ -1,6 +1,7 @@
 package com.pyco.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -8,8 +9,10 @@ import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
+import com.pyco.app.screens.closet.AddWardrobeItemScreen
 import com.pyco.app.screens.closet.ClosetScreen
 import com.pyco.app.screens.home.HomeScreen
+import com.pyco.app.screens.outfits.OutfitDetailScreen
 import com.pyco.app.screens.outfits.OutfitsScreen
 import com.pyco.app.screens.outfits.creation.OutfitCreationScreen
 import com.pyco.app.screens.upload.UploadScreen
@@ -58,6 +61,11 @@ fun AppNavigation(
                 navController = navController
             )
         }
+        composable(Routes.ADD_WARDROBE_ITEM) {
+            AddWardrobeItemScreen(
+                navController = navController
+            )
+        }
         composable(Routes.UPLOAD) {
             UploadScreen(
                 navController = navController
@@ -75,5 +83,16 @@ fun AppNavigation(
                 outfitsViewModel = OutfitsViewModel()
             )
         }
+        composable("${Routes.OUTFIT_DETAIL}/{outfitId}") { backStackEntry ->
+            val outfitId = backStackEntry.arguments?.getString("outfitId")
+            OutfitDetailScreen(
+                outfitId = outfitId,
+                outfitsViewModel = OutfitsViewModel(),
+                resolveClothingItem = { reference ->
+                    OutfitsViewModel().wardrobeMap.collectAsState().value[reference?.id]
+                }
+            )
+        }
+
     }
 }

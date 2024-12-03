@@ -17,18 +17,17 @@ fun ClothingItemThumbnail(item: ClothingItem) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .size(80.dp) // Adjust size as needed
+            .size(80.dp)
             .padding(4.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(
                 model = item.imageUrl,
-                error = painterResource(id = R.drawable.error_placeholder),
-                placeholder = painterResource(id = R.drawable.loading_placeholder)
+                placeholder = painterResource(id = R.drawable.loading_placeholder),
+                error = painterResource(id = R.drawable.error_placeholder)
             ),
             contentDescription = item.name,
-            modifier = Modifier
-                .size(48.dp)
+            modifier = Modifier.size(64.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
@@ -38,3 +37,4 @@ fun ClothingItemThumbnail(item: ClothingItem) {
         )
     }
 }
+

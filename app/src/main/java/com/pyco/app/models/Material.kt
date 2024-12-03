@@ -10,6 +10,7 @@ enum class Material {
     NYLON,
     RAYON,
     LINEN,
-    CASHMERE
+    CASHMERE,
+    SHELL
     // Add more materials as needed
 }

@@ -5,8 +5,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.ClothingType
-import com.pyco.app.models.Color
-import com.pyco.app.models.Material
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import android.util.Log
@@ -41,12 +39,13 @@ class ClosetViewModel : ViewModel() {
                     Log.e("ClosetViewModel", "Error fetching wardrobe items", error)
                     return@addSnapshotListener
                 }
+
                 if (snapshot != null) {
                     val items = snapshot.documents.mapNotNull { doc ->
                         try {
                             val clothingItem = doc.toObject(ClothingItem::class.java)
                             if (clothingItem != null) {
-                                clothingItem
+                                clothingItem.copy(id = doc.id) // Populate ID from Firestore document
                             } else {
                                 Log.w("ClosetViewModel", "Document ${doc.id} is null")
                                 null
@@ -55,7 +54,8 @@ class ClosetViewModel : ViewModel() {
                             Log.e("ClosetViewModel", "Error deserializing document ${doc.id}", e)
                             null
                         }
-                    }.orEmpty()
+                    }
+
                     // Organize items by type
                     _tops.value = items.filter { it.type == ClothingType.TOP }
                     _bottoms.value = items.filter { it.type == ClothingType.BOTTOM }
@@ -65,33 +65,36 @@ class ClosetViewModel : ViewModel() {
             }
     }
 
-    // Function to add clothing item with custom ID
+    // Function to add a clothing item with a custom ID
     fun addClothingItemWithCustomId(item: ClothingItem, customId: String) {
-        if (userId == null) return
+        if (userId == null) {
+            Log.e("ClosetViewModel", "User not authenticated")
+            return
+        }
 
         val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
-        val docRef = wardrobeRef.document(customId) // Set custom ID
+        val docRef = wardrobeRef.document(customId) // Use custom ID
+
         val itemWithId = item.copy(id = customId)
 
         firestore.runTransaction { transaction ->
             transaction.set(docRef, itemWithId)
         }.addOnSuccessListener {
-            Log.d("ClosetViewModel", "ClothingItem added successfully")
+            Log.d("ClosetViewModel", "ClothingItem added successfully with custom ID")
         }.addOnFailureListener { exception ->
             Log.e("ClosetViewModel", "Error adding ClothingItem", exception)
         }
     }
 
-    // Optional: Modify existing addClothingItem to accept custom ID
+    // Function to add a clothing item with an optional custom ID
     fun addClothingItem(item: ClothingItem, customId: String? = null) {
-        if (userId == null) return
+        if (userId == null) {
+            Log.e("ClosetViewModel", "User not authenticated")
+            return
+        }
 
         val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
-        val docRef = if (customId != null) {
-            wardrobeRef.document(customId)
-        } else {
-            wardrobeRef.document()
-        }
+        val docRef = if (customId != null) wardrobeRef.document(customId) else wardrobeRef.document()
 
         val itemWithId = item.copy(id = docRef.id)
 

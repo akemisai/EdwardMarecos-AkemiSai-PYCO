@@ -1,6 +1,8 @@
 package com.pyco.app.screens.closet
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -32,6 +34,14 @@ fun ClosetScreen(
         containerColor = closetBackgroundColor, // Set the background color
         bottomBar = {
             BottomNavigationBar(navController = navController)
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate("addWardrobeItem") },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = "Add Item", tint = Color.White)
+            }
         }
     ) { innerPadding ->
         Column(

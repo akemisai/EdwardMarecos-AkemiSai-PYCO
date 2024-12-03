@@ -1,6 +1,6 @@
 package com.pyco.app.models
 
-enum class Color {
+enum class Colors {
     BLACK,
     BLUE,
     GREEN,

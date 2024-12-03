@@ -9,6 +9,7 @@ object Routes {
     const val CLOSET = "closet"
     const val UPLOAD = "upload"
     const val OUTFITS = "outfits"
-    const val CREATE_OUTFIT = "createOutfit" // Newly added route
-    // Add more routes as needed
+    const val CREATE_OUTFIT = "createOutfit"
+    const val OUTFIT_DETAIL = "outfit_detail"
+    const val ADD_WARDROBE_ITEM = "addWardrobeItem"
 }

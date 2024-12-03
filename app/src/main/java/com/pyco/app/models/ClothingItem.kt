@@ -5,6 +5,6 @@ data class ClothingItem(
     val type: ClothingType = ClothingType.TOP, // Using enum
     val name: String = "",
     val imageUrl: String = "",
-    val color: Color = Color.BLACK, // Using enum
+    val colors: Colors = Colors.BLACK, // Using enum
     val material: Material = Material.COTTON // Using enum
 )
