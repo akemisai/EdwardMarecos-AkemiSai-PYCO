@@ -15,6 +15,7 @@ firebaseBom = "33.6.0"
 foundation = "1.8.0-alpha06"
 foundationPager = "1.4.0-beta01"
 googleid = "1.1.1"
+guava = "32.0.1-jre"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -61,6 +62,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 google-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "862613621685",
+    "firebase_url": "https://pyco-9a1ed-default-rtdb.firebaseio.com",
     "project_id": "pyco-9a1ed",
     "storage_bucket": "pyco-9a1ed.firebasestorage.app"
   },
@@ -14,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "862613621685-8mmdun1in3ntarlai2f5k02ii21i0d9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pyco.app",
+            "certificate_hash": "8efe50154b320f57568a11ec8db88a4b4188189a"
+          }
+        },
+        {
           "client_id": "862613621685-ujsj2icu9tk8oghp14nfbpm6s6os10io.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,7 +31,7 @@
           }
         },
         {
-          "client_id": "862613621685-0pk56fonv5pf657baoot1djfehtdic7j.apps.googleusercontent.com",
+          "client_id": "862613621685-8a41h8t925rpq4pif3bn0nt2r6v79vki.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

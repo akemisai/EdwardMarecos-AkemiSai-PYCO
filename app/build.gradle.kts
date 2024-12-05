@@ -104,4 +104,8 @@ dependencies {
 
     // accompanist pager library for the horizontal pager on outfit feeds.
     implementation(libs.androidx.foundation)
+    
+    // guava
+    implementation(libs.guava)
+
 }
