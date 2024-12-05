@@ -26,7 +26,9 @@ import com.pyco.app.viewmodels.HomeViewModel
 val backgroundColor = Color(0xFF333333) // Dark background color
 
 @Composable
-fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(
+    navController: NavHostController,
+    homeViewModel: HomeViewModel = viewModel()) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
     Scaffold(

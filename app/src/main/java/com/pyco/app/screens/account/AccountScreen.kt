@@ -20,6 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,6 +39,9 @@ fun AccountScreen(
     authViewModel: AuthViewModel = viewModel(),
     navController: NavHostController
 ) {
+    // Observe currentUserData LiveData
+    val user by authViewModel.currentUserData.observeAsState()
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background, // Dark background
         topBar = {
@@ -80,11 +86,16 @@ fun AccountScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Display user info using the exposed property
-                val email = authViewModel.userEmail
-                if (email != null) {
+                // Display user info
+                if (user != null) {
                     Text(
-                        text = "Logged in as: $email",
+                        text = "Display Name: ${user?.displayName ?: "N/A"}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Email: ${user?.email ?: "N/A"}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -97,6 +108,22 @@ fun AccountScreen(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
+
+                // Add a log-out button
+                Button(
+                    onClick = {
+                        authViewModel.logOut()
+                        navController.navigate("login") {
+                            popUpTo("account") { inclusive = true }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) {
+                    Text(text = "Log Out")
+                }
             }
         }
     }

@@ -12,7 +12,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.*
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,7 +43,6 @@ import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.creation.components.ClothingItemSelector
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +58,6 @@ fun OutfitCreationScreen(
     val accessories by closetViewModel.accessories.collectAsState()
 
     var outfitName by remember { mutableStateOf("") }
-    var createdBy by remember { mutableStateOf("") } // User-inputted name
     var isPublic by remember { mutableStateOf(false) } // Toggle for public outfit
     var selectedTop by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedBottom by remember { mutableStateOf<ClothingItem?>(null) }
@@ -57,6 +66,7 @@ fun OutfitCreationScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val displayName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown User" // Fetch displayName
 
     Scaffold(
         topBar = {
@@ -74,7 +84,6 @@ fun OutfitCreationScreen(
                 onClick = {
                     // Validate inputs
                     if (outfitName.isNotBlank() &&
-                        createdBy.isNotBlank() &&
                         selectedTop != null &&
                         selectedBottom != null &&
                         selectedShoe != null
@@ -83,19 +92,18 @@ fun OutfitCreationScreen(
 
                         val newOutfit = Outfit(
                             name = outfitName,
-                            createdBy = createdBy,
+                            createdBy = displayName, // Use fetched displayName
                             top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
                             bottom = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedBottom!!.id}"),
                             shoe = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedShoe!!.id}"),
                             accessory = selectedAccessory?.let {
                                 FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
                             },
-                            isPublic = isPublic // Pass the value here
+                            isPublic = isPublic
                         )
 
                         outfitsViewModel.addOutfit(
                             name = newOutfit.name,
-                            createdBy = newOutfit.createdBy,
                             topRef = newOutfit.top!!,
                             bottomRef = newOutfit.bottom!!,
                             shoeRef = newOutfit.shoe!!,
@@ -133,17 +141,6 @@ fun OutfitCreationScreen(
                         value = outfitName,
                         onValueChange = { outfitName = it },
                         label = { Text("Outfit Name") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-                }
-
-                item {
-                    OutlinedTextField(
-                        value = createdBy,
-                        onValueChange = { createdBy = it },
-                        label = { Text("Your Name") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
