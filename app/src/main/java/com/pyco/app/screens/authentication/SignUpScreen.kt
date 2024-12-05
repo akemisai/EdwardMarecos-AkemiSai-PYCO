@@ -54,6 +54,7 @@ fun SignUpScreen(
     val coroutineScope = rememberCoroutineScope() // Remember a coroutine scope
 
     var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
@@ -122,6 +123,23 @@ fun SignUpScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text("Username", color = customColor) },
+                colors = outlinedTextFieldColors(
+                    focusedBorderColor = customColor,
+                    unfocusedBorderColor = customColor,
+                    cursorColor = customColor,
+                    focusedLabelColor = customColor, // for focused label color
+                    unfocusedLabelColor = customColor // for unfocused label color
+                ),
+                textStyle = TextStyle(color = customColor), // Set text color here
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .width(240.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password", color = customColor) },
@@ -160,7 +178,7 @@ fun SignUpScreen(
             // sign up button
 
             TextButton(
-                onClick = { authViewModel.signup(email, password, confirmPassword) },
+                onClick = { authViewModel.signup(email, username, password, confirmPassword) },
                 enabled = true,
                 modifier = Modifier
                     .offset(x = -90.dp) // my plan was to offset by half the width of the password field i did (240.dp / 2) then adjusted as needed
@@ -173,7 +191,7 @@ fun SignUpScreen(
                     textDecoration = TextDecoration.Underline,
                 )
             }
-            Spacer(modifier = Modifier.height(175.dp))
+            Spacer(modifier = Modifier.height(111.dp))
 
             // "Already have an account? Sign In"
             Row(
