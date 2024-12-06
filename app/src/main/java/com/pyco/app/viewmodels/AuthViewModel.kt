@@ -168,7 +168,6 @@ class AuthViewModel : ViewModel() {
         val wardrobeData = mapOf(
             "userId" to userId,             // Use the provided userId
             "wardrobeId" to wardrobeId,     // Use the provided wardrobeId
-            "items" to emptyList<String>()  // Initial empty list of items
         )
 
         firestore.collection("wardrobes").document(wardrobeId)
