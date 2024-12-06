@@ -10,7 +10,9 @@ import androidx.compose.ui.unit.dp
 import com.pyco.app.models.ClothingItem
 
 @Composable
-fun ClothingItemList(items: List<ClothingItem>) {
+fun ClothingItemList(
+    items: List<ClothingItem>
+) {
     if (items.isEmpty()) {
         // This case is handled in ClosetScreen.kt with NoItemsMessage
         return

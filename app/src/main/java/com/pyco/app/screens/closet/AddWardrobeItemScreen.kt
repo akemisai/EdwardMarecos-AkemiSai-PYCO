@@ -46,23 +46,29 @@ import com.pyco.app.models.ClothingType
 import com.pyco.app.models.Colors
 import com.pyco.app.models.Material
 import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.viewmodels.ClosetViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddWardrobeItemScreen(
     navController: NavHostController,
-    closetViewModel: ClosetViewModel = viewModel()
+    userViewModel: com.pyco.app.viewmodels.UserViewModel // Explicit type
 ) {
+    // Create ClosetViewModel using a custom factory
+    val closetViewModel: ClosetViewModel = viewModel(
+        factory = ClosetViewModelFactory(userViewModel)
+    )
+
     var name by remember { mutableStateOf("") }
     var type by remember { mutableStateOf(ClothingType.TOP) }
-    var colors by remember { mutableStateOf(Colors.BLACK) } // Default enum value
-    var material by remember { mutableStateOf(Material.COTTON) } // Default enum value
+    var colors by remember { mutableStateOf(Colors.BLACK) }
+    var material by remember { mutableStateOf(Material.COTTON) }
     var imageUrl by remember { mutableStateOf<String?>(null) }
 
     val storage = FirebaseStorage.getInstance()
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
-            val ref = storage.reference.child("wardrobe/${uri.lastPathSegment}")
+            val ref = storage.reference.child("wardrobes/images/${uri.lastPathSegment}")
             ref.putFile(uri).addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener { downloadUri ->
                     imageUrl = downloadUri.toString()
@@ -99,7 +105,6 @@ fun AddWardrobeItemScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // Dropdown for Clothing Type
             DropdownMenuBox(
                 label = "Type",
                 options = ClothingType.entries,
@@ -107,7 +112,6 @@ fun AddWardrobeItemScreen(
                 onOptionSelected = { type = it }
             )
 
-            // Dropdown for Color
             DropdownMenuBox(
                 label = "Color",
                 options = Colors.entries,
@@ -115,7 +119,6 @@ fun AddWardrobeItemScreen(
                 onOptionSelected = { colors = it }
             )
 
-            // Dropdown for Material
             DropdownMenuBox(
                 label = "Material",
                 options = Material.entries,
@@ -123,7 +126,6 @@ fun AddWardrobeItemScreen(
                 onOptionSelected = { material = it }
             )
 
-            // Image Picker
             Button(onClick = { launcher.launch("image/*") }) {
                 Text("Select Image")
             }
@@ -141,19 +143,29 @@ fun AddWardrobeItemScreen(
             Button(
                 onClick = {
                     Log.d("AddWardrobeItem", "Save Button Clicked")
-                    Log.d("AddWardrobeItem", "Name: $name, Type: $type, Color: $colors, Material: $material, ImageUrl: $imageUrl")
-
                     if (name.isNotBlank() && imageUrl != null) {
                         val newItem = ClothingItem(
                             name = name,
                             type = type,
-                            colors = colors,
+                            colour = colors,
                             material = material,
                             imageUrl = imageUrl!!
                         )
-                        closetViewModel.addClothingItem(newItem)
-                        Log.d("AddWardrobeItem", "Item Added: $newItem")
-                        navController.navigateUp()
+
+                        // Map ClothingType to subcollection name
+                        val category = when (type) {
+                            ClothingType.TOP -> "tops"
+                            ClothingType.BOTTOM -> "bottoms"
+                            ClothingType.SHOE -> "shoes"
+                            ClothingType.ACCESSORY -> "accessories"
+                        }
+
+                        // Add item using the ViewModel
+                        userViewModel.userProfile.value?.wardrobeId?.let { wardrobeId ->
+                            closetViewModel.addClothingItem(newItem, wardrobeId, category)
+                            Log.d("AddWardrobeItem", "Item Added: $newItem")
+                            navController.navigateUp()
+                        } ?: Log.e("AddWardrobeItem", "Wardrobe ID is null")
                     } else {
                         Log.e("AddWardrobeItem", "Validation failed: Ensure all fields are filled.")
                     }
@@ -162,10 +174,10 @@ fun AddWardrobeItemScreen(
             ) {
                 Text("Save Item", color = Color.White)
             }
-
         }
     }
 }
+
 
 @Composable
 fun <T> DropdownMenuBox(
@@ -179,7 +191,8 @@ fun <T> DropdownMenuBox(
     Column {
         Text(text = label, style = MaterialTheme.typography.labelSmall)
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 8.dp)
                 .clickable { expanded = true },
             contentAlignment = Alignment.CenterStart
@@ -202,4 +215,3 @@ fun <T> DropdownMenuBox(
         }
     }
 }
-

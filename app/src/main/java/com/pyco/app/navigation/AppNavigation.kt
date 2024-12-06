@@ -21,10 +21,12 @@ import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.RequestViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 @Composable
 fun AppNavigation(
     authViewModel: AuthViewModel,
+    userViewModel: UserViewModel
 ) {
     val navController = rememberNavController()
 
@@ -48,7 +50,8 @@ fun AppNavigation(
         }
         composable(Routes.CLOSET) {
             ClosetScreen(
-                navController = navController
+                navController = navController,
+                userViewModel = userViewModel
             )
         }
         composable(Routes.UPLOAD) {
@@ -63,7 +66,7 @@ fun AppNavigation(
         }
         composable(Routes.ACCOUNT) {
             AccountScreen(
-                authViewModel = authViewModel,
+                userViewModel = UserViewModel(),
                 navController = navController
             )
         }
@@ -79,7 +82,8 @@ fun AppNavigation(
         // wardrobe related navigation
         composable(Routes.ADD_WARDROBE_ITEM) {
             AddWardrobeItemScreen(
-                navController = navController
+                navController = navController,
+                userViewModel = userViewModel
             )
         }
 
@@ -87,7 +91,7 @@ fun AppNavigation(
         composable(Routes.CREATE_OUTFIT) {
             OutfitCreationScreen(
                 navController = navController,
-                closetViewModel = ClosetViewModel(),
+                closetViewModel = ClosetViewModel(userViewModel),
                 outfitsViewModel = OutfitsViewModel()
             )
         }
