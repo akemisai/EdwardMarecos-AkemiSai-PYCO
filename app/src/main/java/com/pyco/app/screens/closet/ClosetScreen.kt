@@ -1,37 +1,67 @@
 package com.pyco.app.screens.closet
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
-import com.pyco.app.screens.closet.components.ClothingItemList
 import com.pyco.app.screens.closet.components.ClosetTopSection
-import com.pyco.app.models.ClothingItem
+import com.pyco.app.screens.closet.components.ClothingItemList
 import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.viewmodels.ClosetViewModelFactory
+import com.pyco.app.viewmodels.UserViewModel
 
 val closetBackgroundColor = Color(0xFF333333) // Dark background color
 val customColor = Color(0xFFF7f7f7) // Assuming white for text/icons; adjust as needed
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClosetScreen(
     navController: NavHostController,
-    closetViewModel: ClosetViewModel = viewModel()
+    userViewModel: UserViewModel,
+    closetViewModel: ClosetViewModel = viewModel(
+        factory = ClosetViewModelFactory(userViewModel)
+    )
 ) {
+    // Observe all category flows
+    val tops by closetViewModel.tops.collectAsState()
+    val bottoms by closetViewModel.bottoms.collectAsState()
+    val shoes by closetViewModel.shoes.collectAsState()
+    val accessories by closetViewModel.accessories.collectAsState()
+
+    // Tab titles
+    val tabs = listOf("Tops", "Bottoms", "Shoes", "Accessories")
+
+    // Tab index state
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+
     Scaffold(
-        containerColor = closetBackgroundColor, // Set the background color
+        containerColor = closetBackgroundColor,
         bottomBar = {
             BottomNavigationBar(navController = navController)
         },
@@ -49,15 +79,12 @@ fun ClosetScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Top Section with Title and Tabs
+            // Top Section
             ClosetTopSection()
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tabs for Clothing Categories
-            var selectedTabIndex by remember { mutableIntStateOf(0) }
-            val tabs = listOf("Tops", "Bottoms", "Shoes", "Accessories")
-
+            // Tab Row
             TabRow(
                 selectedTabIndex = selectedTabIndex,
                 containerColor = closetBackgroundColor,
@@ -82,61 +109,36 @@ fun ClosetScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Display Clothing Items Based on Selected Tab
-            when (selectedTabIndex) {
-                0 -> ClothingItemList(items = closetViewModel.tops.collectAsState().value)
-                1 -> ClothingItemList(items = closetViewModel.bottoms.collectAsState().value)
-                2 -> ClothingItemList(items = closetViewModel.shoes.collectAsState().value)
-                3 -> ClothingItemList(items = closetViewModel.accessories.collectAsState().value)
+            // Get the selected category items
+            val items = when (selectedTabIndex) {
+                0 -> tops
+                1 -> bottoms
+                2 -> shoes
+                3 -> accessories
+                else -> emptyList()
             }
 
-            // If no items are present in the selected category, show a message
-            when (selectedTabIndex) {
-                0 -> {
-                    if (closetViewModel.tops.collectAsState().value.isEmpty()) {
-                        NoItemsMessage(message = "No Tops to Show")
-                    }
-                }
-                1 -> {
-                    if (closetViewModel.bottoms.collectAsState().value.isEmpty()) {
-                        NoItemsMessage(message = "No Bottoms to Show")
-                    }
-                }
-                2 -> {
-                    if (closetViewModel.shoes.collectAsState().value.isEmpty()) {
-                        NoItemsMessage(message = "No Shoes to Show")
-                    }
-                }
-                3 -> {
-                    if (closetViewModel.accessories.collectAsState().value.isEmpty()) {
-                        NoItemsMessage(message = "No Accessories to Show")
-                    }
-                }
+            // Display items or NoItemsMessage
+            if (items.isEmpty()) {
+                NoItemsMessage(message = "No ${tabs[selectedTabIndex]} to Show")
+            } else {
+                ClothingItemList(items = items)
             }
         }
     }
 }
 
+
 @Composable
 fun NoItemsMessage(message: String) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = message,
             style = MaterialTheme.typography.bodyMedium,
-            color = customColor.copy(alpha = 0.7f)
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
         )
     }
-}
-
-@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "ClosetScreen Preview")
-@Composable
-fun ClosetScreenPreview() {
-    ClosetScreen(
-        navController = NavHostController(LocalContext.current)
-    )
 }

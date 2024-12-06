@@ -3,12 +3,12 @@ package com.pyco.app.models
 import com.google.firebase.firestore.DocumentReference
 
 data class Outfit(
-    val id: String = "",
-    val name: String = "",
-    val top: DocumentReference? = null,
-    val bottom: DocumentReference? = null,
-    val shoe: DocumentReference? = null,
-    val accessory: DocumentReference? = null,
-    val createdBy: String = "",
-    val isPublic: Boolean = false
+    val id: String = "",                        // Unique ID for the outfit
+    val name: String = "",                      // Name of the outfit
+    val top: DocumentReference? = null,         // References to clothing items
+    val bottom: DocumentReference? = null,      // References to clothing items
+    val shoe: DocumentReference? = null,        // References to clothing items
+    val accessory: DocumentReference? = null,   // References to clothing items
+    val createdBy: String = "",                 // User who created the outfit
+    val isPublic: Boolean = false               // Whether the outfit is public
 )

@@ -12,5 +12,4 @@ enum class Material {
     LINEN,
     CASHMERE,
     SHELL
-    // Add more materials as needed
 }

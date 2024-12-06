@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pyco.app.navigation.AppNavigation
 import com.pyco.app.ui.theme.PycoTheme
 import com.pyco.app.viewmodels.AuthViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 class MainActivity : BaseActivity() {
 
@@ -18,7 +19,12 @@ class MainActivity : BaseActivity() {
             PycoTheme {
                 // Provide the AuthViewModel to the navigation
                 val authViewModel: AuthViewModel = viewModel()
-                AppNavigation(authViewModel = authViewModel)
+                val userViewModel: UserViewModel = viewModel()
+
+                AppNavigation(
+                    authViewModel = authViewModel,
+                    userViewModel = userViewModel
+                )
             }
         }
     }

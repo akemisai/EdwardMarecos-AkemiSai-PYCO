@@ -1,8 +1,10 @@
 package com.pyco.app.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -76,6 +78,7 @@ class AuthViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     val firebaseUser = auth.currentUser
                     firebaseUser?.let { user ->
+                        // Update the user's profile
                         val profileUpdates = UserProfileChangeRequest.Builder()
                             .setDisplayName(username)
                             .build()
@@ -83,22 +86,30 @@ class AuthViewModel : ViewModel() {
                         user.updateProfile(profileUpdates)
                             .addOnCompleteListener { updateTask ->
                                 if (updateTask.isSuccessful) {
-                                    val userDocData = mapOf(
-                                        "uid" to user.uid,
-                                        "email" to email,
-                                        "displayName" to username,
-                                        "photoURL" to (user.photoUrl?.toString() ?: "")
-                                    )
+                                    // Reload user to ensure profile is updated
+                                    user.reload().addOnCompleteListener {
+                                        val wardrobeRef = firestore.collection("wardrobes").document()
 
-                                    firestore.collection("users").document(user.uid)
-                                        .set(userDocData, SetOptions.merge())
-                                        .addOnSuccessListener {
-                                            _authState.value = AuthState.Authenticated
-                                            fetchUserProfile()
-                                        }
-                                        .addOnFailureListener { e ->
-                                            _authState.value = AuthState.Error("Error saving user data: ${e.message}")
-                                        }
+                                        // Now save the user document in Firestore
+                                        val userDocData = mapOf(
+                                            "uid" to user.uid,
+                                            "email" to user.email,
+                                            "displayName" to (user.displayName ?: username),
+                                            "photoURL" to (user.photoUrl?.toString() ?: ""),
+                                            "wardrobeId" to wardrobeRef.id,
+                                        )
+
+                                        firestore.collection("users").document(user.uid)
+                                            .set(userDocData, SetOptions.merge())
+                                            .addOnSuccessListener {
+                                                initializeWardrobe(wardrobeRef.id, user.uid)
+                                                _authState.value = AuthState.Authenticated
+                                                fetchUserProfile()
+                                            }
+                                            .addOnFailureListener { e ->
+                                                _authState.value = AuthState.Error("Error saving user data: ${e.message}")
+                                            }
+                                    }
                                 } else {
                                     _authState.value = AuthState.Error("Could not update profile")
                                 }
@@ -152,8 +163,33 @@ class AuthViewModel : ViewModel() {
                 _currentUserData.value = null
             }
     }
-}
 
+    private fun initializeWardrobe(wardrobeId: String, userId: String) {
+        val wardrobeData = mapOf(
+            "userId" to userId,             // Use the provided userId
+            "wardrobeId" to wardrobeId,     // Use the provided wardrobeId
+            "items" to emptyList<String>()  // Initial empty list of items
+        )
+
+        firestore.collection("wardrobes").document(wardrobeId)
+            .set(wardrobeData)
+            .addOnSuccessListener {
+                Log.d("AuthViewModel", "Wardrobe document created with ID: $wardrobeId")
+
+                // Initialize subcollections for categories
+                val categories = listOf("tops", "bottoms", "shoes", "accessories")
+                categories.forEach { category ->
+                    firestore.collection("wardrobes").document(wardrobeId)
+                        .collection(category)
+                        .document() // No dummy document, just initialize the collection
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("AuthViewModel", "Error creating wardrobe document: ${e.message}")
+                _authState.value = AuthState.Error("Error initializing wardrobe: ${e.message}")
+            }
+    }
+}
 
 sealed class AuthState {
     data object Unauthenticated : AuthState()

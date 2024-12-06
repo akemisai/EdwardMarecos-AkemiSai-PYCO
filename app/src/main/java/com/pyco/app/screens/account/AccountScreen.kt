@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,26 +23,25 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.models.User
 import com.pyco.app.navigation.Routes
-import com.pyco.app.viewmodels.AuthViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(
-    authViewModel: AuthViewModel = viewModel(),
+    userViewModel: UserViewModel = viewModel(),
     navController: NavHostController
 ) {
-    // Observe currentUserData LiveData
-    val user by authViewModel.currentUserData.observeAsState()
+    // Collecting state from UserViewModel
+    val userProfile by userViewModel.userProfile.collectAsState()
+    val isLoading by userViewModel.isLoading.collectAsState()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background, // Dark background
@@ -49,7 +49,7 @@ fun AccountScreen(
             TopAppBar(
                 title = { Text(text = "Account") },
                 actions = {
-                    IconButton(onClick = { navController.navigate("settings") }) {
+                    IconButton(onClick = { navController.navigate(Routes.SETTINGS) }) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = "Settings",
@@ -80,40 +80,34 @@ fun AccountScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Account Page",
+                    text = "Account Details",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Display user info
-                if (user != null) {
-                    Text(
-                        text = "Display Name: ${user?.displayName ?: "N/A"}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Email: ${user?.email ?: "N/A"}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                // Display loading spinner if the profile is being fetched
+                if (isLoading) {
+                    CircularProgressIndicator()
                 } else {
-                    Text(
-                        text = "User not logged in.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    // Display user information or error message
+                    userProfile?.let { user ->
+                        DisplayUserInfo(user)
+                    } ?: run {
+                        Text(
+                            text = "User profile not found.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Make Request Button
                 Button(
-                    onClick = {
-                        navController.navigate(Routes.MAKE_REQUEST)
-                    },
+                    onClick = { navController.navigate(Routes.MAKE_REQUEST) },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
@@ -121,8 +115,33 @@ fun AccountScreen(
                 ) {
                     Text(text = "Make a Request")
                 }
-
             }
         }
+    }
+}
+
+@Composable
+fun DisplayUserInfo(user: User) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Display Name: ${user.displayName}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Email: ${user.email}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Wardrobe ID: ${user.wardrobeId}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
