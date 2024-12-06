@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -109,31 +110,19 @@ fun AccountScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Add a log-out button
                 Button(
                     onClick = {
-                        authViewModel.logOut()
-                        navController.navigate("login") {
-                            popUpTo("account") { inclusive = true }
-                        }
+                        navController.navigate(Routes.MAKE_REQUEST)
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
-                    Text(text = "Log Out")
+                    Text(text = "Make a Request")
                 }
+
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "AccountScreen Preview")
-@Composable
-fun AccountScreenPreview() {
-    AccountScreen(
-        authViewModel = AuthViewModel(),
-        navController = NavHostController(LocalContext.current)
-    )
 }
