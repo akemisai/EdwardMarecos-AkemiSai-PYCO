@@ -13,7 +13,10 @@ import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.R
 
 @Composable
-fun ClothingItemThumbnail(item: ClothingItem) {
+fun ClothingItemThumbnail(
+    item: ClothingItem,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
