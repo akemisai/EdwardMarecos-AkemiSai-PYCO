@@ -41,6 +41,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.creation.components.ClothingItemSelector
+import com.pyco.app.screens.outfits.creation.components.PublicOutfitCreator
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import kotlinx.coroutines.launch
@@ -92,7 +93,7 @@ fun OutfitCreationScreen(
 
                         val newOutfit = Outfit(
                             name = outfitName,
-                            createdBy = displayName, // Use fetched displayName
+                            createdBy = displayName,
                             top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
                             bottom = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedBottom!!.id}"),
                             shoe = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedShoe!!.id}"),
@@ -102,14 +103,7 @@ fun OutfitCreationScreen(
                             isPublic = isPublic
                         )
 
-                        outfitsViewModel.addOutfit(
-                            name = newOutfit.name,
-                            topRef = newOutfit.top!!,
-                            bottomRef = newOutfit.bottom!!,
-                            shoeRef = newOutfit.shoe!!,
-                            accessoryRef = newOutfit.accessory,
-                            isPublic = newOutfit.isPublic
-                        )
+                        outfitsViewModel.addOutfit(newOutfit)  // make new outfit
 
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.closet.components.ClosetTopSection
 import com.pyco.app.screens.closet.components.ClothingItemList
 import com.pyco.app.viewmodels.ClosetViewModel
@@ -43,12 +44,8 @@ val customColor = Color(0xFFF7f7f7) // Assuming white for text/icons; adjust as 
 @Composable
 fun ClosetScreen(
     navController: NavHostController,
-    userViewModel: UserViewModel // Pass UserViewModel here
+    closetViewModel: ClosetViewModel // Use shared ClosetViewModel
 ) {
-
-    val closetViewModel: ClosetViewModel = viewModel(
-        factory = ClosetViewModelFactory(userViewModel)
-    )
 
     // Observe all category flows
     val tops by closetViewModel.tops.collectAsState()
@@ -69,7 +66,7 @@ fun ClosetScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate("addWardrobeItem") },
+                onClick = { navController.navigate(Routes.ADD_WARDROBE_ITEM) },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Item", tint = Color.White)
@@ -111,7 +108,6 @@ fun ClosetScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Get the selected category items
             val items = when (selectedTabIndex) {
                 0 -> tops
                 1 -> bottoms
@@ -120,7 +116,6 @@ fun ClosetScreen(
                 else -> emptyList()
             }
 
-            // Display items or NoItemsMessage
             if (items.isEmpty()) {
                 NoItemsMessage(message = "No ${tabs[selectedTabIndex]} to Show")
             } else {

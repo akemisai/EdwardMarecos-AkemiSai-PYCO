@@ -54,12 +54,8 @@ import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
 @Composable
 fun AddWardrobeItemScreen(
     navController: NavHostController,
-    userViewModel: UserViewModel,
+    closetViewModel: ClosetViewModel // Use shared ClosetViewModel
 ) {
-
-    val closetViewModel: ClosetViewModel = viewModel(
-        factory = ClosetViewModelFactory(userViewModel)
-    )
 
     // State variables for form fields
     var name by remember { mutableStateOf("") }

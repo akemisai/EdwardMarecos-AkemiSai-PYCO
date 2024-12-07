@@ -13,11 +13,11 @@ object Routes {
     const val ACCOUNT = "account"
 
     // outfit related navigation
-    const val CREATE_OUTFIT = "createOutfit"
+    const val CREATE_OUTFIT = "create_outfit"
     const val OUTFIT_DETAIL = "outfit_detail"
 
     // wardrobe related navigation
-    const val ADD_WARDROBE_ITEM = "addWardrobeItem"
+    const val ADD_WARDROBE_ITEM = "add_wardrobe_item"
 
     // account related navigation
     const val SETTINGS = "settings"

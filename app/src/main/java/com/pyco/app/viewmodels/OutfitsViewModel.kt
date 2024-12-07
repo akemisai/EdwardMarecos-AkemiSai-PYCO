@@ -5,170 +5,159 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.DocumentReference
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.creation.components.PublicOutfitCreator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
-class OutfitsViewModel : ViewModel() {
-    private val firestore = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+class OutfitsViewModel(
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
+) : ViewModel() {
+
     private val userId = auth.currentUser?.uid
 
-    // StateFlows for outfits and wardrobe map
     private val _outfits = MutableStateFlow<List<Outfit>>(emptyList())
-    val outfits: StateFlow<List<Outfit>> = _outfits.asStateFlow()
+    val outfits: StateFlow<List<Outfit>> = _outfits
 
     private val _wardrobeMap = MutableStateFlow<Map<String, ClothingItem>>(emptyMap())
-    val wardrobeMap: StateFlow<Map<String, ClothingItem>> = _wardrobeMap.asStateFlow()
+    val wardrobeMap: StateFlow<Map<String, ClothingItem>> = _wardrobeMap
+
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage
 
     init {
         fetchWardrobeItems()
         fetchUserOutfits()
     }
 
-    // Fetch wardrobe items from Firestore
     private fun fetchWardrobeItems() {
         if (userId == null) {
-            Log.e("OutfitsViewModel", "User not authenticated. Cannot fetch wardrobe items.")
+            _errorMessage.update { "User not authenticated. Cannot fetch wardrobe items." }
             return
         }
 
-        val categories = listOf("tops", "bottoms", "shoes", "accessories")
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val categories = listOf("tops", "bottoms", "shoes", "accessories")
+                categories.forEach { category ->
+                    val snapshot = firestore.collection("wardrobes")
+                        .document(userId)
+                        .collection(category)
+                        .get()
+                        .await()
 
-        categories.forEach { category ->
-            firestore.collection("wardrobes")
-                .document(userId) // Use `userId` to identify the wardrobe
-                .collection(category) // Fetch items from the specific category
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        Log.e("OutfitsViewModel", "Error fetching $category items: ${error.message}")
-                        return@addSnapshotListener
-                    }
+                    val wardrobeItems = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
+                    }.associateBy { it.id }
 
-                    snapshot?.let {
-                        val wardrobeItems = it.documents.mapNotNull { doc ->
-                            doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
-                        }.associateBy { it.id }
-                        _wardrobeMap.value += wardrobeItems
-                        Log.d("OutfitsViewModel", "Wardrobe items fetched for $category: $wardrobeItems")
-                    }
+                    _wardrobeMap.update { it + wardrobeItems }
+                    Log.d("OutfitsViewModel", "Wardrobe items fetched for $category")
                 }
+            } catch (e: Exception) {
+                Log.e("OutfitsViewModel", "Error fetching wardrobe items: ${e.message}", e)
+                _errorMessage.update { "Error fetching wardrobe items: ${e.message}" }
+            }
         }
     }
 
-    // Fetch user outfits from Firestore
     private fun fetchUserOutfits() {
         if (userId == null) {
-            Log.e("OutfitsViewModel", "User not authenticated. Cannot fetch outfits.")
+            _errorMessage.update { "User not authenticated. Cannot fetch outfits." }
             return
         }
 
-        firestore.collection("outfits").document(userId)
-            .collection("user_outfits") // Assuming "user_outfits" as a subcollection
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    Log.e("OutfitsViewModel", "Error fetching outfits: ${error.message}")
-                    return@addSnapshotListener
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val snapshot = firestore.collection("outfits")
+                    .document(userId)
+                    .collection("user_outfits")
+                    .get()
+                    .await()
 
-                snapshot?.let {
-                    val outfitsList = it.documents.mapNotNull { doc ->
-                        doc.toObject(Outfit::class.java)?.copy(id = doc.id)
-                    }
-                    _outfits.value = outfitsList
-                    Log.d("OutfitsViewModel", "User outfits fetched: $outfitsList")
+                val outfitsList = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(Outfit::class.java)?.copy(id = doc.id)
                 }
+                _outfits.update { outfitsList }
+            } catch (e: Exception) {
+                Log.e("OutfitsViewModel", "Error fetching outfits: ${e.message}", e)
+                _errorMessage.update { "Error fetching outfits: ${e.message}" }
             }
+        }
     }
 
-    // Add an outfit to Firestore
-    fun addOutfit(
-        name: String,
-        topRef: DocumentReference,
-        bottomRef: DocumentReference,
-        shoeRef: DocumentReference,
-        accessoryRef: DocumentReference?, // Optional
-        isPublic: Boolean
-    ) {
+    fun addOutfit(outfit: Outfit) {
         if (userId == null) {
-            Log.e("OutfitsViewModel", "User not authenticated. Cannot add outfit.")
+            _errorMessage.update { "User not authenticated. Cannot add outfit." }
             return
         }
 
-        firestore.collection("users").document(userId).get()
-            .addOnSuccessListener { document ->
-                val displayName = document.getString("displayName") ?: "Unknown User"
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // Add the outfit to Firestore and get the generated outfit ID
+                val newOutfitRef = firestore.collection("outfits")
+                    .document(userId)
+                    .collection("user_outfits")
+                    .document()
 
-                val newOutfit = Outfit(
-                    id = "", // Firestore will generate this
-                    name = name,
-                    createdBy = displayName,
-                    top = topRef,
-                    bottom = bottomRef,
-                    shoe = shoeRef,
-                    accessory = accessoryRef,
-                    isPublic = isPublic
-                )
+                firestore.runTransaction { transaction ->
+                    transaction.set(newOutfitRef, outfit.copy(id = newOutfitRef.id), SetOptions.merge())
+                }.await()
 
-                // Add to user outfits collection
-                val outfitsRef = firestore.collection("outfits").document(userId).collection("user_outfits")
-                val newDocRef = outfitsRef.document()
+                // Update the local state with the new outfit
+                _outfits.update { currentOutfits ->
+                    currentOutfits + outfit.copy(id = newOutfitRef.id)
+                }
 
-                newDocRef.set(newOutfit.copy(id = newDocRef.id))
-                    .addOnSuccessListener {
-                        Log.d("OutfitsViewModel", "Outfit added successfully.")
+                Log.d("OutfitsViewModel", "Outfit added successfully: ${outfit.name}")
 
-                        // If public, add to public feed
-                        if (isPublic) {
-                            val publicOutfitCreator = PublicOutfitCreator()
-                            publicOutfitCreator.createPublicOutfit(
-                                newOutfit.copy(id = newDocRef.id),
-                                onSuccess = {
-                                    Log.d("OutfitsViewModel", "Public outfit creation succeeded.")
-                                },
-                                onFailure = { error ->
-                                    Log.e("OutfitsViewModel", "Public outfit creation failed: ${error.message}")
-                                }
-                            )
-                        }
-
-                    }
-                    .addOnFailureListener { error ->
-                        Log.e("OutfitsViewModel", "Error adding outfit: ${error.message}")
-                    }
+                // Now handle public outfit creation if needed
+                if (outfit.isPublic) {
+                    val publicOutfitCreator = PublicOutfitCreator()
+                    publicOutfitCreator.createPublicOutfit(outfit.copy(id = newOutfitRef.id),
+                        onSuccess = {
+                            // Show success snack bar
+                            Log.d("OutfitsViewModel", "Outfit added to public feed!")
+                        },
+                        onFailure = { error ->
+                            Log.e("OutfitsViewModel", "Failed to add outfit to public feed: ${error.message}")
+                        })
+                }
+            } catch (e: Exception) {
+                Log.e("OutfitsViewModel", "Error adding outfit: ${e.message}", e)
+                _errorMessage.update { "Error adding outfit: ${e.message}" }
             }
-            .addOnFailureListener { error ->
-                Log.e("OutfitsViewModel", "Error fetching user displayName: ${error.message}")
-            }
+        }
     }
 
-    // Delete an outfit
+
     fun deleteOutfit(outfitId: String) {
         if (userId == null) {
-            Log.e("OutfitsViewModel", "User not authenticated. Cannot delete outfit.")
+            _errorMessage.update { "User not authenticated. Cannot delete outfit." }
             return
         }
 
-        firestore.collection("outfits").document(userId).collection("user_outfits")
-            .document(outfitId)
-            .delete()
-            .addOnSuccessListener {
-                Log.d("OutfitsViewModel", "Outfit deleted successfully.")
-                firestore.collection("public_outfits").document(outfitId).delete()
-                    .addOnSuccessListener {
-                        Log.d("OutfitsViewModel", "Outfit removed from public feed.")
-                    }
-                    .addOnFailureListener { error ->
-                        Log.e("OutfitsViewModel", "Error removing outfit from public feed: ${error.message}")
-                    }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                firestore.collection("outfits")
+                    .document(userId)
+                    .collection("user_outfits")
+                    .document(outfitId)
+                    .delete()
+                    .await()
+
+                Log.d("OutfitsViewModel", "Outfit deleted successfully: $outfitId")
+            } catch (e: Exception) {
+                Log.e("OutfitsViewModel", "Error deleting outfit: ${e.message}", e)
+                _errorMessage.update { "Error deleting outfit: ${e.message}" }
             }
-            .addOnFailureListener { error ->
-                Log.e("OutfitsViewModel", "Error deleting outfit: ${error.message}")
-            }
+        }
     }
 }
