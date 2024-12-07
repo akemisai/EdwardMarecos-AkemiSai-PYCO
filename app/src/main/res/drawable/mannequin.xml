@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="400dp"
+    android:viewportWidth="200"
+    android:viewportHeight="400">
+
+    <!-- Head -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M100,10
+                         a30,30 0 1,1 0.1,0Z" />
+
+    <!-- Neck -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M85,70
+                         L115,70
+                         L115,90
+                         L85,90
+                         Z" />
+
+    <!-- Shoulders -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M40,90
+                         L160,90
+                         L140,130
+                         L60,130
+                         Z" />
+
+    <!-- Torso -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M60,130
+                         L140,130
+                         L160,250
+                         L40,250
+                         Z" />
+
+    <!-- Left Arm -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M40,130
+                         L10,200
+                         L20,210
+                         L60,150
+                         Z" />
+
+    <!-- Right Arm -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M160,130
+                         L190,200
+                         L180,210
+                         L140,150
+                         Z" />
+
+    <!-- Hips -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M60,250
+                         L140,250
+                         L130,280
+                         L70,280
+                         Z" />
+
+    <!-- Left Leg -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M70,280
+                         L85,400
+                         L95,400
+                         L95,280
+                         Z" />
+
+    <!-- Right Leg -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M105,280
+                         L105,400
+                         L115,400
+                         L130,280
+                         Z" />
+</vector>

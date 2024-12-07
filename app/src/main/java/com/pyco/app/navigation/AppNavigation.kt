@@ -98,6 +98,7 @@ fun AppNavigation(
         composable("${Routes.OUTFIT_DETAIL}/{outfitId}") { backStackEntry ->
             val outfitId = backStackEntry.arguments?.getString("outfitId")
             OutfitDetailScreen(
+                navController = navController,
                 outfitId = outfitId,
                 outfitsViewModel = OutfitsViewModel(),
                 resolveClothingItem = { reference ->
