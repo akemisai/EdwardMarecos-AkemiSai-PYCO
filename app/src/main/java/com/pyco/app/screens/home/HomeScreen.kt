@@ -51,13 +51,3 @@ fun HomeScreen(
         }
     }
 }
-
-
-
-@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "HomeScreen Preview")
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(
-        navController = NavHostController(LocalContext.current)
-    )
-}

@@ -39,14 +39,15 @@ import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.outfits.components.OutfitRow
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
+import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutfitsScreen(
     navController: NavHostController,
-    outfitsViewModel: OutfitsViewModel = viewModel(),
-    closetViewModel: ClosetViewModel = viewModel()
+    outfitsViewModel: OutfitsViewModel = viewModel(factory = OutfitsViewModelFactory())
 ) {
+
     val outfits by outfitsViewModel.outfits.collectAsState()
     val wardrobeMap by outfitsViewModel.wardrobeMap.collectAsState()
 

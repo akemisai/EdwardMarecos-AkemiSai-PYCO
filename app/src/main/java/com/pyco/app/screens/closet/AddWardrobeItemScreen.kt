@@ -40,31 +40,35 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.ClothingType
 import com.pyco.app.models.Colors
 import com.pyco.app.models.Material
 import com.pyco.app.viewmodels.ClosetViewModel
-import com.pyco.app.viewmodels.ClosetViewModelFactory
+import com.pyco.app.viewmodels.UserViewModel
+import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddWardrobeItemScreen(
     navController: NavHostController,
-    userViewModel: com.pyco.app.viewmodels.UserViewModel // Explicit type
+    userViewModel: UserViewModel,
 ) {
-    // Create ClosetViewModel using a custom factory
+
     val closetViewModel: ClosetViewModel = viewModel(
         factory = ClosetViewModelFactory(userViewModel)
     )
 
+    // State variables for form fields
     var name by remember { mutableStateOf("") }
     var type by remember { mutableStateOf(ClothingType.TOP) }
     var colors by remember { mutableStateOf(Colors.BLACK) }
     var material by remember { mutableStateOf(Material.COTTON) }
     var imageUrl by remember { mutableStateOf<String?>(null) }
 
+    // Firebase Storage reference
     val storage = FirebaseStorage.getInstance()
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
@@ -160,12 +164,16 @@ fun AddWardrobeItemScreen(
                             ClothingType.ACCESSORY -> "accessories"
                         }
 
-                        // Add item using the ViewModel
-                        userViewModel.userProfile.value?.wardrobeId?.let { wardrobeId ->
-                            closetViewModel.addClothingItem(newItem, wardrobeId, category)
+                        // Get the current user's ID directly from FirebaseAuth
+                        val userId = FirebaseAuth.getInstance().currentUser?.uid
+                        if (userId != null) {
+                            // Add item using the ViewModel
+                            closetViewModel.addClothingItem(newItem, userId, category)
                             Log.d("AddWardrobeItem", "Item Added: $newItem")
                             navController.navigateUp()
-                        } ?: Log.e("AddWardrobeItem", "Wardrobe ID is null")
+                        } else {
+                            Log.e("AddWardrobeItem", "User ID is null")
+                        }
                     } else {
                         Log.e("AddWardrobeItem", "Validation failed: Ensure all fields are filled.")
                     }
@@ -177,6 +185,7 @@ fun AddWardrobeItemScreen(
         }
     }
 }
+
 
 
 @Composable
