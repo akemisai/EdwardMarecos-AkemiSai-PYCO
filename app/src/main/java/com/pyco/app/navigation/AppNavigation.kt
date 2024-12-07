@@ -2,9 +2,12 @@ package com.pyco.app.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.authentication.LoginScreen
@@ -22,6 +25,8 @@ import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.RequestViewModel
 import com.pyco.app.viewmodels.UserViewModel
+import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
+import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 @Composable
 fun AppNavigation(
@@ -30,11 +35,25 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "login") {
+    // Create shared ViewModel instances using factories
+    val firestore = FirebaseFirestore.getInstance()
+    val auth = FirebaseAuth.getInstance()
+
+    val closetViewModel: ClosetViewModel = viewModel(
+        factory = ClosetViewModelFactory(userViewModel)
+    )
+
+    val outfitsViewModel: OutfitsViewModel = viewModel(
+        factory = OutfitsViewModelFactory(auth, firestore)
+    )
+
+    NavHost(navController = navController, startDestination = Routes.LOGIN) {
+
+        // Auth navigation
         composable(Routes.LOGIN) {
             LoginScreen(
                 authViewModel = authViewModel,
-                navController = navController,
+                navController = navController
             )
         }
         composable(Routes.SIGNUP) {
@@ -43,35 +62,34 @@ fun AppNavigation(
                 navController = navController
             )
         }
+
+        // Main navigation
         composable(Routes.HOME) {
-            HomeScreen(
-                navController = navController
-            )
+            HomeScreen(navController = navController)
         }
         composable(Routes.CLOSET) {
             ClosetScreen(
                 navController = navController,
-                userViewModel = userViewModel
+                closetViewModel = closetViewModel
             )
         }
         composable(Routes.UPLOAD) {
-            UploadScreen(
-                navController = navController
-            )
+            UploadScreen(navController = navController)
         }
         composable(Routes.OUTFITS) {
             OutfitsScreen(
-                navController = navController
+                navController = navController,
+                outfitsViewModel = outfitsViewModel
             )
         }
         composable(Routes.ACCOUNT) {
             AccountScreen(
-                userViewModel = UserViewModel(),
+                userViewModel = userViewModel,
                 navController = navController
             )
         }
 
-        // account related navigation
+        // Account related navigation
         composable(Routes.SETTINGS) {
             SettingsScreen(
                 authViewModel = authViewModel,
@@ -79,38 +97,38 @@ fun AppNavigation(
             )
         }
 
-        // wardrobe related navigation
+        // Wardrobe related navigation
         composable(Routes.ADD_WARDROBE_ITEM) {
             AddWardrobeItemScreen(
                 navController = navController,
-                userViewModel = userViewModel
+                closetViewModel = closetViewModel
             )
         }
 
-        // outfit related navigation
+        // Outfit related navigation
         composable(Routes.CREATE_OUTFIT) {
             OutfitCreationScreen(
                 navController = navController,
-                closetViewModel = ClosetViewModel(userViewModel),
-                outfitsViewModel = OutfitsViewModel()
-            )
-        }
-        composable("${Routes.OUTFIT_DETAIL}/{outfitId}") { backStackEntry ->
-            val outfitId = backStackEntry.arguments?.getString("outfitId")
-            OutfitDetailScreen(
-                navController = navController,
-                outfitId = outfitId,
-                outfitsViewModel = OutfitsViewModel(),
-                resolveClothingItem = { reference ->
-                    OutfitsViewModel().wardrobeMap.collectAsState().value[reference?.id]
-                }
+                closetViewModel = closetViewModel,
+                outfitsViewModel = outfitsViewModel
             )
         }
 
-        // request related navigation
+        composable("${Routes.OUTFIT_DETAIL}/{outfitId}") { backStackEntry ->
+            val outfitId = backStackEntry.arguments?.getString("outfitId") ?: "default_id"
+            OutfitDetailScreen(
+                navController = navController,
+                outfitId = outfitId,
+                outfitsViewModel = outfitsViewModel,
+                closetViewModel = closetViewModel // Pass ClosetViewModel here
+            )
+        }
+
+        // Request related navigation
         composable(Routes.MAKE_REQUEST) {
+            val requestViewModel: RequestViewModel = viewModel()
             MakeRequestScreen(
-                requestViewModel = RequestViewModel(),
+                requestViewModel = requestViewModel,
                 navController = navController
             )
         }

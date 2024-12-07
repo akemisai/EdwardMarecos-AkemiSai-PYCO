@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.ClothingItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class ClosetViewModel(
     private val userViewModel: UserViewModel
@@ -30,8 +33,12 @@ class ClosetViewModel(
     private val _accessories = MutableStateFlow<List<ClothingItem>>(emptyList())
     val accessories: StateFlow<List<ClothingItem>> = _accessories
 
+    // Centralized wardrobe map (key = clothing item ID, value = ClothingItem)
+    private val _wardrobeMap = MutableStateFlow<Map<String, ClothingItem>>(emptyMap())
+    val wardrobeMap: StateFlow<Map<String, ClothingItem>> = _wardrobeMap
+
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val userId = auth.currentUser?.uid
             if (userId == null) {
                 Log.e("ClosetViewModel", "User is not authenticated.")
@@ -53,32 +60,35 @@ class ClosetViewModel(
         )
 
         categories.forEach { (category, flow) ->
-            Log.d("ClosetViewModel", "Fetching items from category: $category")
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    val snapshot = firestore.collection("wardrobes")
+                        .document(userId)
+                        .collection(category)
+                        .get()
+                        .await()
 
-            firestore.collection("wardrobes")
-                .document(userId) // Use userId directly for wardrobe document
-                .collection(category) // Access the specific category subcollection
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        Log.e("ClosetViewModel", "Error fetching $category items: ${error.message}")
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null) {
-                        Log.d("ClosetViewModel", "Fetched ${snapshot.size()} items from $category")
-                        val items = snapshot.documents.mapNotNull { doc ->
-                            try {
-                                doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
-                            } catch (e: Exception) {
-                                Log.e("ClosetViewModel", "Error deserializing document ${doc.id} in $category", e)
-                                null
-                            }
+                    val items = snapshot.documents.mapNotNull { doc ->
+                        try {
+                            doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
+                        } catch (e: Exception) {
+                            Log.e("ClosetViewModel", "Error deserializing document ${doc.id} in $category", e)
+                            null
                         }
-                        flow.value = items
-                    } else {
-                        Log.e("ClosetViewModel", "Snapshot is null for category: $category")
                     }
+
+                    // Update the specific category flow (like _tops, _bottoms)
+                    flow.update { items }
+
+                    // Update the wardrobeMap with items from this category
+                    _wardrobeMap.update { currentMap ->
+                        currentMap + items.associateBy { it.id }
+                    }
+
+                } catch (e: Exception) {
+                    Log.e("ClosetViewModel", "Error fetching $category items: ${e.message}", e)
                 }
+            }
         }
     }
 
@@ -88,27 +98,41 @@ class ClosetViewModel(
             return
         }
 
-        val validCategories = listOf("tops", "bottoms", "shoes", "accessories")
-        if (!validCategories.contains(category)) {
+        if (category !in listOf("tops", "bottoms", "shoes", "accessories")) {
             Log.e("ClosetViewModel", "Invalid category: $category")
             return
         }
 
         val categoryRef = firestore.collection("wardrobes")
-            .document(userId) // Use userId directly for wardrobe document
+            .document(userId)
             .collection(category)
 
-        val docRef = categoryRef.document() // Auto-generate an ID for the item
-        val itemWithId = item.copy(id = docRef.id) // Add the auto-generated ID to the item
+        val docRef = categoryRef.document()
+        val itemWithId = item.copy(id = docRef.id)
 
-        firestore.runTransaction { transaction ->
-            transaction.set(docRef, itemWithId)
-        }.addOnSuccessListener {
-            Log.d("ClosetViewModel", "ClothingItem added successfully to $category: $itemWithId")
-        }.addOnFailureListener { exception ->
-            Log.e("ClosetViewModel", "Error adding ClothingItem to $category", exception)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                docRef.set(itemWithId).await()
+                Log.d("ClosetViewModel", "ClothingItem added successfully to $category: $itemWithId")
+
+                // Update the appropriate category StateFlow directly
+                when (category) {
+                    "tops" -> _tops.update { it + itemWithId }
+                    "bottoms" -> _bottoms.update { it + itemWithId }
+                    "shoes" -> _shoes.update { it + itemWithId }
+                    "accessories" -> _accessories.update { it + itemWithId }
+                }
+
+                // Update the wardrobeMap with the new item
+                _wardrobeMap.update { currentMap ->
+                    currentMap + (itemWithId.id to itemWithId)
+                }
+            } catch (e: Exception) {
+                Log.e("ClosetViewModel", "Error adding ClothingItem to $category", e)
+            }
         }
     }
+
 }
 
 

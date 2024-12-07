@@ -8,6 +8,13 @@ class PublicOutfitCreator {
     private val firestore = FirebaseFirestore.getInstance()
 
     fun createPublicOutfit(outfit: Outfit, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Ensure the outfit ID is valid before proceeding
+        if (outfit.id.isBlank()) {
+            Log.e("PublicOutfitCreator", "Outfit ID is invalid or blank.")
+            onFailure(IllegalArgumentException("Invalid outfit ID"))
+            return
+        }
+
         val outfitData = mapOf(
             "name" to outfit.name,
             "createdBy" to outfit.createdBy,
@@ -18,7 +25,8 @@ class PublicOutfitCreator {
             "isPublic" to outfit.isPublic
         )
 
-        firestore.collection("public_outfits").document(outfit.id)
+        // Use the outfit's ID to specify the document reference
+        firestore.collection("public_outfits").document(outfit.id)  // Ensure outfit.id is valid
             .set(outfitData)
             .addOnSuccessListener {
                 Log.d("PublicOutfitCreator", "Outfit added to public feed: $outfitData")

@@ -4,13 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.Tasks
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.pyco.app.models.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class AuthViewModel : ViewModel() {
 
@@ -20,7 +23,6 @@ class AuthViewModel : ViewModel() {
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
 
-    // LiveData for the user object
     private val _currentUserData = MutableLiveData<User?>()
     val currentUserData: LiveData<User?> = _currentUserData
 
@@ -30,38 +32,15 @@ class AuthViewModel : ViewModel() {
 
     private fun checkAuthStatus() {
         val currentUser = auth.currentUser
-        _authState.value = if (currentUser == null) {
-            AuthState.Unauthenticated
+        if (currentUser == null) {
+            _authState.value = AuthState.Unauthenticated
         } else {
-            fetchUserProfile() // fetch user doc if already signed in
-            AuthState.Authenticated
+            _authState.value = AuthState.Authenticated
+            fetchUserProfile()
         }
     }
 
-    // email sign in ------------------------------------------------------------------------------------
-
-    // Updates _authState to Authenticated on success
-    fun login(email: String, password: String) {
-        if (email.isBlank() || password.isBlank()) {
-            _authState.value = AuthState.Error("Email and password cannot be empty")
-            return
-        }
-
-        _authState.value = AuthState.Loading
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
-                    fetchUserProfile()
-                } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Unknown error")
-                }
-            }
-    }
-
-    // signup with email and password (added username)-------------------------------------------------
-
+    // Email signup
     fun signup(email: String, username: String, password: String, confirmPassword: String) {
         if (email.isBlank() || username.isBlank() || password.isBlank()) {
             _authState.value = AuthState.Error("Email, username, and password cannot be empty")
@@ -73,120 +52,116 @@ class AuthViewModel : ViewModel() {
 
         _authState.value = AuthState.Loading
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val firebaseUser = auth.currentUser
-                    firebaseUser?.let { user ->
-                        // Update the user's profile
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(username)
-                            .build()
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                auth.createUserWithEmailAndPassword(email, password).await()
+                val firebaseUser = auth.currentUser ?: throw Exception("User creation successful but user is null")
 
-                        user.updateProfile(profileUpdates)
-                            .addOnCompleteListener { updateTask ->
-                                if (updateTask.isSuccessful) {
-                                    // Reload user to ensure profile is updated
-                                    user.reload().addOnCompleteListener {
-                                        val wardrobeRef = firestore.collection("wardrobes").document()
+                // Update profile
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setDisplayName(username)
+                    .build()
+                firebaseUser.updateProfile(profileUpdates).await()
 
-                                        // Now save the user document in Firestore
-                                        val userDocData = mapOf(
-                                            "uid" to user.uid,
-                                            "email" to user.email,
-                                            "displayName" to (user.displayName ?: username),
-                                            "photoURL" to (user.photoUrl?.toString() ?: ""),
-                                            "wardrobeId" to wardrobeRef.id,
-                                        )
+                val userId = firebaseUser.uid
 
-                                        firestore.collection("users").document(user.uid)
-                                            .set(userDocData, SetOptions.merge())
-                                            .addOnSuccessListener {
-                                                initializeWardrobe(wardrobeRef.id, user.uid)
-                                                _authState.value = AuthState.Authenticated
-                                                fetchUserProfile()
-                                            }
-                                            .addOnFailureListener { e ->
-                                                _authState.value = AuthState.Error("Error saving user data: ${e.message}")
-                                            }
-                                    }
-                                } else {
-                                    _authState.value = AuthState.Error("Could not update profile")
-                                }
-                            }
-                    } ?: run {
-                        _authState.value = AuthState.Error("User creation successful but user is null")
-                    }
-                } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Unknown error")
-                }
+                firestore.collection("users").document(userId)
+                    .set(mapOf("uid" to userId), SetOptions.merge()).await()
+
+                initializeWardrobe(userId)
+                _authState.postValue(AuthState.Authenticated)
+                fetchUserProfile()
+            } catch (e: Exception) {
+                _authState.postValue(AuthState.Error(e.message ?: "Error signing up"))
             }
+        }
     }
 
-    // Google sign-in ---------------------------------------------------------------------------------
-
+    // Sign in with Google
     fun signInWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val credential = GoogleAuthProvider.getCredential(idToken, null)
+                auth.signInWithCredential(credential).await()
+                _authState.postValue(AuthState.Authenticated)
+                fetchUserProfile()
+                Log.d("AuthViewModel", "Google sign-in successful.")
+            } catch (e: Exception) {
+                _authState.postValue(AuthState.Error("Error during Google sign-in: ${e.message}"))
+                Log.e("AuthViewModel", "Error during Google sign-in: ${e.message}")
+            }
+        }
+    }
+
+    // Email login
+    fun login(email: String, password: String) {
+        if (email.isBlank() || password.isBlank()) {
+            _authState.value = AuthState.Error("Email and password cannot be empty")
+            return
+        }
+
         _authState.value = AuthState.Loading
 
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
-                    fetchUserProfile()
-                } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Unknown error")
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                auth.signInWithEmailAndPassword(email, password).await()
+                _authState.postValue(AuthState.Authenticated)
+                fetchUserProfile()
+                Log.d("AuthViewModel", "Login successful.")
+            } catch (e: Exception) {
+                _authState.postValue(AuthState.Error("Error logging in: ${e.message}"))
+                Log.e("AuthViewModel", "Login failed: ${e.message}")
             }
+        }
     }
 
-    // sign out ---------------------------------------------------------------------------------
+    private fun initializeWardrobe(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val wardrobeData = mapOf("userId" to userId)
+                firestore.collection("wardrobes").document(userId).set(wardrobeData, SetOptions.merge()).await()
 
-    fun logOut() {
-        auth.signOut()
-        _authState.value = AuthState.Unauthenticated
-        _currentUserData.value = null
-    }
-
-    // Fetch user data from Firestore
-    private fun fetchUserProfile() {
-        val uid = auth.currentUser?.uid ?: return
-        firestore.collection("users").document(uid).get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    _currentUserData.value = document.toObject(User::class.java)
-                } else {
-                    _currentUserData.value = null
-                }
-            }
-            .addOnFailureListener {
-                _currentUserData.value = null
-            }
-    }
-
-    private fun initializeWardrobe(wardrobeId: String, userId: String) {
-        val wardrobeData = mapOf(
-            "userId" to userId,             // Use the provided userId
-            "wardrobeId" to wardrobeId,     // Use the provided wardrobeId
-        )
-
-        firestore.collection("wardrobes").document(wardrobeId)
-            .set(wardrobeData)
-            .addOnSuccessListener {
-                Log.d("AuthViewModel", "Wardrobe document created with ID: $wardrobeId")
-
-                // Initialize subcollections for categories
                 val categories = listOf("tops", "bottoms", "shoes", "accessories")
                 categories.forEach { category ->
-                    firestore.collection("wardrobes").document(wardrobeId)
+                    firestore.collection("wardrobes")
+                        .document(userId)
                         .collection(category)
-                        .document() // No dummy document, just initialize the collection
+                        .document("info")
+                        .set(mapOf("initialized" to true)).await()
                 }
+
+                Log.d("AuthViewModel", "Wardrobe for user $userId has been initialized successfully")
+            } catch (e: Exception) {
+                Log.e("AuthViewModel", "Error initializing wardrobe for user $userId: ${e.message}")
+                _authState.postValue(AuthState.Error("Error initializing wardrobe: ${e.message}"))
             }
-            .addOnFailureListener { e ->
-                Log.e("AuthViewModel", "Error creating wardrobe document: ${e.message}")
-                _authState.value = AuthState.Error("Error initializing wardrobe: ${e.message}")
+        }
+    }
+
+    private fun fetchUserProfile() {
+        val uid = auth.currentUser?.uid ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val document = firestore.collection("users").document(uid).get().await()
+                _currentUserData.postValue(document.toObject(User::class.java))
+            } catch (e: Exception) {
+                _currentUserData.postValue(null)
             }
+        }
+    }
+
+    fun logOut() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                auth.signOut()
+                _authState.postValue(AuthState.Unauthenticated)
+                _currentUserData.postValue(null)
+                Log.d("AuthViewModel", "User logged out successfully.")
+            } catch (e: Exception) {
+                Log.e("AuthViewModel", "Error logging out: ${e.message}")
+                _authState.postValue(AuthState.Error("Error logging out: ${e.message}"))
+            }
+        }
     }
 }
 
@@ -194,5 +169,5 @@ sealed class AuthState {
     data object Unauthenticated : AuthState()
     data object Authenticated : AuthState()
     data object Loading : AuthState()
-    data class Error(val message: String) : AuthState()
+    data class Error(val message: String, val cause: Throwable? = null) : AuthState()
 }

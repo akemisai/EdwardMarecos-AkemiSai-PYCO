@@ -32,7 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.navigation.Routes
@@ -45,7 +47,12 @@ import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 @Composable
 fun OutfitsScreen(
     navController: NavHostController,
-    outfitsViewModel: OutfitsViewModel = viewModel(factory = OutfitsViewModelFactory())
+    outfitsViewModel: OutfitsViewModel = viewModel(
+        factory = OutfitsViewModelFactory(
+            auth = FirebaseAuth.getInstance(),
+            firestore = FirebaseFirestore.getInstance()
+        )
+    )
 ) {
 
     val outfits by outfitsViewModel.outfits.collectAsState()
@@ -56,7 +63,7 @@ fun OutfitsScreen(
 
     // Resolver function for DocumentReference to ClothingItem
     val resolveClothingItem: (DocumentReference?) -> ClothingItem? = { reference ->
-        wardrobeMap[reference?.id] // Use the `id` from the reference to find the item in the map
+        reference?.id?.let { wardrobeMap[it] }
     }
 
     Scaffold(
