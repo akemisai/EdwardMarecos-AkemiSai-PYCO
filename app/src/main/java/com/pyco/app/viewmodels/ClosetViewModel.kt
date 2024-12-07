@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ClosetViewModel(
-    private val userViewModel: UserViewModel // Inject UserViewModel
+    private val userViewModel: UserViewModel
 ) : ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -32,16 +32,17 @@ class ClosetViewModel(
 
     init {
         viewModelScope.launch {
-            userViewModel.userProfile.collect { user ->
-                user?.wardrobeId?.let { wardrobeId ->
-                    fetchClothingItems(wardrobeId)
-                } ?: Log.e("ClosetViewModel", "Wardrobe ID is null for user.")
+            val userId = auth.currentUser?.uid
+            if (userId == null) {
+                Log.e("ClosetViewModel", "User is not authenticated.")
+            } else {
+                fetchClothingItems(userId)
             }
         }
     }
 
-    private fun fetchClothingItems(wardrobeId: String) {
-        Log.d("ClosetViewModel", "Fetching items for wardrobe: $wardrobeId")
+    private fun fetchClothingItems(userId: String) {
+        Log.d("ClosetViewModel", "Fetching items for user: $userId")
 
         // Define categories and their respective flows
         val categories = mapOf(
@@ -55,8 +56,8 @@ class ClosetViewModel(
             Log.d("ClosetViewModel", "Fetching items from category: $category")
 
             firestore.collection("wardrobes")
-                .document(wardrobeId)
-                .collection(category)
+                .document(userId) // Use userId directly for wardrobe document
+                .collection(category) // Access the specific category subcollection
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
                         Log.e("ClosetViewModel", "Error fetching $category items: ${error.message}")
@@ -81,10 +82,9 @@ class ClosetViewModel(
         }
     }
 
-    fun addClothingItem(item: ClothingItem, wardrobeId: String, category: String) {
-        val userId = auth.currentUser?.uid
-        if (userId == null) {
-            Log.e("ClosetViewModel", "User not authenticated. Cannot add item.")
+    fun addClothingItem(item: ClothingItem, userId: String, category: String) {
+        if (userId.isBlank()) {
+            Log.e("ClosetViewModel", "User ID is blank. Cannot add item.")
             return
         }
 
@@ -95,11 +95,11 @@ class ClosetViewModel(
         }
 
         val categoryRef = firestore.collection("wardrobes")
-            .document(wardrobeId)
+            .document(userId) // Use userId directly for wardrobe document
             .collection(category)
 
-        val docRef = categoryRef.document()
-        val itemWithId = item.copy(id = docRef.id)
+        val docRef = categoryRef.document() // Auto-generate an ID for the item
+        val itemWithId = item.copy(id = docRef.id) // Add the auto-generated ID to the item
 
         firestore.runTransaction { transaction ->
             transaction.set(docRef, itemWithId)
@@ -110,6 +110,7 @@ class ClosetViewModel(
         }
     }
 }
+
 
 //    // Function to add a clothing item with a custom ID
 //    fun addClothingItemWithCustomId(item: ClothingItem, customId: String) {

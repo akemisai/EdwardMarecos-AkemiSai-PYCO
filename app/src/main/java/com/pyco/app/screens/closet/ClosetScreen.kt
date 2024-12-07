@@ -34,8 +34,8 @@ import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.screens.closet.components.ClosetTopSection
 import com.pyco.app.screens.closet.components.ClothingItemList
 import com.pyco.app.viewmodels.ClosetViewModel
-import com.pyco.app.viewmodels.ClosetViewModelFactory
 import com.pyco.app.viewmodels.UserViewModel
+import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
 
 val closetBackgroundColor = Color(0xFF333333) // Dark background color
 val customColor = Color(0xFFF7f7f7) // Assuming white for text/icons; adjust as needed
@@ -43,11 +43,13 @@ val customColor = Color(0xFFF7f7f7) // Assuming white for text/icons; adjust as 
 @Composable
 fun ClosetScreen(
     navController: NavHostController,
-    userViewModel: UserViewModel,
-    closetViewModel: ClosetViewModel = viewModel(
+    userViewModel: UserViewModel // Pass UserViewModel here
+) {
+
+    val closetViewModel: ClosetViewModel = viewModel(
         factory = ClosetViewModelFactory(userViewModel)
     )
-) {
+
     // Observe all category flows
     val tops by closetViewModel.tops.collectAsState()
     val bottoms by closetViewModel.bottoms.collectAsState()
