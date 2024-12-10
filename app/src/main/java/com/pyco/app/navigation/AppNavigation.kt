@@ -32,20 +32,11 @@ import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 @Composable
 fun AppNavigation(
     authViewModel: AuthViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    closetViewModel: ClosetViewModel,
+    outfitsViewModel: OutfitsViewModel
 ) {
     val navController = rememberNavController()
-
-    val firestore = FirebaseFirestore.getInstance()
-    val auth = FirebaseAuth.getInstance()
-
-    val closetViewModel: ClosetViewModel = viewModel(
-        factory = ClosetViewModelFactory(userViewModel)
-    )
-
-    val outfitsViewModel: OutfitsViewModel = viewModel(
-        factory = OutfitsViewModelFactory(auth, firestore)
-    )
 
     NavHost(navController = navController, startDestination = Routes.LOGIN) {
 

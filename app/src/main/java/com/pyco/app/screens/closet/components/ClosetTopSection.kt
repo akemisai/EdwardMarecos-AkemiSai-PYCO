@@ -1,14 +1,11 @@
+// ClosetTopSection.kt
 package com.pyco.app.screens.closet.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +17,8 @@ import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.viewmodels.UserViewModel
+import android.util.Log
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 
 @Composable
 fun ClosetTopSection(
@@ -29,6 +28,11 @@ fun ClosetTopSection(
     userViewModel: UserViewModel
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
+
+    // Log user profile
+    LaunchedEffect(userProfile) {
+        Log.d("ClosetTopSection", "UserProfile: $userProfile")
+    }
 
     Column(
         modifier = Modifier
@@ -76,7 +80,7 @@ fun ClosetTopSection(
                     contentColor = customColor,
                     edgePadding = 8.dp,
                     indicator = { tabPositions ->
-                        SecondaryIndicator(
+                        TabRowDefaults.SecondaryIndicator(
                             Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
                             height = 2.dp,
                             color = customColor

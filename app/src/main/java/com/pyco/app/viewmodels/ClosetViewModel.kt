@@ -37,18 +37,22 @@ class ClosetViewModel(
     private val _wardrobeMap = MutableStateFlow<Map<String, ClothingItem>>(emptyMap())
     val wardrobeMap: StateFlow<Map<String, ClothingItem>> = _wardrobeMap
 
+    // Loading state
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val userId = auth.currentUser?.uid
-            if (userId == null) {
-                Log.e("ClosetViewModel", "User is not authenticated.")
-            } else {
-                fetchClothingItems(userId)
+        // Observe userProfile and fetch data when user is authenticated
+        viewModelScope.launch {
+            userViewModel.userProfile.collect { user ->
+                user?.uid?.let { userId ->
+                    fetchClothingItems(userId)
+                }
             }
         }
     }
 
-    private fun fetchClothingItems(userId: String) {
+    private suspend fun fetchClothingItems(userId: String) {
         Log.d("ClosetViewModel", "Fetching items for user: $userId")
 
         // Define categories and their respective flows
@@ -59,36 +63,35 @@ class ClosetViewModel(
             "accessories" to _accessories
         )
 
-        categories.forEach { (category, flow) ->
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val snapshot = firestore.collection("wardrobes")
-                        .document(userId)
-                        .collection(category)
-                        .get()
-                        .await()
+        _isLoading.value = true
 
-                    val items = snapshot.documents.mapNotNull { doc ->
-                        try {
-                            doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
-                        } catch (e: Exception) {
-                            Log.e("ClosetViewModel", "Error deserializing document ${doc.id} in $category", e)
-                            null
-                        }
+        try {
+            categories.forEach { (category, flow) ->
+                val snapshot = firestore.collection("wardrobes")
+                    .document(userId)
+                    .collection(category)
+                    .get()
+                    .await()
+
+                val items = snapshot.documents.mapNotNull { doc ->
+                    try {
+                        doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
+                    } catch (e: Exception) {
+                        Log.e("ClosetViewModel", "Error deserializing document ${doc.id} in $category", e)
+                        null
                     }
-
-                    // Update the specific category flow (like _tops, _bottoms)
-                    flow.update { items }
-
-                    // Update the wardrobeMap with items from this category
-                    _wardrobeMap.update { currentMap ->
-                        currentMap + items.associateBy { it.id }
-                    }
-
-                } catch (e: Exception) {
-                    Log.e("ClosetViewModel", "Error fetching $category items: ${e.message}", e)
                 }
+
+                // Update the specific category flow (like _tops, _bottoms)
+                flow.value = items
+
+                // Update the wardrobeMap with items from this category
+                _wardrobeMap.value += items.associateBy { it.id }
             }
+        } catch (e: Exception) {
+            Log.e("ClosetViewModel", "Error fetching clothing items: ${e.message}", e)
+        } finally {
+            _isLoading.value = false
         }
     }
 

@@ -44,6 +44,7 @@ import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.outfits.components.OutfitRow
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
+import com.pyco.app.viewmodels.UserViewModel
 import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +53,7 @@ fun OutfitsScreen(
     navController: NavHostController,
     outfitsViewModel: OutfitsViewModel = viewModel(
         factory = OutfitsViewModelFactory(
-            auth = FirebaseAuth.getInstance(),
+            userViewModel = UserViewModel(),
             firestore = FirebaseFirestore.getInstance()
         )
     )
