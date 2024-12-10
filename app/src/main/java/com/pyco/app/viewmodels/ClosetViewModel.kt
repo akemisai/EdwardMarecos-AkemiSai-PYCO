@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class ClosetViewModel(
-    private val userViewModel: UserViewModel
+    internal val userViewModel: UserViewModel
 ) : ViewModel() {
 
     private val firestore = FirebaseFirestore.getInstance()

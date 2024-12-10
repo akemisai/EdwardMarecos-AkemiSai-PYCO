@@ -20,6 +20,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,6 +37,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.outfits.components.OutfitRow
@@ -67,14 +70,19 @@ fun OutfitsScreen(
     }
 
     Scaffold(
+        containerColor = backgroundColor,
         topBar = {
             TopAppBar(
                 title = { Text("Outfits") },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = customColor)
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = backgroundColor,
+                    titleContentColor = customColor,
+                )
             )
         },
         bottomBar = {
@@ -86,7 +94,7 @@ fun OutfitsScreen(
                     navController.navigate(Routes.CREATE_OUTFIT)
                 },
                 content = {
-                    Icon(Icons.Filled.Add, contentDescription = "Create Outfit")
+                    Icon(Icons.Filled.Add, contentDescription = "Create Outfit", tint = customColor)
                 }
             )
         },
@@ -101,7 +109,7 @@ fun OutfitsScreen(
                         .fillMaxSize()
                         .padding(padding)
                 ) {
-                    Text(text = "No outfits found", style = MaterialTheme.typography.bodyLarge)
+                    Text(text = "No outfits found", style = MaterialTheme.typography.bodyLarge, color = customColor)
                 }
             } else {
                 LazyColumn(
@@ -123,13 +131,5 @@ fun OutfitsScreen(
                 }
             }
         }
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun OutfitsScreenPreview() {
-    OutfitsScreen(
-        navController = NavHostController(LocalContext.current)
     )
 }

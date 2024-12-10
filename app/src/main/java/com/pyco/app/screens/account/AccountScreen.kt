@@ -25,8 +25,11 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
 import com.pyco.app.models.User
 import com.pyco.app.viewmodels.UserViewModel
+import kotlin.contracts.contract
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,33 +41,38 @@ fun AccountScreen(
     val isLoading by userViewModel.isLoading.collectAsState()
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = backgroundColor,
         bottomBar = { BottomNavigationBar(navController = navController) },
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = backgroundColor,
+                    titleContentColor = customColor,
+                ),
                 title = {
-                    Text(text = "PYCO", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "PYCO",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = customColor
+                    )
                 },
                 actions = {
                     IconButton(onClick = { /* TODO: Navigate to notifications */ }) {
                         Icon(
                             imageVector = Icons.Default.Notifications,
                             contentDescription = "Notifications",
-                            tint = MaterialTheme.colorScheme.onBackground
+                            tint = customColor
                         )
                     }
                     IconButton(onClick = { navController.navigate("settings") }) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = "Settings",
-                            tint = MaterialTheme.colorScheme.onBackground
+                            tint = customColor
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
             )
         }
     ) { innerPadding ->
@@ -106,7 +114,7 @@ fun AccountScreen(
                 text = userProfile?.displayName ?: "Jane Doe",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground
+                color = customColor
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -117,8 +125,8 @@ fun AccountScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 userProfile?.let { profile ->
-                    EngagementStat(count = profile.followersCount, label = "followers")
-                    EngagementStat(count = profile.followingCount, label = "following")
+                    EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor)
+                    EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor)
                     EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color.Red)
                 }
             }
@@ -129,8 +137,8 @@ fun AccountScreen(
             Button(
                 onClick = { navController.navigate("update_profile") },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = customColor,
+                    contentColor = backgroundColor
                 )
             ) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Profile")
@@ -148,7 +156,8 @@ fun AccountScreen(
                 text = "Metrics",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                color = customColor
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -180,7 +189,7 @@ fun EngagementStat(count: Int, label: String, iconColor: Color = MaterialTheme.c
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+            color = customColor
         )
     }
 }
