@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.pyco.app.viewmodels.AuthViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,13 +89,4 @@ fun SettingsScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "SettingsScreen Preview")
-@Composable
-fun SettingsScreenPreview() {
-    SettingsScreen(
-        authViewModel = AuthViewModel(),
-        navController = NavHostController(LocalContext.current)
-    )
 }

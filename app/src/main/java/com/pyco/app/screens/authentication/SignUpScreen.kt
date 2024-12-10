@@ -40,7 +40,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.pyco.app.viewmodels.AuthState
 import com.pyco.app.viewmodels.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,13 +64,13 @@ fun SignUpScreen(
 
     LaunchedEffect(authState) {
         when (authState) {
-            is AuthState.Authenticated -> {
+            is AuthViewModel.AuthState.Authenticated -> {
                 navController.navigate("home") {
                     popUpTo("signup") { inclusive = true }
                 }
             }
-            is AuthState.Error -> {
-                snackbarHostState.showSnackbar((authState as AuthState.Error).message)
+            is AuthViewModel.AuthState.Error -> {
+                snackbarHostState.showSnackbar((authState as AuthViewModel.AuthState.Error).message)
             }
             else -> Unit
         }
@@ -217,12 +216,4 @@ fun SignUpScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
-@Composable
-fun SignUpScreenPreview() {
-    SignUpScreen(
-        authViewModel = AuthViewModel(),
-        navController = NavHostController(LocalContext.current))
 }

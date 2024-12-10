@@ -111,9 +111,3 @@ fun HomeTopSection(
         }
     }
 }
-
-@Preview(showBackground = true, device = "spec:parent=pixel_6_pro", name = "HomeTopSection Preview")
-@Composable
-fun HomeTopSectionPreview() {
-    HomeTopSection()
-}

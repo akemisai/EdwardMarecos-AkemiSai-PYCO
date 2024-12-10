@@ -108,4 +108,7 @@ dependencies {
     // guava
     implementation(libs.guava)
 
+    // Firebase App Check
+    implementation(libs.firebase.appcheck.playintegrity)
+
 }
