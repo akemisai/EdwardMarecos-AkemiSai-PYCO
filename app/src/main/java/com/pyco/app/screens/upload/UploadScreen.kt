@@ -32,7 +32,7 @@ import com.pyco.app.MainActivity
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.screens.upload.components.CameraPreview
 import com.pyco.app.R
-import com.pyco.app.screens.closet.closetBackgroundColor
+import com.pyco.app.components.backgroundColor
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -52,7 +52,7 @@ fun UploadScreen(
     }
 
     Scaffold(
-        containerColor = closetBackgroundColor, // Set the background color
+        containerColor = backgroundColor, // Set the background color
         bottomBar = {
             BottomNavigationBar(navController = navController)
         },
@@ -94,12 +94,4 @@ fun UploadScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
-@Composable
-fun UploadScreenPreview() {
-    UploadScreen(
-        navController = NavHostController(LocalContext.current)
-    )
 }
