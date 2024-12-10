@@ -21,6 +21,7 @@ object Routes {
 
     // account related navigation
     const val SETTINGS = "settings"
+    const val UPDATE_PROFILE = "update_profile"
 
     // request related navigation
     const val MAKE_REQUEST = "make_request"

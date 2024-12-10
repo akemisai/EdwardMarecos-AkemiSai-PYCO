@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.screens.account.AccountScreen
+import com.pyco.app.screens.account.UpdateProfileScreen
 import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
@@ -35,7 +36,6 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
 
-    // Create shared ViewModel instances using factories
     val firestore = FirebaseFirestore.getInstance()
     val auth = FirebaseAuth.getInstance()
 
@@ -93,6 +93,13 @@ fun AppNavigation(
         composable(Routes.SETTINGS) {
             SettingsScreen(
                 authViewModel = authViewModel,
+                navController = navController
+            )
+        }
+        // Add Update Profile Screen
+        composable(Routes.UPDATE_PROFILE) {
+            UpdateProfileScreen(
+                userViewModel = userViewModel,
                 navController = navController
             )
         }

@@ -47,7 +47,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -55,7 +54,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.pyco.app.R
-import com.pyco.app.viewmodels.AuthState
 import com.pyco.app.viewmodels.AuthViewModel
 import kotlinx.coroutines.launch
 
@@ -107,13 +105,13 @@ fun LoginScreen(
 
     LaunchedEffect(authState) {
         when (authState) {
-            is AuthState.Authenticated -> {
+            is AuthViewModel.AuthState.Authenticated -> {
                 navController.navigate("home") {
                     popUpTo("login") { inclusive = true }
                 }
             }
-            is AuthState.Error -> {
-                snackbarHostState.showSnackbar((authState as AuthState.Error).message)
+            is AuthViewModel.AuthState.Error -> {
+                snackbarHostState.showSnackbar((authState as AuthViewModel.AuthState.Error).message)
             }
             else -> Unit
         }
@@ -257,71 +255,71 @@ fun LoginScreen(
                         }
                 )
 
-                // instagram sign in button next
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_instagram),
-                    contentDescription = "Instagram Sign In",
-                    modifier = Modifier
-                        .size(48.dp)
-                        .padding(8.dp)
-                        .background(color = customColor, shape = CircleShape) // Make the image round
-                        .clip(CircleShape)
-                        .padding(5.dp)
-                        .clickable {
-                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestIdToken(context.getString(R.string.default_web_client_id))
-                                .requestEmail()
-                                .build()
-
-                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
-                            val signInIntent = googleSignInClient.signInIntent
-                            googleSignInLauncher.launch(signInIntent)
-                        }
-                )
-
-                // then x sign in button
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_x),
-                    contentDescription = "Google Sign In",
-                    modifier = Modifier
-                        .size(48.dp)
-                        .padding(8.dp)
-                        .background(color = customColor, shape = CircleShape) // Make the image round
-                        .clip(CircleShape)
-                        .padding(6.dp)
-                        .clickable {
-                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestIdToken(context.getString(R.string.default_web_client_id))
-                                .requestEmail()
-                                .build()
-
-                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
-                            val signInIntent = googleSignInClient.signInIntent
-                            googleSignInLauncher.launch(signInIntent)
-                        }
-                )
-
-                // lastly sign in with tiktok button
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_tiktok),
-                    contentDescription = "Instagram Sign In",
-                    modifier = Modifier
-                        .size(48.dp)
-                        .padding(8.dp)
-                        .background(color = customColor, shape = CircleShape) // Make the image round
-                        .clip(CircleShape)
-                        .padding(5.dp)
-                        .clickable {
-                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestIdToken(context.getString(R.string.default_web_client_id))
-                                .requestEmail()
-                                .build()
-
-                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
-                            val signInIntent = googleSignInClient.signInIntent
-                            googleSignInLauncher.launch(signInIntent)
-                        }
-                )
+//                // instagram sign in button next
+//                androidx.compose.foundation.Image(
+//                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_instagram),
+//                    contentDescription = "Instagram Sign In",
+//                    modifier = Modifier
+//                        .size(48.dp)
+//                        .padding(8.dp)
+//                        .background(color = customColor, shape = CircleShape) // Make the image round
+//                        .clip(CircleShape)
+//                        .padding(5.dp)
+//                        .clickable {
+//                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                                .requestIdToken(context.getString(R.string.default_web_client_id))
+//                                .requestEmail()
+//                                .build()
+//
+//                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
+//                            val signInIntent = googleSignInClient.signInIntent
+//                            googleSignInLauncher.launch(signInIntent)
+//                        }
+//                )
+//
+//                // then x sign in button
+//                androidx.compose.foundation.Image(
+//                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_x),
+//                    contentDescription = "Google Sign In",
+//                    modifier = Modifier
+//                        .size(48.dp)
+//                        .padding(8.dp)
+//                        .background(color = customColor, shape = CircleShape) // Make the image round
+//                        .clip(CircleShape)
+//                        .padding(6.dp)
+//                        .clickable {
+//                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                                .requestIdToken(context.getString(R.string.default_web_client_id))
+//                                .requestEmail()
+//                                .build()
+//
+//                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
+//                            val signInIntent = googleSignInClient.signInIntent
+//                            googleSignInLauncher.launch(signInIntent)
+//                        }
+//                )
+//
+//                // lastly sign in with tiktok button
+//                androidx.compose.foundation.Image(
+//                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_tiktok),
+//                    contentDescription = "Instagram Sign In",
+//                    modifier = Modifier
+//                        .size(48.dp)
+//                        .padding(8.dp)
+//                        .background(color = customColor, shape = CircleShape) // Make the image round
+//                        .clip(CircleShape)
+//                        .padding(5.dp)
+//                        .clickable {
+//                            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                                .requestIdToken(context.getString(R.string.default_web_client_id))
+//                                .requestEmail()
+//                                .build()
+//
+//                            val googleSignInClient = GoogleSignIn.getClient(context, gso)
+//                            val signInIntent = googleSignInClient.signInIntent
+//                            googleSignInLauncher.launch(signInIntent)
+//                        }
+//                )
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -350,12 +348,4 @@ fun LoginScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "id:pixel_6_pro", name = "fone")
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(
-        authViewModel = AuthViewModel(),
-        navController = NavHostController(LocalContext.current))
 }

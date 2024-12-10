@@ -8,6 +8,7 @@ import com.pyco.app.navigation.AppNavigation
 import com.pyco.app.ui.theme.PycoTheme
 import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.UserViewModel
+import com.pyco.app.viewmodels.factories.AuthViewModelFactory
 
 class MainActivity : BaseActivity() {
 
@@ -18,8 +19,10 @@ class MainActivity : BaseActivity() {
         setContent {
             PycoTheme {
                 // Provide the AuthViewModel to the navigation
-                val authViewModel: AuthViewModel = viewModel()
                 val userViewModel: UserViewModel = viewModel()
+                val authViewModel: AuthViewModel = viewModel(
+                    factory = AuthViewModelFactory(userViewModel)
+                )
 
                 AppNavigation(
                     authViewModel = authViewModel,
