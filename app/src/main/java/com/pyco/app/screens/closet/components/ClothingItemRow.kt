@@ -1,9 +1,12 @@
+// ClothingItemRow.kt
 package com.pyco.app.screens.closet.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,9 +15,15 @@ import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.res.painterResource
 import com.pyco.app.R
 import androidx.compose.ui.graphics.Color
+import android.util.Log
 
 @Composable
 fun ClothingItemRow(item: ClothingItem) {
+    // Log each item being displayed
+    LaunchedEffect(item) {
+        Log.d("ClothingItemRow", "Displaying item: ${item.name}")
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

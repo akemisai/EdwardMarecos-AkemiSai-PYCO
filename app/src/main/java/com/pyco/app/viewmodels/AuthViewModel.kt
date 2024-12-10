@@ -1,8 +1,6 @@
 package com.pyco.app.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +9,8 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.User
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -21,8 +21,8 @@ class AuthViewModel(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    private val _authState = MutableLiveData<AuthState>()
-    val authState: LiveData<AuthState> = _authState
+    private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
+    val authState: StateFlow<AuthState> = _authState
 
     // Expose user's email as a property
     val userEmail: String?
@@ -55,8 +55,6 @@ class AuthViewModel(
 
         _authState.value = AuthState.Loading
 
-        logOut() // Ensure no old user session remains
-
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -67,10 +65,10 @@ class AuthViewModel(
                             auth.currentUser?.uid?.let { userId ->
                                 userViewModel.fetchUserProfile(userId) // Fetch the new user's profile
                             }
-                            _authState.postValue(AuthState.Authenticated)
+                            _authState.value = AuthState.Authenticated
                         } catch (e: Exception) {
                             Log.e("AuthViewModel", "Error after login: ${e.message}")
-                            _authState.postValue(AuthState.Error(e.message ?: "Unknown error"))
+                            _authState.value = AuthState.Error(e.message ?: "Unknown error")
                         }
                     }
                 } else {
@@ -139,10 +137,10 @@ class AuthViewModel(
                                             // Fetch the updated user profile to update the state
                                             userViewModel.fetchUserProfile(user.uid)
 
-                                            _authState.postValue(AuthState.Authenticated)
+                                            _authState.value = AuthState.Authenticated
                                         } catch (e: Exception) {
                                             Log.e("AuthViewModel", "Error during signup process: ${e.message}")
-                                            _authState.postValue(AuthState.Error(e.message ?: "Failed to complete signup"))
+                                            _authState.value = AuthState.Error(e.message ?: "Failed to complete signup")
                                         }
                                     }
                                 } else {
@@ -166,8 +164,6 @@ class AuthViewModel(
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         _authState.value = AuthState.Loading
 
-        logOut() // Ensure no old user session remains
-
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -178,10 +174,10 @@ class AuthViewModel(
                             auth.currentUser?.uid?.let { userId ->
                                 userViewModel.fetchUserProfile(userId)
                             }
-                            _authState.postValue(AuthState.Authenticated)
+                            _authState.value = AuthState.Authenticated
                         } catch (e: Exception) {
                             Log.e("AuthViewModel", "Error during Google sign-in: ${e.message}")
-                            _authState.postValue(AuthState.Error(e.message ?: "Unknown error"))
+                            _authState.value = AuthState.Error(e.message ?: "Unknown error")
                         }
                     }
                 } else {
