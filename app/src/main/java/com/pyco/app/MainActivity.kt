@@ -10,10 +10,12 @@ import com.pyco.app.navigation.AppNavigation
 import com.pyco.app.ui.theme.PycoTheme
 import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.UserViewModel
 import com.pyco.app.viewmodels.factories.AuthViewModelFactory
 import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
+import com.pyco.app.viewmodels.factories.HomeViewModelFactory
 import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 class MainActivity : BaseActivity() {
@@ -30,6 +32,14 @@ class MainActivity : BaseActivity() {
                 // Initialize AuthViewModel with its factory
                 val authViewModel: AuthViewModel = viewModel(
                     factory = AuthViewModelFactory(userViewModel)
+                )
+
+                // Initialize UserViewModel with its factory
+                val homeViewModel: HomeViewModel = viewModel(
+                    factory = HomeViewModelFactory(
+                        userViewModel,
+                        FirebaseFirestore.getInstance()
+                    )
                 )
 
                 // Initialize ClosetViewModel with its factory
@@ -49,6 +59,7 @@ class MainActivity : BaseActivity() {
                 AppNavigation(
                     authViewModel = authViewModel,
                     userViewModel = userViewModel,
+                    homeViewModel = homeViewModel,
                     closetViewModel = closetViewModel,
                     outfitsViewModel = outfitsViewModel
                 )

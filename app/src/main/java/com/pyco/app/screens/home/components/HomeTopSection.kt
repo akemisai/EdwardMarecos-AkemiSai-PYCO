@@ -1,5 +1,6 @@
 package com.pyco.app.screens.home.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -22,14 +23,16 @@ import com.pyco.app.screens.home.components.requests.RequestsFeed
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 @Composable
 fun HomeTopSection(
-    navController: NavHostController? = null,
-    homeViewModel: HomeViewModel = viewModel()
+    homeViewModel: HomeViewModel,
 ) {
-
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
+
+    val userProfile by homeViewModel.userViewModel.userProfile.collectAsState()
+    val currentUserId = userProfile?.uid ?: ""
 
     Column(
         modifier = Modifier
@@ -55,19 +58,16 @@ fun HomeTopSection(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.mis_chat), // chat icon
+                Image(
+                    painter = painterResource(id = R.drawable.mis_chat),
                     contentDescription = "Chat",
-                    tint = customColor,
                     modifier = Modifier
                         .size(24.dp)
-                        .padding(top = 2.dp)
-                        .padding(end = 4.dp)
+                        .padding(end = 4.dp),
                 )
-                Icon(
-                    painter = painterResource(id = R.drawable.mis_alert), // notification icon
+                Image(
+                    painter = painterResource(id = R.drawable.mis_alert),
                     contentDescription = "Notification",
-                    tint = customColor,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -106,7 +106,12 @@ fun HomeTopSection(
         // Display Content Based on Selected Tab
         when (selectedTabIndex) {
             0 -> RequestsFeed(requestViewModel = viewModel())
-            1 -> TopOutfitsFeed(outfits = publicOutfits)
+            1 -> TopOutfitsFeed(
+                outfits = publicOutfits,
+                onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },
+                fetchResolvedClothingItems = { outfit -> homeViewModel.fetchResolvedClothingItems(outfit) },
+                currentUserId = currentUserId
+            )
             2 -> ResponsesFeed()
         }
     }
