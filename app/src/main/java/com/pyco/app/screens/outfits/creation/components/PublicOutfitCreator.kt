@@ -7,36 +7,47 @@ import com.pyco.app.models.Outfit
 class PublicOutfitCreator {
     private val firestore = FirebaseFirestore.getInstance()
 
-    fun createPublicOutfit(outfit: Outfit, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        // Ensure the outfit ID is valid before proceeding
-        if (outfit.id.isBlank()) {
+    fun createPublicOutfit(
+        originalOutfit: Outfit,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        if (originalOutfit.id.isBlank()) {
             Log.e("PublicOutfitCreator", "Outfit ID is invalid or blank.")
             onFailure(IllegalArgumentException("Invalid outfit ID"))
             return
         }
 
-        val outfitData = mapOf(
-            "name" to outfit.name,
-            "createdBy" to outfit.createdBy,
-            "top" to outfit.top,
-            "bottom" to outfit.bottom,
-            "shoe" to outfit.shoe,
-            "accessory" to outfit.accessory,
-            "isPublic" to outfit.isPublic
+        val originalOutfitRef = firestore.collection("outfits")
+            .document(originalOutfit.ownerId)
+            .collection("user_outfits")
+            .document(originalOutfit.id)
+
+        val publicOutfitData = mapOf(
+            "id" to originalOutfit.id,
+            "name" to originalOutfit.name,
+            "top" to originalOutfit.top,
+            "bottom" to originalOutfit.bottom,
+            "shoe" to originalOutfit.shoe,
+            "accessory" to originalOutfit.accessory,
+            "createdBy" to originalOutfit.createdBy,
+            "creatorId" to originalOutfit.creatorId,
+            "creatorPhotoUrl" to originalOutfit.creatorPhotoUrl,
+            "ownerId" to originalOutfit.ownerId,
+            "timestamp" to originalOutfit.timestamp,
+            "likes" to emptyList<String>(),
+            "isPublic" to true,
+            "originalOutfitRef" to originalOutfitRef
         )
 
-        // Use the outfit's ID to specify the document reference
-        firestore.collection("public_outfits").document(outfit.id)  // Ensure outfit.id is valid
-            .set(outfitData)
+        firestore.collection("public_outfits").document(originalOutfit.id)
+            .set(publicOutfitData)
             .addOnSuccessListener {
-                Log.d("PublicOutfitCreator", "Outfit added to public feed: $outfitData")
+                Log.d("PublicOutfitCreator", "Outfit reference added to public feed.")
                 onSuccess()
             }
             .addOnFailureListener { error ->
-                Log.e(
-                    "PublicOutfitCreator",
-                    "Error adding outfit to public feed: ${error.message} and Attempting to write to public_outfits: $outfitData"
-                )
+                Log.e("PublicOutfitCreator", "Error adding outfit reference to public feed: ${error.message}")
                 onFailure(error)
             }
     }

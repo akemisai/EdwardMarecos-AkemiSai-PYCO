@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
@@ -21,7 +20,8 @@ import com.pyco.app.viewmodels.HomeViewModel
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    homeViewModel: HomeViewModel = viewModel()) {
+    homeViewModel: HomeViewModel
+) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
     Scaffold(
@@ -39,7 +39,9 @@ fun HomeScreen(
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                HomeTopSection()
+                HomeTopSection(
+                    homeViewModel = homeViewModel,
+                )
             }
         }
     }

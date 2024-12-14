@@ -23,6 +23,7 @@ import com.pyco.app.screens.requests.creation.MakeRequestScreen
 import com.pyco.app.screens.upload.UploadScreen
 import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.RequestViewModel
 import com.pyco.app.viewmodels.UserViewModel
@@ -33,6 +34,7 @@ import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 fun AppNavigation(
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
+    homeViewModel: HomeViewModel,
     closetViewModel: ClosetViewModel,
     outfitsViewModel: OutfitsViewModel
 ) {
@@ -56,7 +58,10 @@ fun AppNavigation(
 
         // Main navigation
         composable(Routes.HOME) {
-            HomeScreen(navController = navController)
+            HomeScreen(
+                navController = navController,
+                homeViewModel = homeViewModel
+            )
         }
         composable(Routes.CLOSET) {
             ClosetScreen(

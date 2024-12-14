@@ -31,6 +31,9 @@ class OutfitsViewModel(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
+    private val _publicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
+    val publicOutfits: StateFlow<List<Outfit>> = _publicOutfits
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
@@ -52,18 +55,12 @@ class OutfitsViewModel(
     private suspend fun fetchWardrobeItems(userId: String) {
         Log.d("OutfitsViewModel", "Fetching wardrobe items for user: $userId")
 
-        // Define categories and their respective flows
-        val categories = mapOf(
-            "tops" to _wardrobeMap,
-            "bottoms" to _wardrobeMap,
-            "shoes" to _wardrobeMap,
-            "accessories" to _wardrobeMap
-        )
+        val categories = listOf("tops", "bottoms", "shoes", "accessories")
 
         _isLoading.value = true
 
         try {
-            categories.keys.forEach { category ->
+            categories.forEach { category ->
                 val snapshot = firestore.collection("wardrobes")
                     .document(userId)
                     .collection(category)
@@ -74,7 +71,6 @@ class OutfitsViewModel(
                     doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
                 }
 
-                // Update the wardrobeMap with items from this category
                 _wardrobeMap.update { currentMap ->
                     currentMap + wardrobeItems.associateBy { it.id }
                 }
@@ -115,39 +111,48 @@ class OutfitsViewModel(
     }
 
     fun addOutfit(outfit: Outfit) {
-        val userId = userViewModel.userProfile.value?.uid
-        if (userId == null) {
+        val user = userViewModel.userProfile.value
+        if (user == null) {
             _errorMessage.value = "User not authenticated. Cannot add outfit."
             return
         }
 
+        val userId = user.uid
+        val creatorName = user.displayName ?: ""
+        val creatorPhotoUrl = user.photoURL ?: ""
+
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
-                // Add the outfit to Firestore and get the generated outfit ID
                 val newOutfitRef = firestore.collection("outfits")
                     .document(userId)
                     .collection("user_outfits")
                     .document()
 
+                val preparedOutfit = outfit.copy(
+                    id = newOutfitRef.id,
+                    ownerId = userId,
+                    creatorId = userId,
+                    createdBy = creatorName,
+                    creatorPhotoUrl = creatorPhotoUrl
+                )
+
                 firestore.runTransaction { transaction ->
-                    transaction.set(newOutfitRef, outfit.copy(id = newOutfitRef.id), SetOptions.merge())
+                    transaction.set(newOutfitRef, preparedOutfit, SetOptions.merge())
                 }.await()
 
-                // Update the local state with the new outfit
                 _outfits.update { currentOutfits ->
-                    currentOutfits + outfit.copy(id = newOutfitRef.id)
+                    currentOutfits + preparedOutfit
                 }
 
-                Log.d("OutfitsViewModel", "Outfit added successfully: ${outfit.name}")
+                Log.d("OutfitsViewModel", "Outfit added successfully: ${preparedOutfit.name}")
 
-                // Now handle public outfit creation if needed
-                if (outfit.isPublic) {
+                if (preparedOutfit.isPublic) {
                     val publicOutfitCreator = PublicOutfitCreator()
                     publicOutfitCreator.createPublicOutfit(
-                        outfit.copy(id = newOutfitRef.id),
+                        preparedOutfit,
                         onSuccess = {
-                            Log.d("OutfitsViewModel", "Outfit added to public feed!")
+                            Log.d("OutfitsViewModel", "Outfit reference added to public feed!")
                         },
                         onFailure = { error ->
                             Log.e("OutfitsViewModel", "Failed to add outfit to public feed: ${error.message}")
@@ -157,39 +162,6 @@ class OutfitsViewModel(
             } catch (e: Exception) {
                 Log.e("OutfitsViewModel", "Error adding outfit: ${e.message}", e)
                 _errorMessage.value = "Error adding outfit: ${e.message}"
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
-
-
-    fun deleteOutfit(outfitId: String) {
-        val userId = userViewModel.userProfile.value?.uid
-        if (userId == null) {
-            _errorMessage.value = "User not authenticated. Cannot delete outfit."
-            return
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
-            try {
-                firestore.collection("outfits")
-                    .document(userId)
-                    .collection("user_outfits")
-                    .document(outfitId)
-                    .delete()
-                    .await()
-
-                // Update the local state by removing the deleted outfit
-                _outfits.update { currentOutfits ->
-                    currentOutfits.filterNot { it.id == outfitId }
-                }
-
-                Log.d("OutfitsViewModel", "Outfit deleted successfully: $outfitId")
-            } catch (e: Exception) {
-                Log.e("OutfitsViewModel", "Error deleting outfit: ${e.message}", e)
-                _errorMessage.value = "Error deleting outfit: ${e.message}"
             } finally {
                 _isLoading.value = false
             }
