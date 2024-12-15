@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.pyco.app.models.Outfit
 import com.pyco.app.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -88,6 +89,12 @@ class UserViewModel : ViewModel() {
                 if (document.exists()) {
                     val user = document.toObject(User::class.java)
                     _userProfile.update { user }
+
+                    // Fetch public outfits for this user after we have the user profile
+                    user?.uid?.let { uid ->
+                        fetchUserPublicOutfits(uid)
+                    }
+
                     Log.d("UserViewModel", "Fetched user profile for $userId successfully.")
                 } else {
                     Log.e("UserViewModel", "User profile not found for $userId.")
@@ -99,6 +106,33 @@ class UserViewModel : ViewModel() {
             } finally {
                 _isLoading.update { false }
                 Log.d("UserViewModel", "Finished fetching user profile for $userId.")
+            }
+        }
+    }
+
+    private val _userPublicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
+    val userPublicOutfits: StateFlow<List<Outfit>> = _userPublicOutfits
+
+    fun fetchUserPublicOutfits(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.update { true }
+            try {
+                val snapshot = firestore.collection("public_outfits")
+                    .whereEqualTo("creatorId", userId)
+                    .get()
+                    .await()
+
+                val outfits = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(Outfit::class.java)
+                }
+
+                _userPublicOutfits.value = outfits
+                Log.d("UserViewModel", "Fetched ${outfits.size} public outfits for user: $userId")
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error fetching user public outfits: ${e.message}")
+                _errorMessage.update { "Error fetching user public outfits: ${e.message}" }
+            } finally {
+                _isLoading.update { false }
             }
         }
     }

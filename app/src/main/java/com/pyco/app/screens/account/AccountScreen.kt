@@ -1,6 +1,7 @@
 package com.pyco.app.screens.account
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -27,6 +29,7 @@ import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
+import com.pyco.app.models.Outfit
 import com.pyco.app.models.User
 import com.pyco.app.viewmodels.UserViewModel
 import kotlin.contracts.contract
@@ -38,6 +41,8 @@ fun AccountScreen(
     navController: NavHostController
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
+    val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
+
     val isLoading by userViewModel.isLoading.collectAsState()
 
     Scaffold(
@@ -121,13 +126,15 @@ fun AccountScreen(
 
             // Followers, Following, and Likes stats
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 userProfile?.let { profile ->
                     EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor)
                     EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor)
-                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color.Red)
+                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xff852221))
                 }
             }
 
@@ -151,7 +158,10 @@ fun AccountScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            // Metrics section
+            // Metrics section - Podium
+            val sortedOutfits = userPublicOutfits.sortedByDescending { it.likes.size }
+            val top3 = sortedOutfits.take(3)
+
             Text(
                 text = "Metrics",
                 style = MaterialTheme.typography.titleMedium,
@@ -161,31 +171,102 @@ fun AccountScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Example for highlights/outfits display
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                // Replace with actual data for outfits or popular posts
-                MetricCard(title = "Fall Fit", stats = "3000 Likes")
-                MetricCard(title = "Fit 2", stats = "2000 Likes")
-                MetricCard(title = "Fit 3", stats = "1000 Likes")
+            if (top3.isEmpty()) {
+                Text(
+                    text = "No public outfits yet",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = customColor.copy(alpha = 0.7f)
+                )
+            } else {
+                val firstPlaceHeight = 160.dp
+                val secondPlaceHeight = 120.dp
+                val thirdPlaceHeight = 80.dp
+
+                val first = top3.getOrNull(0)
+                val second = top3.getOrNull(1)
+                val third = top3.getOrNull(2)
+
+                // Wrap Row in a Box to push it to the bottom
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(), // Fill remaining space
+                    contentAlignment = Alignment.BottomCenter // Align podium at the bottom
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        // 2nd place on the left (if available)
+                        if (second != null) {
+                            PodiumSpot(
+                                outfit = second,
+                                rank = "2nd",
+                                platformHeight = secondPlaceHeight
+                            )
+                        } else {
+                            Spacer(modifier = Modifier.width(100.dp))
+                        }
+
+                        // 1st place in the center (highest)
+                        if (first != null) {
+                            PodiumSpot(
+                                outfit = first,
+                                rank = "1st",
+                                platformHeight = firstPlaceHeight
+                            )
+                        } else {
+                            Spacer(modifier = Modifier.width(100.dp))
+                        }
+
+                        // 3rd place on the right (if available)
+                        if (third != null) {
+                            PodiumSpot(
+                                outfit = third,
+                                rank = "3rd",
+                                platformHeight = thirdPlaceHeight
+                            )
+                        } else {
+                            Spacer(modifier = Modifier.width(100.dp))
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun EngagementStat(count: Int, label: String, iconColor: Color = MaterialTheme.colorScheme.onBackground) {
+fun EngagementStat(
+    count: Int,
+    label: String,
+    iconColor: Color = MaterialTheme.colorScheme.onBackground
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = "$count",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = iconColor
-        )
+        // Row for count and icon
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "$count",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = iconColor
+            )
+            if (label == "likes") {
+                Icon(
+                    painter = painterResource(id = R.drawable.heart), // Replace with your heart icon
+                    contentDescription = "Heart Icon",
+                    tint = iconColor,
+                    modifier = Modifier
+                        .size(16.dp) // Adjust the size as needed
+                        .padding(start = 4.dp) // Space between count and icon
+                )
+            }
+        }
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
@@ -195,43 +276,71 @@ fun EngagementStat(count: Int, label: String, iconColor: Color = MaterialTheme.c
 }
 
 @Composable
-fun MetricCard(title: String, stats: String) {
-    Card(
-        modifier = Modifier
-            .width(100.dp)
-            .height(120.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
+fun PodiumSpot(
+    outfit: Outfit,
+    rank: String,
+    platformHeight: Dp
+) {
+    Box(
+        modifier = Modifier.width(100.dp),
+        contentAlignment = Alignment.BottomCenter
     ) {
+        // The platform
+        Box(
+            modifier = Modifier
+                .height(platformHeight)
+                .fillMaxWidth()
+                .background(Color(0xff1e1e1e)), // Podium color
+            contentAlignment = Alignment.Center
+        ) {
+            // Crown for 1st place
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (rank == "1st") {
+                    Icon(
+                        painter = painterResource(id = R.drawable.crown),
+                        contentDescription = "Crown",
+                        tint = Color(0xffffd700),
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
+
+                Text(
+                    text = rank,
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                    color = Color(0xffffd700) // gold color for rank text
+                )
+            }
+        }
+
+        // The outfit card above the platform
         Column(
             modifier = Modifier
-                .padding(8.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween,
+                .padding(bottom = platformHeight) // Move the card above the platform
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.placeholder_image), // Replace with actual resource
-                contentDescription = "Placeholder Icon",
+                painter = painterResource(id = R.drawable.placeholder_image),
+                contentDescription = "Outfit Image",
                 tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(bottom = 4.dp)
             )
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = stats,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                )
-            }
+
+            Text(
+                text = outfit.name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = customColor
+            )
+
+            Text(
+                text = "${outfit.likes.size} Likes",
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                color = Color(0xffff4081)
+            )
         }
     }
 }
