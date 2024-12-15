@@ -1,8 +1,12 @@
 package com.pyco.app.screens.account
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
@@ -10,9 +14,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,17 +24,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
+import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
-import com.pyco.app.models.User
 import com.pyco.app.viewmodels.UserViewModel
-import kotlin.contracts.contract
+import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,8 +46,11 @@ fun AccountScreen(
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
     val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
-
     val isLoading by userViewModel.isLoading.collectAsState()
+
+    // State to handle dialog
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedOutfit by remember { mutableStateOf<Outfit?>(null) }
 
     Scaffold(
         containerColor = backgroundColor,
@@ -186,11 +193,10 @@ fun AccountScreen(
                 val second = top3.getOrNull(1)
                 val third = top3.getOrNull(2)
 
-                // Wrap Row in a Box to push it to the bottom
                 Box(
                     modifier = Modifier
-                        .fillMaxSize(), // Fill remaining space
-                    contentAlignment = Alignment.BottomCenter // Align podium at the bottom
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.BottomCenter
                 ) {
                     Row(
                         modifier = Modifier
@@ -204,7 +210,11 @@ fun AccountScreen(
                             PodiumSpot(
                                 outfit = second,
                                 rank = "2nd",
-                                platformHeight = secondPlaceHeight
+                                platformHeight = secondPlaceHeight,
+                                onOutfitClick = {
+                                    selectedOutfit = it
+                                    showDialog = true
+                                }
                             )
                         } else {
                             Spacer(modifier = Modifier.width(100.dp))
@@ -215,7 +225,11 @@ fun AccountScreen(
                             PodiumSpot(
                                 outfit = first,
                                 rank = "1st",
-                                platformHeight = firstPlaceHeight
+                                platformHeight = firstPlaceHeight,
+                                onOutfitClick = {
+                                    selectedOutfit = it
+                                    showDialog = true
+                                }
                             )
                         } else {
                             Spacer(modifier = Modifier.width(100.dp))
@@ -226,7 +240,11 @@ fun AccountScreen(
                             PodiumSpot(
                                 outfit = third,
                                 rank = "3rd",
-                                platformHeight = thirdPlaceHeight
+                                platformHeight = thirdPlaceHeight,
+                                onOutfitClick = {
+                                    selectedOutfit = it
+                                    showDialog = true
+                                }
                             )
                         } else {
                             Spacer(modifier = Modifier.width(100.dp))
@@ -236,7 +254,19 @@ fun AccountScreen(
             }
         }
     }
+
+    // Show dialog if needed
+    if (showDialog && selectedOutfit != null) {
+        OutfitPreviewDialog(
+            outfit = selectedOutfit!!,
+            onDismiss = {
+                showDialog = false
+                selectedOutfit = null
+            }
+        )
+    }
 }
+
 
 @Composable
 fun EngagementStat(
@@ -258,12 +288,12 @@ fun EngagementStat(
             )
             if (label == "likes") {
                 Icon(
-                    painter = painterResource(id = R.drawable.heart), // Replace with your heart icon
+                    painter = painterResource(id = R.drawable.heart),
                     contentDescription = "Heart Icon",
                     tint = iconColor,
                     modifier = Modifier
-                        .size(16.dp) // Adjust the size as needed
-                        .padding(start = 4.dp) // Space between count and icon
+                        .size(16.dp)
+                        .padding(start = 4.dp)
                 )
             }
         }
@@ -279,7 +309,8 @@ fun EngagementStat(
 fun PodiumSpot(
     outfit: Outfit,
     rank: String,
-    platformHeight: Dp
+    platformHeight: Dp,
+    onOutfitClick: (Outfit) -> Unit
 ) {
     Box(
         modifier = Modifier.width(100.dp),
@@ -317,7 +348,8 @@ fun PodiumSpot(
         Column(
             modifier = Modifier
                 .padding(bottom = platformHeight) // Move the card above the platform
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable { onOutfitClick(outfit) }, // Click to preview
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
@@ -342,5 +374,144 @@ fun PodiumSpot(
                 color = Color(0xffff4081)
             )
         }
+    }
+}
+
+
+@Composable
+fun OutfitPreviewDialog(
+    outfit: Outfit,
+    onDismiss: () -> Unit, // Callback to dismiss the dialog
+) {
+    Dialog(onDismissRequest = { onDismiss() }) {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.background,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Horizontal scroll for clothing items
+                val clothingItems = remember { mutableStateListOf<ClothingItem?>() }
+
+                LaunchedEffect(outfit) {
+                    val resolvedItems = listOf(
+                        "tops" to outfit.top,
+                        "bottoms" to outfit.bottom,
+                        "shoes" to outfit.shoe,
+                        "accessories" to outfit.accessory
+                    ).map { (category, ref) ->
+                        ref?.let {
+                            // Correct the path and resolve to a ClothingItem object
+                            val segments = it.path.split("/")
+                            if (segments.size == 4) {
+                                val correctedPath = "wardrobes/${segments[1]}/$category/${segments[3]}"
+                                resolveClothingItem(correctedPath)
+                            } else {
+                                null
+                            }
+                        }
+                    }
+                    clothingItems.clear()
+                    clothingItems.addAll(resolvedItems)
+                }
+
+                // Make the clothing items horizontally scrollable
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp) // Set height to ensure uniform size
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    clothingItems.forEach { item ->
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp) // Same size for all items
+                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (item != null) {
+                                Image(
+                                    painter = rememberAsyncImagePainter(item.imageUrl),
+                                    contentDescription = item.name,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .aspectRatio(1f)
+                                        .clip(MaterialTheme.shapes.medium),
+                                    contentScale = ContentScale.Fit
+                                )
+                            } else {
+                                Text(
+                                    text = "N/A",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Outfit Name
+                Text(
+                    text = outfit.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                // Outfit Creator
+                Text(
+                    text = "By: ${outfit.createdBy}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                // Likes
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "${outfit.likes.size} Likes",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        color = Color(0xffff4081)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.heart),
+                        contentDescription = "Heart Icon",
+                        tint = Color(0xffff4081),
+                        modifier = Modifier.size(16.dp).padding(start = 4.dp)
+                    )
+                }
+
+                // Close Button
+                Button(
+                    onClick = { onDismiss() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
+                    Text("Close")
+                }
+            }
+        }
+    }
+}
+
+suspend fun resolveClothingItem(path: String): ClothingItem? {
+    return try {
+        FirebaseFirestore.getInstance().document(path).get().await().toObject(ClothingItem::class.java)
+    } catch (e: Exception) {
+        Log.e("ViewModel", "Error resolving clothing item for path $path: ${e.message}")
+        null
     }
 }
