@@ -3,9 +3,11 @@ package com.pyco.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.screens.account.AccountScreen
@@ -101,10 +103,15 @@ fun AppNavigation(
         }
 
         // Wardrobe related navigation
-        composable(Routes.ADD_WARDROBE_ITEM) {
+        composable(
+            route = "${Routes.ADD_WARDROBE_ITEM}?imageUri={imageUri}",
+            arguments = listOf(navArgument("imageUri") { type = NavType.StringType; nullable = true })
+        ) { backStackEntry ->
+            val imageUri = backStackEntry.arguments?.getString("imageUri")
             AddWardrobeItemScreen(
                 navController = navController,
-                closetViewModel = closetViewModel
+                closetViewModel = closetViewModel,
+                imageUri = imageUri
             )
         }
 

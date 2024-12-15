@@ -1,5 +1,6 @@
 package com.pyco.app.screens.closet
 
+import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,7 +56,8 @@ import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
 @Composable
 fun AddWardrobeItemScreen(
     navController: NavHostController,
-    closetViewModel: ClosetViewModel // Use shared ClosetViewModel
+    closetViewModel: ClosetViewModel, // Use shared ClosetViewModel
+    imageUri: String? // Add imageUri parameter
 ) {
 
     // State variables for form fields
@@ -72,6 +75,22 @@ fun AddWardrobeItemScreen(
             ref.putFile(uri).addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener { downloadUri ->
                     imageUrl = downloadUri.toString()
+                }
+            }.addOnFailureListener {
+                Log.e("AddWardrobeItem", "Error uploading image", it)
+            }
+        }
+    }
+
+    // Upload the captured image if imageUri is provided
+    LaunchedEffect(imageUri) {
+        imageUri?.let {
+            val uri = Uri.parse(it)
+            val ref = storage.reference.child("wardrobes/images/${uri.lastPathSegment}")
+            ref.putFile(uri).addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener { downloadUri ->
+                    imageUrl = downloadUri.toString()
+                    Log.d("AddWardrobeItem", "Image uploaded successfully: $imageUrl")
                 }
             }.addOnFailureListener {
                 Log.e("AddWardrobeItem", "Error uploading image", it)

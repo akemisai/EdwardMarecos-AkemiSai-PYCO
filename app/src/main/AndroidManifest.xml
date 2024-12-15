@@ -20,6 +20,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pyco"
         tools:targetApi="31">
+
+        <!-- CameraX saving picture stuff  -->
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/path_provider"/>
+        </provider>
+        <!-- CameraX saving picture stuff  -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
