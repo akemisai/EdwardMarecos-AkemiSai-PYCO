@@ -31,7 +31,6 @@ import com.pyco.app.R
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.components.OutfitDisplay
-import com.pyco.app.screens.outfits.components.OutfitTextDetails
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 
@@ -117,20 +116,7 @@ fun OutfitDetailScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Divider for sectioning
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
-                )
-
-                // Section: Clothing Items
-                Text(
-                    text = "Clothing Items",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                // Display outfit with clothing items
+                // Section: Mannequin with clothing items
                 OutfitDisplay(
                     outfitItems = listOf(
                         "Top" to top,
@@ -142,10 +128,20 @@ fun OutfitDetailScreen(
                 )
 
                 // Section: Text Details
-                OutfitTextDetails(
-                    outfitName = outfit.name,
-                    createdBy = outfit.createdBy,
-                    isPublic = outfit.isPublic
+                Text(
+                    text = outfit.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = "Created by: ${outfit.createdBy}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = if (outfit.public) "Public Outfit" else "Private Outfit",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (outfit.public) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

@@ -59,7 +59,7 @@ fun OutfitCreationScreen(
     val accessories by closetViewModel.accessories.collectAsState()
 
     var outfitName by remember { mutableStateOf("") }
-    var isPublic by remember { mutableStateOf(false) } // Toggle for public outfit
+    var public by remember { mutableStateOf(false) }
     var selectedTop by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedBottom by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedShoe by remember { mutableStateOf<ClothingItem?>(null) }
@@ -100,7 +100,7 @@ fun OutfitCreationScreen(
                             accessory = selectedAccessory?.let {
                                 FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
                             },
-                            isPublic = isPublic
+                            public = public
                         )
 
                         outfitsViewModel.addOutfit(newOutfit)  // make new outfit
@@ -146,8 +146,8 @@ fun OutfitCreationScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Checkbox(
-                            checked = isPublic,
-                            onCheckedChange = { isPublic = it }
+                            checked = public,
+                            onCheckedChange = { public = it }
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Make this outfit public")
