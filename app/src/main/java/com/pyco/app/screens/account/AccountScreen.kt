@@ -169,7 +169,7 @@ fun AccountScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 // Replace with actual data for outfits or popular posts
-                MetricCard(title = "Fall Fit", stats = "3000 Likes 432 Comments")
+                MetricCard(title = "Fall Fit", stats = "3000 Likes")
                 MetricCard(title = "Fit 2", stats = "2000 Likes")
                 MetricCard(title = "Fit 3", stats = "1000 Likes")
             }
