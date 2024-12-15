@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pyco.app.models.ClothingItem
@@ -24,61 +25,33 @@ fun OutfitDisplay(
     outfitItems: List<Pair<String, ClothingItem?>>,
     mannequinImage: Int // Resource ID of the mannequin image
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(0.5f) // Adjust ratio for mannequin proportions
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Mannequin background
-        Image(
-            painter = painterResource(mannequinImage),
-            contentDescription = "Mannequin",
-            modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.Center)
-        )
-
         outfitItems.forEach { (label, item) ->
-            when (label) {
-                "Top" -> item?.let {
-                    ClothingItemThumbnail(
-                        item = it,
-                        modifier = Modifier
-                            .size(100.dp) // Adjust size as needed
-                            .align(Alignment.TopCenter)
-                            .offset(y = 80.dp) // Position over the chest
-                    )
-                }
-                "Bottom" -> item?.let {
-                    ClothingItemThumbnail(
-                        item = it,
-                        modifier = Modifier
-                            .size(120.dp) // Adjust size as needed
-                            .align(Alignment.Center)
-                            .offset(y = 100.dp) // Position over the legs
-                    )
-                }
-                "Shoes" -> item?.let {
-                    ClothingItemThumbnail(
-                        item = it,
-                        modifier = Modifier
-                            .size(80.dp) // Adjust size as needed
-                            .align(Alignment.BottomCenter)
-                            .offset(y = -50.dp) // Position at the feet
-                    )
-                }
-                "Accessory" -> item?.let {
-                    ClothingItemThumbnail(
-                        item = it,
-                        modifier = Modifier
-                            .size(60.dp) // Adjust size as needed
-                            .align(Alignment.TopCenter)
-                            .offset(y = -50.dp) // Position above the mannequin's head
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = label, // Display the label (e.g., "Top", "Bottom")
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                if (item != null) {
+                    ClothingItemThumbnail(item = item) // Use the provided component
+                } else {
+                    Text(
+                        text = "No $label", // Placeholder text if the item is null
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                     )
                 }
             }
         }
     }
 }
-
-

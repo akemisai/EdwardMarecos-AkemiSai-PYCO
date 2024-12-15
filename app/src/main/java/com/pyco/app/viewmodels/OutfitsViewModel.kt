@@ -147,7 +147,7 @@ class OutfitsViewModel(
 
                 Log.d("OutfitsViewModel", "Outfit added successfully: ${preparedOutfit.name}")
 
-                if (preparedOutfit.isPublic) {
+                if (preparedOutfit.public) {
                     val publicOutfitCreator = PublicOutfitCreator()
                     publicOutfitCreator.createPublicOutfit(
                         preparedOutfit,

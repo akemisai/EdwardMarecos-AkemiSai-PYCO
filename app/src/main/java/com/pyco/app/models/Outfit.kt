@@ -12,7 +12,7 @@ data class Outfit(
     val accessory: DocumentReference? = null,   // References to clothing items
     val createdBy: String = "",                 // User who created the outfit
     val creatorId: String = "",                 // User ID of the creator
-    val isPublic: Boolean = false,              // Whether the outfit is public
+    val public: Boolean = false,              // Whether the outfit is public
     val creatorPhotoUrl: String = "",           // URL of the creator's profile picture
     val ownerId: String = "",                   // User ID of the owner of the outfit
     val likes: List<String> = emptyList(),       // List of user IDs who liked the outfit
