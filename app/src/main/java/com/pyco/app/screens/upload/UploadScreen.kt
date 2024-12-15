@@ -56,8 +56,14 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.Objects
+import android.database.Cursor
+import android.provider.MediaStore
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import android.content.Intent
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 
 
 @Composable
@@ -66,12 +72,8 @@ fun UploadScreen(
 ) {
     val context = LocalContext.current as MainActivity
     val permissionGranted = context.isCameraPermissionGranted.collectAsState().value
-    val file = context.createImageFile()
-    val uri = FileProvider.getUriForFile(
-        context,
-        "${context.packageName}.provider",
-        file
-    )
+
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     var cameraLaunched by remember { mutableStateOf(false) }
 
     val cameraLauncher =
@@ -79,10 +81,11 @@ fun UploadScreen(
             ActivityResultContracts.TakePicture()
         ) { success ->
             if (success) {
-                Log.d("UploadScreen", "Image captured successfully: $uri")
-                navController.navigate("add_wardrobe_item?imageUri=${uri}")
+                Log.d("UploadScreen", "Image captured successfully: $capturedImageUri")
+                navController.navigate("add_wardrobe_item?imageUri=${capturedImageUri}")
             } else {
                 Toast.makeText(context, "Failed to capture image", Toast.LENGTH_SHORT).show()
+                navController.navigate("home")
             }
             cameraLaunched = false
         }
@@ -92,6 +95,13 @@ fun UploadScreen(
     ) {
         if (it) {
             Toast.makeText(context, "Permission granted", Toast.LENGTH_SHORT).show()
+            val file = context.createImageFile()
+            val uri = FileProvider.getUriForFile(
+                context,
+                context.packageName + ".provider",
+                file
+            )
+            capturedImageUri = uri
             cameraLauncher.launch(uri)
             cameraLaunched = true
         } else {
@@ -101,21 +111,43 @@ fun UploadScreen(
 
     LaunchedEffect(permissionGranted) {
         if (permissionGranted && !cameraLaunched) {
+            val file = context.createImageFile()
+            val uri = FileProvider.getUriForFile(
+                context,
+                context.packageName + ".provider",
+                file
+            )
+            capturedImageUri = uri
             cameraLauncher.launch(uri)
             cameraLaunched = true
         } else if (!permissionGranted) {
             permissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
+    if (capturedImageUri?.path?.isNotEmpty() == true) {
+        Image(
+            modifier = Modifier.padding(16.dp, 8.dp),
+            painter = rememberAsyncImagePainter(capturedImageUri),
+            contentDescription = null
+        )
+    } else {
+        Image(
+            modifier = Modifier.padding(16.dp, 8.dp),
+            painter = rememberAsyncImagePainter(capturedImageUri),
+            contentDescription = null
+        )
+    }
 }
 
+
+
 fun Context.createImageFile(): File {
-    val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(Date())
+    val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
-    val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(
+    val image = File.createTempFile(
         imageFileName,
         ".jpg",
-        storageDir
+        externalCacheDir
     )
+    return image
 }

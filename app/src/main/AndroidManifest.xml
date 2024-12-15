@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <!-- permission to write to external storage for image saving -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,6 +21,7 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pyco"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
 
         <!-- CameraX saving picture stuff  -->
@@ -29,7 +32,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path_provider"/>
+                android:resource="@xml/file_paths"/>
         </provider>
         <!-- CameraX saving picture stuff  -->
 
@@ -45,5 +48,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

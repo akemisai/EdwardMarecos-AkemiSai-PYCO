@@ -86,6 +86,7 @@ fun AddWardrobeItemScreen(
     LaunchedEffect(imageUri) {
         imageUri?.let {
             val uri = Uri.parse(it)
+            Log.d("AddWardrobeItem", "Parsed URI: $uri")
             val ref = storage.reference.child("wardrobes/images/${uri.lastPathSegment}")
             ref.putFile(uri).addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener { downloadUri ->
@@ -239,3 +240,5 @@ fun <T> DropdownMenuBox(
         }
     }
 }
+
+
