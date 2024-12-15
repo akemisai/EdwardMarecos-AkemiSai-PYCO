@@ -3,10 +3,8 @@ package com.pyco.app.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.DocumentReference
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.creation.components.PublicOutfitCreator

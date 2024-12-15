@@ -1,17 +1,17 @@
 package com.pyco.app.screens.requests
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.pyco.app.models.Request
 import com.pyco.app.screens.requests.components.RequestCard
 import com.pyco.app.viewmodels.RequestViewModel
 
@@ -44,8 +44,3 @@ fun RequestScreen(requestViewModel: RequestViewModel = viewModel()) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun RequestScreenPreview() {
-    RequestScreen(requestViewModel = viewModel())
-}
