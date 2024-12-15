@@ -62,8 +62,20 @@ import android.provider.MediaStore
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.view.WindowInsetsAnimation
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import com.google.android.gms.common.api.Response
+import com.pyco.app.models.Request
+import okhttp3.Call
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 @Composable
@@ -82,7 +94,11 @@ fun UploadScreen(
         ) { success ->
             if (success) {
                 Log.d("UploadScreen", "Image captured successfully: $capturedImageUri")
-                navController.navigate("add_wardrobe_item?imageUri=${capturedImageUri}")
+                capturedImageUri?.let { uri ->
+                    removeBackgroundAndUpload(context, uri) { processedUri ->
+                        navController.navigate("add_wardrobe_item?imageUri=${processedUri}")
+                    }
+                }
             } else {
                 Toast.makeText(context, "Failed to capture image", Toast.LENGTH_SHORT).show()
                 navController.navigate("home")
@@ -139,8 +155,6 @@ fun UploadScreen(
     }
 }
 
-
-
 fun Context.createImageFile(): File {
     val timeStamp = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
@@ -150,4 +164,55 @@ fun Context.createImageFile(): File {
         externalCacheDir
     )
     return image
+}
+
+fun removeBackgroundAndUpload(context: Context, imageUri: Uri, onComplete: (Uri) -> Unit) {
+    val apiKey = "PaaXzUsVC9srkjC1ra8GpNv2"
+    val file = context.createImageFile()
+    val inputStream = context.contentResolver.openInputStream(imageUri)
+    val outputStream = FileOutputStream(file)
+    inputStream?.copyTo(outputStream)
+    inputStream?.close()
+    outputStream.close()
+
+    val requestBody = MultipartBody.Builder()
+        .setType(MultipartBody.FORM)
+        .addFormDataPart("image_file", file.name, file.asRequestBody("image/*".toMediaTypeOrNull()))
+        .addFormDataPart("size", "auto")
+        .build()
+
+    val request = okhttp3.Request.Builder()
+        .url("https://api.remove.bg/v1.0/removebg")
+        .addHeader("X-Api-Key", apiKey)
+        .post(requestBody)
+        .build()
+
+    val client = OkHttpClient()
+    client.newCall(request).enqueue(object : okhttp3.Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            Log.e("RemoveBG", "Failed to remove background", e)
+        }
+
+        override fun onResponse(call: Call, response: okhttp3.Response) {
+            if (response.isSuccessful) {
+                val inputStream = response.body?.byteStream()
+                val outputFile = context.createImageFile()
+                val outputStream = FileOutputStream(outputFile)
+                inputStream?.copyTo(outputStream)
+                outputStream.close()
+                inputStream?.close()
+
+                val processedUri = FileProvider.getUriForFile(
+                    context,
+                    context.packageName + ".provider",
+                    outputFile
+                )
+                Handler(Looper.getMainLooper()).post {
+                    onComplete(processedUri)
+                }
+            } else {
+                Log.e("RemoveBG", "Failed to remove background: ${response.message}")
+            }
+        }
+    })
 }
