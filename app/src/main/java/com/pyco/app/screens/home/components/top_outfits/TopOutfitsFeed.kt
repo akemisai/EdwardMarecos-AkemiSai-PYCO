@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
-import com.pyco.app.viewmodels.HomeViewModel
 
 
 @Composable

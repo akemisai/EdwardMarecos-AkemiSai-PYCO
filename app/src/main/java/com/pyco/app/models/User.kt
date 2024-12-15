@@ -1,7 +1,7 @@
 package com.pyco.app.models
 
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
 
 data class User(
     val uid: String = "",                                   // User's unique ID

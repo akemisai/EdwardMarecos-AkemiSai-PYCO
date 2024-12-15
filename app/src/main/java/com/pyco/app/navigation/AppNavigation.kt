@@ -1,15 +1,12 @@
 package com.pyco.app.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.UpdateProfileScreen
 import com.pyco.app.screens.account.components.SettingsScreen
@@ -29,8 +26,6 @@ import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.RequestViewModel
 import com.pyco.app.viewmodels.UserViewModel
-import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
-import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 @Composable
 fun AppNavigation(

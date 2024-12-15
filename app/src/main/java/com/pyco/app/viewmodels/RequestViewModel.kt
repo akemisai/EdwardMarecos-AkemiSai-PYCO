@@ -7,7 +7,6 @@ import com.pyco.app.models.Request
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.tasks.await
 
 class RequestViewModel : ViewModel() {
 

@@ -41,7 +41,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.screens.outfits.creation.components.ClothingItemSelector
-import com.pyco.app.screens.outfits.creation.components.PublicOutfitCreator
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import kotlinx.coroutines.launch
