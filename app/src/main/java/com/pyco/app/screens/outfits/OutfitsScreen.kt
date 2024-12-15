@@ -1,12 +1,12 @@
 package com.pyco.app.screens.outfits
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -28,12 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.components.BottomNavigationBar
@@ -41,8 +38,7 @@ import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.navigation.Routes
-import com.pyco.app.screens.outfits.components.OutfitRow
-import com.pyco.app.viewmodels.ClosetViewModel
+import com.pyco.app.screens.outfits.components.OutfitCardGridItem
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.UserViewModel
 import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
@@ -113,21 +109,23 @@ fun OutfitsScreen(
                     Text(text = "No outfits found", style = MaterialTheme.typography.bodyLarge, color = customColor)
                 }
             } else {
-                LazyColumn(
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .padding(16.dp)
+                        .padding(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(outfits) { outfit ->
-                        OutfitRow(
+                        OutfitCardGridItem(
                             outfit = outfit,
                             resolveClothingItem = resolveClothingItem,
                             onClick = { selectedOutfit ->
                                 navController.navigate("${Routes.OUTFIT_DETAIL}/${selectedOutfit.id}")
                             }
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
