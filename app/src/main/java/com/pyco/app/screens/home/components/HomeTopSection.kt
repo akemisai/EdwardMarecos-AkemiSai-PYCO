@@ -1,5 +1,6 @@
 package com.pyco.app.screens.home.components
 
+import RequestsFeed
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -28,11 +28,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
-import com.pyco.app.screens.home.components.requests.RequestsFeed
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
@@ -117,7 +115,9 @@ fun HomeTopSection(
 
         // Display Content Based on Selected Tab
         when (selectedTabIndex) {
-            0 -> RequestsFeed()
+            0 -> RequestsFeed(
+                homeViewModel = homeViewModel
+            )
             1 -> TopOutfitsFeed(
                 outfits = publicOutfits,
                 onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },

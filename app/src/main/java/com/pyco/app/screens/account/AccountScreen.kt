@@ -67,7 +67,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firestore.v1.Cursor
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
@@ -75,12 +74,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
-import com.pyco.app.models.User
-import com.pyco.app.screens.home.components.requests.RequestsFeed
-import com.pyco.app.screens.home.components.responses.ResponsesFeed
-import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.UserViewModel
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)

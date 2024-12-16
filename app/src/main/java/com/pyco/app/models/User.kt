@@ -1,6 +1,5 @@
 package com.pyco.app.models
 
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 
 data class User(
