@@ -69,7 +69,6 @@ class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val publicOutfitRef = firestore.collection("public_outfits").document(outfitId)
-                val userDocRef = firestore.collection("users").document(userId)
 
                 firestore.runTransaction { transaction ->
                     val publicSnapshot = transaction.get(publicOutfitRef)
@@ -91,13 +90,18 @@ class HomeViewModel(
                         transaction.update(creatorDocRef, "likesCount", com.google.firebase.firestore.FieldValue.increment(incrementValue.toLong()))
                     }
 
-                    // Update the list of liked outfits in the user's document
-                    val userSnapshot = transaction.get(userDocRef)
-                    val currentLikesGiven = userSnapshot.get("likesGiven") as? List<String> ?: emptyList()
-                    val updatedLikesGiven = if (isLiked) currentLikesGiven + outfitId else currentLikesGiven - outfitId
-                    transaction.update(userDocRef, "likesGiven", updatedLikesGiven)
+                    // Update the current user's likesGiven using arrayUnion/arrayRemove
+                    val userDocRef = firestore.collection("users").document(userId)
+                    if (isLiked) {
+                        // Add this outfitId to likesGiven
+                        transaction.update(userDocRef, "likesGiven", com.google.firebase.firestore.FieldValue.arrayUnion(outfitId))
+                    } else {
+                        // Remove this outfitId from likesGiven
+                        transaction.update(userDocRef, "likesGiven", com.google.firebase.firestore.FieldValue.arrayRemove(outfitId))
+                    }
                 }
 
+                // Update local publicOutfits state
                 _publicOutfits.update { outfits ->
                     outfits.map {
                         if (it.id == outfitId) {

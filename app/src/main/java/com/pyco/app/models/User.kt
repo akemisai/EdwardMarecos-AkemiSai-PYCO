@@ -11,7 +11,7 @@ data class User(
     val bookmarkedOutfits: List<String> = emptyList(),      // Array of outfit IDs the user bookmarked
     val followers: List<DocumentReference> = emptyList(),   // List of references to users who follow this user
     val following: List<DocumentReference> = emptyList(),   // List of references to users the current user is following
-    val likesGiven: List<Like> = emptyList(),               // List of likes the user has given (outfits liked by user)
+    val likesGiven: List<String> = emptyList(),               // List of likes the user has given (outfits liked by user)
 
     val followersCount: Int = 0,                            // Count of followers
     val followingCount: Int = 0,                            // Count of following

@@ -281,7 +281,7 @@ fun AccountScreen(
             when (selectedTabIndex) {
                 0 -> {
                     LikedFits(
-
+                        currentUserId = userProfile?.uid ?: ""
                     )
                 }
                 1 -> {
@@ -307,14 +307,135 @@ fun AccountScreen(
 // liked outfit feed section
 
 @Composable
-fun LikedFits (
-
+fun LikedFits(
+    currentUserId: String // Pass the user's ID
 ) {
-    Text(
-        text = "Liked Outfits",
-        color = customColor
-    )
+    // State to hold liked outfits
+    var likedOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        try {
+            val db = FirebaseFirestore.getInstance()
+
+            // fetch 'likesGiven' array from user's document
+            val userSnapshot = db.collection("users").document(currentUserId).get().await()
+            val likesGiven = userSnapshot.get("likesGiven") as? List<String> ?: emptyList()
+
+            if (likesGiven.isNotEmpty()) {
+                // then fetch outfits from 'public_outfits' using the IDs in likesGiven
+                val fetchedOutfits = likesGiven.mapNotNull { outfitId ->
+                    try {
+                        val outfitSnapshot = db.collection("public_outfits").document(outfitId).get().await()
+                        outfitSnapshot.toObject(Outfit::class.java)
+                    } catch (e: Exception) {
+                        Log.e("LikedFits", "Error fetching outfit with ID: $outfitId", e)
+                        null
+                    }
+                }
+                likedOutfits = fetchedOutfits
+            }
+        } catch (e: Exception) {
+            errorMessage = "Error fetching liked outfits: ${e.message}"
+            Log.e("LikedFits", errorMessage ?: "Unknown error")
+        } finally {
+            isLoading = false
+        }
+    }
+
+    // UI to display liked outfits
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Liked Outfits",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        when {
+            isLoading -> {
+                CircularProgressIndicator()
+            }
+
+            errorMessage != null -> {
+                Text(
+                    text = errorMessage ?: "Something went wrong.",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
+            likedOutfits.isEmpty() -> {
+                Text(
+                    text = "You haven't liked any outfits yet.",
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            }
+
+            else -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(likedOutfits) { outfit ->
+                        LikedOutfitItem(outfit = outfit)
+                    }
+                }
+            }
+        }
+    }
 }
+
+@Composable
+fun LikedOutfitItem(outfit: Outfit) {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable { /* Handle outfit click l8r */ }
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Placeholder image for now
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.placeholder_image),
+                contentDescription = "Outfit Image",
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // Outfit details
+            Column {
+                Text(
+                    text = outfit.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Likes: ${outfit.likes.size}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFFFF4081)
+                )
+            }
+        }
+    }
+}
+
 
 // requests you made section
 
