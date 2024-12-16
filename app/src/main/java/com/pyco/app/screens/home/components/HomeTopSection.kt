@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
@@ -38,6 +39,7 @@ import com.pyco.app.viewmodels.HomeViewModel
 @Composable
 fun HomeTopSection(
     homeViewModel: HomeViewModel,
+    navController: NavHostController
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
@@ -122,7 +124,8 @@ fun HomeTopSection(
                 outfits = publicOutfits,
                 onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },
                 fetchResolvedClothingItems = { outfit -> homeViewModel.fetchResolvedClothingItems(outfit) },
-                currentUserId = currentUserId
+                currentUserId = currentUserId,
+                navController = navController
             )
             2 -> ResponsesFeed()
         }

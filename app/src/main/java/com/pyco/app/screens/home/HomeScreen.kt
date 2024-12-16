@@ -41,6 +41,7 @@ fun HomeScreen(
             ) {
                 HomeTopSection(
                     homeViewModel = homeViewModel,
+                    navController = navController
                 )
             }
         }
