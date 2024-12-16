@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
+import com.pyco.app.models.Request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +21,7 @@ class HomeViewModel(
     private val firestore: FirebaseFirestore
 ) : ViewModel() {
 
+    // state flow for public outfit feed (top outfits)
     private val _publicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
     val publicOutfits: StateFlow<List<Outfit>> = _publicOutfits
 
@@ -31,10 +33,23 @@ class HomeViewModel(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
+    // StateFlow to hold the list of global requests
+    private val _globalRequests = MutableStateFlow<List<Request>>(emptyList())
+    val globalRequests: StateFlow<List<Request>> = _globalRequests
+
+    private val _isLoadingRequests = MutableStateFlow(false)
+    val isLoadingRequests: StateFlow<Boolean> = _isLoadingRequests
+
+    private val _requestError = MutableStateFlow<String?>(null)
+    val requestError: StateFlow<String?> = _requestError
+
     init {
         fetchPublicOutfits()
     }
 
+    // public outfit feed functions
+
+    // fetching public outfits from the database -- public_outfits / outfit_id / outfit_data (mostly refs to original fit )
     private fun fetchPublicOutfits() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
@@ -59,6 +74,7 @@ class HomeViewModel(
         }
     }
 
+    // liking an outfit updates the current users liked outfit list, and the like count on the outfit and creators (not owner's) profile
     fun toggleLikeOutfit(outfitId: String, isLiked: Boolean) {
         val userId = userViewModel.userProfile.value?.uid
         if (userId == null) {
@@ -119,6 +135,32 @@ class HomeViewModel(
         }
     }
 
+    // requests feed functions
+    fun fetchGlobalRequests() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoadingRequests.value = true
+            try {
+                val snapshot = firestore.collection("requests")
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .get()
+                    .await()
+
+                val requests = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(Request::class.java)?.copy(id = doc.id)
+                }
+
+                _globalRequests.value = requests
+                Log.d("HomeViewModel", "Fetched ${requests.size} global requests.")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error fetching global requests: ${e.message}")
+                _requestError.value = "Error fetching global requests: ${e.message}"
+            } finally {
+                _isLoadingRequests.value = false
+            }
+        }
+    }
+
+    // functions for fetching clothing items to view.
     suspend fun fetchResolvedClothingItems(outfit: Outfit): List<ClothingItem> {
         val clothingItems = mutableListOf<ClothingItem>()
 

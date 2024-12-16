@@ -1,5 +1,7 @@
 package com.pyco.app.models
 
+import com.google.firebase.Timestamp
+
 data class Request(
     val id: String = "",
     val description: String = "",
@@ -7,5 +9,5 @@ data class Request(
     val ownerName: String = "",
     val ownerPhotoUrl: String = "",
     val responses: List<String> = emptyList(),
-    val timestamp: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now()
+    val timestamp: Timestamp = Timestamp.now()
 )
