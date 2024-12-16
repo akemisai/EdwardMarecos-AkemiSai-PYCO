@@ -34,6 +34,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -41,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,7 +70,12 @@ import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
+import com.pyco.app.models.User
+import com.pyco.app.screens.home.components.requests.RequestsFeed
+import com.pyco.app.screens.home.components.responses.ResponsesFeed
+import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.UserViewModel
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,10 +87,6 @@ fun AccountScreen(
     val userProfile by userViewModel.userProfile.collectAsState()
     val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
     val isLoading by userViewModel.isLoading.collectAsState()
-
-    // State to handle dialog
-    var showDialog by remember { mutableStateOf(false) }
-    var selectedOutfit by remember { mutableStateOf<Outfit?>(null) }
 
     Scaffold(
         containerColor = backgroundColor,
@@ -237,96 +243,203 @@ fun AccountScreen(
             HorizontalDivider()
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Metrics section - Podium
-            val sortedOutfits = userPublicOutfits.sortedByDescending { it.likes.size }
-            val top3 = sortedOutfits.take(3)
+            // Tab Navigation
+            var selectedTabIndex by remember { mutableIntStateOf(1) }
+            val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
 
-            Text(
-                text = "Metrics",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.align(Alignment.Start),
-                color = customColor
-            )
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                containerColor = backgroundColor,
+                contentColor = customColor,
+                indicator = { tabPositions ->
+                    SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        color = customColor
+                    )
+                }
+            ) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(title) },
+                        selectedContentColor = customColor,
+                        unselectedContentColor = customColor.copy(alpha = 0.5f)
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (top3.isEmpty()) {
-                Text(
-                    text = "No public outfits yet",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = customColor.copy(alpha = 0.7f)
-                )
-            } else {
-                val firstPlaceHeight = 160.dp
-                val secondPlaceHeight = 120.dp
-                val thirdPlaceHeight = 80.dp
+            // Display Content Based on Selected Tab
+            when (selectedTabIndex) {
+                0 -> {
+                    LikedFits(
 
-                val first = top3.getOrNull(0)
-                val second = top3.getOrNull(1)
-                val third = top3.getOrNull(2)
+                    )
+                }
+                1 -> {
+                    TopFits(
+                        userPublicOutfits = userPublicOutfits,
+                    )
+                }
+                2 -> {
+                    YourRequests(
 
-                Box(
+                    )
+                }
+                3 -> {
+                    YourResponses(
+
+                    )
+                }
+            }
+        }
+    }
+}
+
+// liked outfit feed section
+
+@Composable
+fun LikedFits (
+
+) {
+    Text(
+        text = "Liked Outfits",
+        color = customColor
+    )
+}
+
+// requests you made section
+
+@Composable
+fun YourRequests (
+
+) {
+    Text(
+        text = "Your Requests",
+        color = customColor
+    )
+}
+
+// responses you made feed section
+
+@Composable
+fun YourResponses (
+
+) {
+    Text(
+        text = "your responses",
+        color = customColor
+    )
+}
+
+
+// in the name of top fits :3
+@Composable
+fun TopFits(
+    userPublicOutfits: List<Outfit> = emptyList(),
+) {
+    // State to handle dialog
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedOutfit by remember { mutableStateOf<Outfit?>(null) }
+
+    // Metrics section - Podium
+    val sortedOutfits = userPublicOutfits.sortedByDescending { it.likes.size }
+    val top3 = sortedOutfits.take(3)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+//            .padding(innerPadding)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Your Top Outfits!!",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.align(Alignment.Start),
+            color = customColor
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (top3.isEmpty()) {
+            Text(
+                text = "No public outfits yet",
+                style = MaterialTheme.typography.bodySmall,
+                color = customColor.copy(alpha = 0.7f)
+            )
+        } else {
+            val firstPlaceHeight = 160.dp
+            val secondPlaceHeight = 120.dp
+            val thirdPlaceHeight = 80.dp
+
+            val first = top3.getOrNull(0)
+            val second = top3.getOrNull(1)
+            val third = top3.getOrNull(2)
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Row(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.BottomCenter
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.Bottom
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.Bottom
-                    ) {
-                        // 2nd place on the left (if available)
-                        if (second != null) {
-                            PodiumSpot(
-                                outfit = second,
-                                rank = "2nd",
-                                platformHeight = secondPlaceHeight,
-                                onOutfitClick = {
-                                    selectedOutfit = it
-                                    showDialog = true
-                                }
-                            )
-                        } else {
-                            Spacer(modifier = Modifier.width(100.dp))
-                        }
+                    // 2nd place on the left (if available)
+                    if (second != null) {
+                        PodiumSpot(
+                            outfit = second,
+                            rank = "2nd",
+                            platformHeight = secondPlaceHeight,
+                            onOutfitClick = {
+                                selectedOutfit = it
+                                showDialog = true
+                            }
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.width(100.dp))
+                    }
 
-                        // 1st place in the center (highest)
-                        if (first != null) {
-                            PodiumSpot(
-                                outfit = first,
-                                rank = "1st",
-                                platformHeight = firstPlaceHeight,
-                                onOutfitClick = {
-                                    selectedOutfit = it
-                                    showDialog = true
-                                }
-                            )
-                        } else {
-                            Spacer(modifier = Modifier.width(100.dp))
-                        }
+                    // 1st place in the center (highest)
+                    if (first != null) {
+                        PodiumSpot(
+                            outfit = first,
+                            rank = "1st",
+                            platformHeight = firstPlaceHeight,
+                            onOutfitClick = {
+                                selectedOutfit = it
+                                showDialog = true
+                            }
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.width(100.dp))
+                    }
 
-                        // 3rd place on the right (if available)
-                        if (third != null) {
-                            PodiumSpot(
-                                outfit = third,
-                                rank = "3rd",
-                                platformHeight = thirdPlaceHeight,
-                                onOutfitClick = {
-                                    selectedOutfit = it
-                                    showDialog = true
-                                }
-                            )
-                        } else {
-                            Spacer(modifier = Modifier.width(100.dp))
-                        }
+                    // 3rd place on the right (if available)
+                    if (third != null) {
+                        PodiumSpot(
+                            outfit = third,
+                            rank = "3rd",
+                            platformHeight = thirdPlaceHeight,
+                            onOutfitClick = {
+                                selectedOutfit = it
+                                showDialog = true
+                            }
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.width(100.dp))
                     }
                 }
             }
         }
     }
-
     // Show dialog if needed
     if (showDialog && selectedOutfit != null) {
         OutfitPreviewDialog(
@@ -448,7 +561,6 @@ fun PodiumSpot(
         }
     }
 }
-
 
 @Composable
 fun OutfitPreviewDialog(
