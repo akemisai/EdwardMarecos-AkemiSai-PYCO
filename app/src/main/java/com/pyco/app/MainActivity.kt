@@ -11,11 +11,13 @@ import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
+import com.pyco.app.viewmodels.RequestViewModel
 import com.pyco.app.viewmodels.UserViewModel
 import com.pyco.app.viewmodels.factories.AuthViewModelFactory
 import com.pyco.app.viewmodels.factories.ClosetViewModelFactory
 import com.pyco.app.viewmodels.factories.HomeViewModelFactory
 import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
+import com.pyco.app.viewmodels.factories.RequestViewModelFactory
 
 class MainActivity : BaseActivity() {
 
@@ -54,13 +56,22 @@ class MainActivity : BaseActivity() {
                     )
                 )
 
+                // Initialize RequestsViewModel with its factory
+                val requestViewModel: RequestViewModel = viewModel(
+                    factory = RequestViewModelFactory(
+                        userViewModel,
+                        FirebaseFirestore.getInstance()
+                    )
+                )
+
                 // Provide all ViewModels to AppNavigation
                 AppNavigation(
                     authViewModel = authViewModel,
                     userViewModel = userViewModel,
                     homeViewModel = homeViewModel,
                     closetViewModel = closetViewModel,
-                    outfitsViewModel = outfitsViewModel
+                    outfitsViewModel = outfitsViewModel,
+                    requestViewModel = requestViewModel
                 )
             }
         }

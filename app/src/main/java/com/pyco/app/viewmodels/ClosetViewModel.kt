@@ -136,25 +136,3 @@ class ClosetViewModel(
         }
     }
 }
-
-
-//    // Function to add a clothing item with a custom ID
-//    fun addClothingItemWithCustomId(item: ClothingItem, customId: String) {
-//        if (userId == null) {
-//            Log.e("ClosetViewModel", "User not authenticated")
-//            return
-//        }
-//
-//        val wardrobeRef = firestore.collection("users").document(userId).collection("wardrobe")
-//        val docRef = wardrobeRef.document(customId) // Use custom ID
-//
-//        val itemWithId = item.copy(id = customId)
-//
-//        firestore.runTransaction { transaction ->
-//            transaction.set(docRef, itemWithId)
-//        }.addOnSuccessListener {
-//            Log.d("ClosetViewModel", "ClothingItem added successfully with custom ID")
-//        }.addOnFailureListener { exception ->
-//            Log.e("ClosetViewModel", "Error adding ClothingItem", exception)
-//        }
-//    }

@@ -88,7 +88,7 @@ fun HomeTopSection(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Tab Navigation
-        var selectedTabIndex by remember { mutableIntStateOf(0) }
+        var selectedTabIndex by remember { mutableIntStateOf(1) }
         val tabs = listOf("Requests", "Top Outfits", "Responses")
 
         TabRow(
@@ -98,7 +98,7 @@ fun HomeTopSection(
             indicator = { tabPositions ->
                 SecondaryIndicator(
                     Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                    color = MaterialTheme.colorScheme.primary
+                    color = customColor
                 )
             }
         ) {
@@ -107,8 +107,8 @@ fun HomeTopSection(
                     selected = selectedTabIndex == index,
                     onClick = { selectedTabIndex = index },
                     text = { Text(title) },
-                    selectedContentColor = MaterialTheme.colorScheme.primary,
-                    unselectedContentColor = customColor.copy(alpha = 0.6f)
+                    selectedContentColor = customColor,
+                    unselectedContentColor = customColor.copy(alpha = 0.5f)
                 )
             }
         }
@@ -117,7 +117,7 @@ fun HomeTopSection(
 
         // Display Content Based on Selected Tab
         when (selectedTabIndex) {
-            0 -> RequestsFeed(requestViewModel = viewModel())
+            0 -> RequestsFeed()
             1 -> TopOutfitsFeed(
                 outfits = publicOutfits,
                 onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },

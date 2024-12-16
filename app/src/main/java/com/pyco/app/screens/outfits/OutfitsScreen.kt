@@ -1,5 +1,6 @@
 package com.pyco.app.screens.outfits
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -70,12 +72,7 @@ fun OutfitsScreen(
         containerColor = backgroundColor,
         topBar = {
             TopAppBar(
-                title = { Text("Outfits") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = customColor)
-                    }
-                },
+                title = { Text("Your Outfits") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = backgroundColor,
                     titleContentColor = customColor,
@@ -86,12 +83,19 @@ fun OutfitsScreen(
             BottomNavigationBar(navController = navController)
         },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = {
                     navController.navigate(Routes.CREATE_OUTFIT)
                 },
+                containerColor = customColor,
+                contentColor = backgroundColor,
                 content = {
-                    Icon(Icons.Filled.Add, contentDescription = "Create Outfit", tint = customColor)
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = "Create Outfit",
+                        tint = backgroundColor,
+                    )
+                    Text("Create Outfit", color = backgroundColor)
                 }
             )
         },
