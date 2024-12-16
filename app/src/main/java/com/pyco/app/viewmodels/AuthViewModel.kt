@@ -112,12 +112,10 @@ class AuthViewModel(
                                                 email = firebaseUser.email ?: "",
                                                 displayName = username,
                                                 photoURL = "",
-                                                likedOutfits = emptyList(),
                                                 bookmarkedOutfits = emptyList(),
                                                 followers = emptyList(),
                                                 following = emptyList(),
                                                 likesGiven = emptyList(),
-                                                likesReceived = emptyList(),
                                                 followersCount = 0,
                                                 followingCount = 0,
                                                 likesCount = 0
