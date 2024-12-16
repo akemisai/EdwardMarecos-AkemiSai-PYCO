@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pyco.app.components.customColor
 
 @Composable
 fun ResponsesFeed() {
@@ -19,7 +20,7 @@ fun ResponsesFeed() {
         Text(
             text = "No Responses to Show",
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+            color = customColor
         )
     }
 }
