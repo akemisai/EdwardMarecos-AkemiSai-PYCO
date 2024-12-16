@@ -1,6 +1,7 @@
 package com.pyco.app.screens.home.components.top_outfits
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
@@ -38,7 +40,8 @@ fun OutfitCard(
     outfit: Outfit,
     clothingItems: List<ClothingItem>,
     onLikeClick: (Boolean) -> Unit,
-    currentUserId: String
+    currentUserId: String,
+    navController: NavHostController
 ) {
     val isLiked = outfit.likes.contains(currentUserId)
 
@@ -64,6 +67,16 @@ fun OutfitCard(
             Row(
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier
+                    .then(
+                        if (outfit.creatorId != currentUserId) {
+                            Modifier.clickable {
+                                // Navigate only if it's not the current user's profile
+                                navController.navigate("user_profile/${outfit.creatorId}")
+                            }
+                        } else {
+                            Modifier // Non-clickable for the current user cause why would u wanna see ur public profile like this?
+                        }
+                    )
                     .padding(bottom = 8.dp)
                     .weight(1f)
             ) {

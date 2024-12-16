@@ -108,6 +108,22 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    // a user that is not yourself
+    suspend fun fetchUserProfileById(userId: String): User? {
+        return try {
+            val snapshot = FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(userId)
+                .get()
+                .await()
+            snapshot.toObject(User::class.java)
+        } catch (e: Exception) {
+            Log.e("UserViewModel", "Error fetching user profile: ${e.message}")
+            null
+        }
+    }
+
+
     private val _userPublicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
     val userPublicOutfits: StateFlow<List<Outfit>> = _userPublicOutfits
 

@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
@@ -24,7 +25,8 @@ fun TopOutfitsFeed(
     outfits: List<Outfit>,
     onLikeClick: (String, Boolean) -> Unit,
     fetchResolvedClothingItems: suspend (Outfit) -> List<ClothingItem>,
-    currentUserId: String
+    currentUserId: String,
+    navController: NavHostController
 ) {
     if (outfits.isEmpty()) {
         Box(
@@ -62,7 +64,8 @@ fun TopOutfitsFeed(
                     onLikeClick = { isLiked ->
                         onLikeClick(outfit.id, isLiked)
                     },
-                    currentUserId = currentUserId
+                    currentUserId = currentUserId,
+                    navController = navController
                 )
             }
         }

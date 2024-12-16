@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.UpdateProfileScreen
 import com.pyco.app.screens.account.components.SettingsScreen
+import com.pyco.app.screens.account.others.UserProfileScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
 import com.pyco.app.screens.closet.AddWardrobeItemScreen
@@ -93,6 +94,13 @@ fun AppNavigation(
         composable(Routes.UPDATE_PROFILE) {
             UpdateProfileScreen(
                 userViewModel = userViewModel,
+                navController = navController
+            )
+        }
+        composable("user_profile/{userId}") { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+            UserProfileScreen(
+                userId = userId,
                 navController = navController
             )
         }
