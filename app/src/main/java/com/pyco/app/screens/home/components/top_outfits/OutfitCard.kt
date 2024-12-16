@@ -49,8 +49,8 @@ fun OutfitCard(
             .padding(8.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            containerColor = customColor.copy(alpha = 0.8f),
+            contentColor = backgroundColor
         )
     ) {
         Column(
@@ -115,7 +115,7 @@ fun OutfitCard(
                     Text(
                         text = outfit.name,
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = backgroundColor,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }

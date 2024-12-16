@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
@@ -175,23 +177,65 @@ fun AccountScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Edit profile button
-            Button(
-                onClick = { navController.navigate("update_profile") },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = customColor,
-                    contentColor = backgroundColor
-                )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Profile")
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Edit Profile")
+                // Edit profile button
+                Button(
+                    modifier = Modifier
+                        .weight(1f) // Equal width for both buttons
+                        .height(36.dp), // Reduce the height to make the button smaller
+                    shape = RoundedCornerShape(6.dp), // Smaller corner radius
+                    onClick = { navController.navigate("update_profile") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = customColor,
+                        contentColor = backgroundColor
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit Profile",
+                        modifier = Modifier.size(18.dp) // Smaller icon size
+                    )
+                    Spacer(modifier = Modifier.width(4.dp)) // Less spacing between icon and text
+                    Text(
+                        text = "Edit Profile",
+                        style = MaterialTheme.typography.bodySmall // Smaller text style
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp)) // Space between the buttons
+
+                // Make request button
+                Button(
+                    modifier = Modifier
+                        .weight(1f) // Equal width for both buttons
+                        .height(36.dp), // Reduce the height
+                    shape = RoundedCornerShape(6.dp), // Smaller corner radius
+                    onClick = { navController.navigate("make_request") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = customColor,
+                        contentColor = backgroundColor
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AutoAwesome,
+                        contentDescription = "Make Request",
+                        modifier = Modifier.size(18.dp) // Smaller icon size
+                    )
+                    Spacer(modifier = Modifier.width(4.dp)) // Less spacing
+                    Text(
+                        text = "Make Request",
+                        style = MaterialTheme.typography.bodySmall // Smaller text style
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalDivider()
             Spacer(modifier = Modifier.height(8.dp))
-
 
             // Metrics section - Podium
             val sortedOutfits = userPublicOutfits.sortedByDescending { it.likes.size }

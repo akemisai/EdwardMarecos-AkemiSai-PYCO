@@ -1,7 +1,6 @@
 package com.pyco.app.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,7 +32,8 @@ fun AppNavigation(
     userViewModel: UserViewModel,
     homeViewModel: HomeViewModel,
     closetViewModel: ClosetViewModel,
-    outfitsViewModel: OutfitsViewModel
+    outfitsViewModel: OutfitsViewModel,
+    requestViewModel: RequestViewModel,
 ) {
     val navController = rememberNavController()
 
@@ -131,9 +131,9 @@ fun AppNavigation(
 
         // Request related navigation
         composable(Routes.MAKE_REQUEST) {
-            val requestViewModel: RequestViewModel = viewModel()
             MakeRequestScreen(
                 requestViewModel = requestViewModel,
+                userViewModel = userViewModel,
                 navController = navController
             )
         }
