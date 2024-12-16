@@ -45,7 +45,6 @@ fun OutfitCard(
 ) {
     val isLiked = outfit.likes.contains(currentUserId)
 
-
     Card(
         modifier = Modifier
             .fillMaxWidth()

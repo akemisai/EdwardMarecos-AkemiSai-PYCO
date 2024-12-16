@@ -564,13 +564,7 @@ fun TopFits(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Your Top Outfits!!",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.align(Alignment.Start),
-            color = customColor
-        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         if (top3.isEmpty()) {
