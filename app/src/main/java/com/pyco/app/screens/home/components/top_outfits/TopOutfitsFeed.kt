@@ -1,4 +1,5 @@
 package com.pyco.app.screens.home.components.top_outfits
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.VerticalPager
@@ -18,7 +19,6 @@ import androidx.navigation.NavHostController
 import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
-
 
 @Composable
 fun TopOutfitsFeed(

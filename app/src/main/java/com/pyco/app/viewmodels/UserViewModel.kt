@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.pyco.app.models.Outfit
@@ -25,6 +27,9 @@ class UserViewModel : ViewModel() {
 
     private val _userProfile = MutableStateFlow<User?>(null)
     val userProfile: StateFlow<User?> = _userProfile
+
+    private val _userPublicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
+    val userPublicOutfits: StateFlow<List<Outfit>> = _userPublicOutfits
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -57,65 +62,46 @@ class UserViewModel : ViewModel() {
         )
 
         viewModelScope.launch {
-            _isLoading.update { true }
+            _isLoading.value = true
             try {
-                // Create or update user profile in Firestore
-                firestore.collection("users").document(uid)
-                    .set(user)
-                    .await()
-                Log.d("UserViewModel", "User profile for $uid created successfully.")
-
-                // Initialize wardrobe
+                firestore.collection("users").document(uid).set(user).await()
                 initializeWardrobe(uid)
-
-                // Fetch the user profile to update the state
                 fetchUserProfile(uid)
+                Log.d("UserViewModel", "User profile created for $uid")
             } catch (e: Exception) {
                 Log.e("UserViewModel", "Error creating user profile: ${e.message}")
-                _errorMessage.update { e.message }
+                _errorMessage.value = e.message
             } finally {
-                _isLoading.update { false }
+                _isLoading.value = false
             }
         }
     }
 
     fun fetchUserProfile(userId: String) {
         viewModelScope.launch {
-            _isLoading.update { true }
+            _isLoading.value = true
             try {
-                val document = firestore.collection("users").document(userId).get().await()
-                if (document.exists()) {
-                    val user = document.toObject(User::class.java)
-                    _userProfile.update { user }
-
-                    // Fetch public outfits for this user after we have the user profile
-                    user?.uid?.let { uid ->
-                        fetchUserPublicOutfits(uid)
-                    }
-
-                    Log.d("UserViewModel", "Fetched user profile for $userId successfully.")
+                val doc = firestore.collection("users").document(userId).get().await()
+                if (doc.exists()) {
+                    val user = doc.toObject(User::class.java)
+                    _userProfile.value = user
+                    user?.uid?.let { fetchUserPublicOutfits(it) }
+                    Log.d("UserViewModel", "Fetched user profile for $userId")
                 } else {
-                    Log.e("UserViewModel", "User profile not found for $userId.")
-                    _errorMessage.update { "User profile not found." }
+                    _errorMessage.value = "User profile not found."
                 }
             } catch (e: Exception) {
-                Log.e("UserViewModel", "Error fetching user profile for $userId: ${e.message}")
-                _errorMessage.update { e.message }
+                Log.e("UserViewModel", "Error fetching user profile: ${e.message}")
+                _errorMessage.value = e.message
             } finally {
-                _isLoading.update { false }
-                Log.d("UserViewModel", "Finished fetching user profile for $userId.")
+                _isLoading.value = false
             }
         }
     }
 
-    // a user that is not yourself
     suspend fun fetchUserProfileById(userId: String): User? {
         return try {
-            val snapshot = FirebaseFirestore.getInstance()
-                .collection("users")
-                .document(userId)
-                .get()
-                .await()
+            val snapshot = firestore.collection("users").document(userId).get().await()
             snapshot.toObject(User::class.java)
         } catch (e: Exception) {
             Log.e("UserViewModel", "Error fetching user profile: ${e.message}")
@@ -123,171 +109,136 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    // Follow or unfollow a user
+    fun toggleFollowUser(targetUserId: String, isFollowing: Boolean) {
+        val currentUserId = getCurrentUserId() ?: return
 
-    private val _userPublicOutfits = MutableStateFlow<List<Outfit>>(emptyList())
-    val userPublicOutfits: StateFlow<List<Outfit>> = _userPublicOutfits
+        // Prevent following oneself
+        if (currentUserId == targetUserId) return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                firestore.runTransaction { transaction ->
+                    val currentUserRef = firestore.collection("users").document(currentUserId)
+                    val targetUserRef = firestore.collection("users").document(targetUserId)
+
+                    val currentUser = transaction.get(currentUserRef).toObject(User::class.java) ?: return@runTransaction
+                    val targetUser = transaction.get(targetUserRef).toObject(User::class.java) ?: return@runTransaction
+
+                    val updatedFollowing = if (isFollowing) currentUser.following + targetUserId else currentUser.following - targetUserId
+                    val updatedFollowers = if (isFollowing) targetUser.followers + currentUserId else targetUser.followers - currentUserId
+
+                    transaction.update(currentUserRef, mapOf(
+                        "following" to updatedFollowing,
+                        "followingCount" to updatedFollowing.size
+                    ))
+                    transaction.update(targetUserRef, mapOf(
+                        "followers" to updatedFollowers,
+                        "followersCount" to updatedFollowers.size
+                    ))
+                }
+
+                // Update local state to reflect changes immediately
+                _userProfile.update { currentUser ->
+                    currentUser?.copy(
+                        following = if (isFollowing) currentUser.following + targetUserId else currentUser.following - targetUserId,
+                        followingCount = if (isFollowing) currentUser.followingCount + 1 else currentUser.followingCount - 1
+                    )
+                }
+
+                Log.d("UserViewModel", "Toggled follow for $targetUserId: now following=$isFollowing")
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error toggling follow: ${e.message}")
+                _errorMessage.value = "Error toggling follow: ${e.message}"
+            }
+        }
+    }
 
     fun fetchUserPublicOutfits(userId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.update { true }
+            _isLoading.value = true
             try {
                 val snapshot = firestore.collection("public_outfits")
                     .whereEqualTo("creatorId", userId)
                     .get()
                     .await()
 
-                val outfits = snapshot.documents.mapNotNull { doc ->
-                    doc.toObject(Outfit::class.java)
-                }
-
+                val outfits = snapshot.documents.mapNotNull { it.toObject(Outfit::class.java) }
                 _userPublicOutfits.value = outfits
-                Log.d("UserViewModel", "Fetched ${outfits.size} public outfits for user: $userId")
             } catch (e: Exception) {
                 Log.e("UserViewModel", "Error fetching user public outfits: ${e.message}")
-                _errorMessage.update { "Error fetching user public outfits: ${e.message}" }
+                _errorMessage.value = "Error fetching user public outfits: ${e.message}"
             } finally {
-                _isLoading.update { false }
+                _isLoading.value = false
             }
         }
     }
 
     private suspend fun initializeWardrobe(userId: String) {
         try {
-            val wardrobeData = mapOf("userId" to userId)
             firestore.collection("wardrobes").document(userId)
-                .set(wardrobeData)
+                .set(mapOf("userId" to userId))
                 .await()
-            Log.d("UserViewModel", "Wardrobe for user $userId initialized successfully.")
         } catch (e: Exception) {
-            Log.e("UserViewModel", "Error initializing wardrobe for user $userId: ${e.message}")
-            _errorMessage.update { e.message }
+            Log.e("UserViewModel", "Error initializing wardrobe: ${e.message}")
+            _errorMessage.value = e.message
         }
     }
 
-    fun addFollower(userId: String, followerId: String) {
-        viewModelScope.launch {
-            _isLoading.update { true }
-            try {
-                val followerRef = firestore.collection("users").document(followerId)
-                val userDocRef = firestore.collection("users").document(userId)
-
-                // Batch write to add follower and increment follower count atomically
-                firestore.runBatch { batch ->
-                    batch.update(userDocRef, "followers", com.google.firebase.firestore.FieldValue.arrayUnion(followerRef))
-                    batch.update(userDocRef, "followersCount", com.google.firebase.firestore.FieldValue.increment(1))
-                }.await()
-
-                Log.d("UserViewModel", "Follower $followerId added to user $userId successfully.")
-            } catch (e: Exception) {
-                Log.e("UserViewModel", "Error adding follower $followerId to user $userId: ${e.message}")
-                _errorMessage.update { e.message }
-            } finally {
-                _isLoading.update { false }
-            }
-        }
-    }
-
-    // update profile
     fun updateDisplayName(newDisplayName: String) {
-        val userId = getCurrentUserId()
-        if (userId == null) {
-            _errorMessage.update { "User not authenticated." }
-            return
-        }
+        val userId = getCurrentUserId() ?: return
 
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.update { true }
+            _isLoading.value = true
             try {
-                // Update FirebaseAuth profile
                 val user = auth.currentUser
                 if (user != null) {
-                    val profileUpdates = UserProfileChangeRequest.Builder()
-                        .setDisplayName(newDisplayName)
-                        .build()
-
-                    user.updateProfile(profileUpdates).await()
-
-                    // Update Firestore user document
-                    firestore.collection("users").document(userId)
-                        .update("displayName", newDisplayName)
-                        .await()
-
-                    // Update local state
-                    _userProfile.update { currentUser ->
-                        currentUser?.copy(displayName = newDisplayName)
-                    }
-
-                    Log.d("UserViewModel", "Display name updated successfully.")
-                } else {
-                    throw Exception("Firebase user is null.")
+                    user.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(newDisplayName).build()).await()
+                    firestore.collection("users").document(userId).update("displayName", newDisplayName).await()
+                    _userProfile.update { it?.copy(displayName = newDisplayName) }
                 }
             } catch (e: Exception) {
                 Log.e("UserViewModel", "Error updating display name: ${e.message}")
-                _errorMessage.update { e.message }
+                _errorMessage.value = e.message
             } finally {
-                _isLoading.update { false }
+                _isLoading.value = false
             }
         }
     }
 
     fun updateProfilePhoto(imageUri: Uri) {
-        val userId = getCurrentUserId()
-        if (userId == null) {
-            _errorMessage.update { "User not authenticated." }
-            return
-        }
+        val userId = getCurrentUserId() ?: return
 
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.update { true }
+            _isLoading.value = true
             try {
-                // Define storage reference
                 val storageRef = storage.reference.child("profile_photos/$userId.jpg")
-
-                // Upload the file
                 storageRef.putFile(imageUri).await()
-
-                // Get the download URL
                 val downloadUrl = storageRef.downloadUrl.await().toString()
 
-                // Update FirebaseAuth profile
-                val user = auth.currentUser
-                if (user != null) {
-                    val profileUpdates = UserProfileChangeRequest.Builder()
-                        .setPhotoUri(Uri.parse(downloadUrl))
-                        .build()
+                auth.currentUser?.updateProfile(
+                    UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(downloadUrl)).build()
+                )?.await()
 
-                    user.updateProfile(profileUpdates).await()
+                firestore.collection("users").document(userId)
+                    .update("photoURL", downloadUrl)
+                    .await()
 
-                    // Update Firestore user document
-                    firestore.collection("users").document(userId)
-                        .update("photoURL", downloadUrl)
-                        .await()
-
-                    // Update local state
-                    _userProfile.update { currentUser ->
-                        currentUser?.copy(photoURL = downloadUrl)
-                    }
-
-                    Log.d("UserViewModel", "Profile photo updated successfully.")
-                } else {
-                    throw Exception("Firebase user is null.")
-                }
+                _userProfile.update { it?.copy(photoURL = downloadUrl) }
             } catch (e: Exception) {
                 Log.e("UserViewModel", "Error updating profile photo: ${e.message}")
-                _errorMessage.update { e.message }
+                _errorMessage.value = e.message
             } finally {
-                _isLoading.update { false }
+                _isLoading.value = false
             }
         }
     }
 
     fun clearUserData() {
-        _userProfile.update { null }
-        _isLoading.update { false }
-        _errorMessage.update { null }
+        _userProfile.value = null
+        _isLoading.value = false
+        _errorMessage.value = null
     }
 
-    private fun getCurrentUserId(): String? {
-        return auth.currentUser?.uid
-    }
+    private fun getCurrentUserId(): String? = auth.currentUser?.uid
 }
