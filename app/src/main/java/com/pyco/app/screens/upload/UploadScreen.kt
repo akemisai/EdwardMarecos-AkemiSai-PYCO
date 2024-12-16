@@ -9,7 +9,29 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,13 +39,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import com.pyco.app.components.backgroundColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.MainActivity
+import com.pyco.app.screens.upload.components.CameraUI
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -35,7 +62,10 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 
+val customColor = Color(0xFFF7F7F7) // Light text color
+val backgroundColor = Color(0xFF333333) // Dark background color
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun UploadScreen(
     navController: NavHostController
@@ -46,37 +76,11 @@ fun UploadScreen(
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     var cameraLaunched by remember { mutableStateOf(false) }
 
-    val cameraLauncher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.TakePicture()
-        ) { success ->
-            if (success) {
-                Log.d("UploadScreen", "Image captured successfully: $capturedImageUri")
-                capturedImageUri?.let { uri ->
-                    removeBackgroundAndUpload(context, uri) { processedUri ->
-                        navController.navigate("add_wardrobe_item?imageUri=${processedUri}")
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Failed to capture image", Toast.LENGTH_SHORT).show()
-                navController.navigate("home")
-            }
-            cameraLaunched = false
-        }
-
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
         if (it) {
             Toast.makeText(context, "Permission granted", Toast.LENGTH_SHORT).show()
-            val file = context.createImageFile()
-            val uri = FileProvider.getUriForFile(
-                context,
-                context.packageName + ".provider",
-                file
-            )
-            capturedImageUri = uri
-            cameraLauncher.launch(uri)
             cameraLaunched = true
         } else {
             Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
@@ -85,31 +89,98 @@ fun UploadScreen(
 
     LaunchedEffect(permissionGranted) {
         if (permissionGranted && !cameraLaunched) {
-            val file = context.createImageFile()
-            val uri = FileProvider.getUriForFile(
-                context,
-                context.packageName + ".provider",
-                file
-            )
-            capturedImageUri = uri
-            cameraLauncher.launch(uri)
             cameraLaunched = true
         } else if (!permissionGranted) {
             permissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
-    if (capturedImageUri?.path?.isNotEmpty() == true) {
-        Image(
-            modifier = Modifier.padding(16.dp, 8.dp),
-            painter = rememberAsyncImagePainter(capturedImageUri),
-            contentDescription = null
-        )
-    } else {
-        Image(
-            modifier = Modifier.padding(16.dp, 8.dp),
-            painter = rememberAsyncImagePainter(capturedImageUri),
-            contentDescription = null
-        )
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = backgroundColor,
+                    titleContentColor = customColor,
+                    navigationIconContentColor = customColor
+                ),
+                modifier = Modifier.height(48.dp)
+            )
+        },
+        containerColor = backgroundColor
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (cameraLaunched) {
+                    CameraUI(
+                        onImageCaptured = { uri ->
+                            capturedImageUri = uri
+                            cameraLaunched = false
+                        },
+                        onError = { exception ->
+                            Toast.makeText(context, "Failed to capture image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            cameraLaunched = false
+                        }
+                    )
+                } else {
+                    if (capturedImageUri?.path?.isNotEmpty() == true) {
+                        Image(
+                            painter = rememberAsyncImagePainter(capturedImageUri),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(vertical = 8.dp)
+                                .clip(MaterialTheme.shapes.medium)
+                                .fillMaxWidth()
+                                .height(700.dp)
+                                .background(Color.Black)
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.Bottom
+                        ) {
+                            IconButton(onClick = {
+                                removeBackgroundAndUpload(context, capturedImageUri!!) { processedUri ->
+                                    navController.navigate("add_wardrobe_item?imageUri=${processedUri}")
+                                }
+                            }) {
+                                Icon(Icons.Default.Check, contentDescription = "Confirm", tint = customColor)
+                            }
+                            IconButton(onClick = {
+                                cameraLaunched = true
+                            }) {
+                                Icon(Icons.Default.Close, contentDescription = "Cancel", tint = customColor)
+                            }
+                        }
+                    } else {
+                        Button(onClick = { context.handleCameraPermission() }) {
+                            Text("Request Camera Permission")
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
 
