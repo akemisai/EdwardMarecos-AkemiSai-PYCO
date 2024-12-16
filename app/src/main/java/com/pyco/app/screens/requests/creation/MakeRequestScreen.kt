@@ -6,15 +6,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.pyco.app.components.BottomNavigationBar
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
 import com.pyco.app.viewmodels.RequestViewModel
 import com.pyco.app.viewmodels.UserViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +35,9 @@ fun MakeRequestScreen(
     val userProfile = userViewModel.userProfile.collectAsState().value
     val isLoading by requestViewModel.isLoading.collectAsState()
     val errorMessage by requestViewModel.errorMessage.collectAsState()
+
+    val coroutineScope = rememberCoroutineScope() // Create a coroutine scope
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var description by remember { mutableStateOf("") }
 
@@ -62,9 +73,6 @@ fun MakeRequestScreen(
             ownerName = ownerName,
             ownerPhotoUrl = ownerPhotoUrl
         )
-
-        // After creation, you might want to navigate back or show a success message.
-        // Since createRequest is async, you can track completion by checking for errors and loading state.
     }
 
     // If there’s an errorMessage, show a toast
@@ -76,9 +84,47 @@ fun MakeRequestScreen(
 
     // UI
     Scaffold(
+        containerColor = backgroundColor,
         topBar = {
             TopAppBar(
-                title = { Text("Create Request") }
+                title = { Text("Create Request") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = customColor)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = backgroundColor,
+                    titleContentColor = customColor,
+                )
+            )
+        },
+//        bottomBar = {
+//            BottomNavigationBar(navController = navController)
+//        }, idk if i like the nav bar being on this screen
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = {
+                    createRequest() // create the request
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar("Request created successfully!")
+                    }
+                    navController.navigateUp() //leave page
+                },
+                containerColor = customColor,
+                contentColor = backgroundColor,
+                content = {
+                    Icon(
+                        Icons.Filled.AutoAwesome,
+                        contentDescription = "Create Request",
+                        tint = Color(0xffffd700),
+                    )
+                    Text(
+                        text = "Create Request",
+                        color = backgroundColor,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
             )
         }
     ) { innerPadding ->
@@ -87,7 +133,10 @@ fun MakeRequestScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            Text("Request Description:")
+            Text(
+                text = "Request Description:",
+                color = customColor
+            )
             Spacer(modifier = Modifier.height(8.dp))
             BasicTextField(
                 value = description,
@@ -95,22 +144,14 @@ fun MakeRequestScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
-                    .border(1.dp, MaterialTheme.colorScheme.onSurfaceVariant)
+                    .border(1.dp, customColor)
                     .padding(8.dp),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(
-                    onDone = { createRequest() }
-                )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             if (isLoading) {
                 CircularProgressIndicator()
-            } else {
-                Button(onClick = { createRequest() }) {
-                    Text("Create Request")
-                }
             }
         }
     }
