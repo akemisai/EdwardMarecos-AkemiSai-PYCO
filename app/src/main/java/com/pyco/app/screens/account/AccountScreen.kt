@@ -229,7 +229,8 @@ fun AccountScreen(
                     Icon(
                         imageVector = Icons.Default.AutoAwesome,
                         contentDescription = "Make Request",
-                        modifier = Modifier.size(18.dp) // Smaller icon size
+                        modifier = Modifier.size(18.dp), // Smaller icon size
+                        tint = Color(0xffffd700)
                     )
                     Spacer(modifier = Modifier.width(4.dp)) // Less spacing
                     Text(
