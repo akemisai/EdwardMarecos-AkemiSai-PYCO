@@ -109,7 +109,6 @@ fun UploadScreen(
                     titleContentColor = customColor,
                     navigationIconContentColor = customColor
                 ),
-                modifier = Modifier.height(48.dp)
             )
         },
         containerColor = backgroundColor
@@ -148,7 +147,7 @@ fun UploadScreen(
                                 .padding(vertical = 8.dp)
                                 .clip(MaterialTheme.shapes.medium)
                                 .fillMaxWidth()
-                                .height(700.dp)
+                                .height(635.dp)
                                 .background(Color.Black)
                         )
                         Row(
