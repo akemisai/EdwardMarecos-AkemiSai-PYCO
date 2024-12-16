@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +29,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -64,12 +67,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firestore.v1.Cursor
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
+import com.pyco.app.models.Request
 import com.pyco.app.models.User
 import com.pyco.app.screens.home.components.requests.RequestsFeed
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
@@ -286,7 +291,7 @@ fun AccountScreen(
                 }
                 2 -> {
                     YourRequests(
-
+                        currentUserId = userProfile?.uid ?: ""
                     )
                 }
                 3 -> {
@@ -315,12 +320,99 @@ fun LikedFits (
 
 @Composable
 fun YourRequests (
-
+    currentUserId: String
 ) {
-    Text(
-        text = "Your Requests",
-        color = customColor
-    )
+    // State to hold the list of requests
+    var requestsList by remember { mutableStateOf<List<Request>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    // Fetch the user's requests from Firestore
+    LaunchedEffect(Unit) {
+        try {
+            val db = FirebaseFirestore.getInstance()
+            val result = db.collection("requests")
+                .whereEqualTo("ownerId", currentUserId) // Filter requests by ownerId
+                .get()
+                .await()
+
+            requestsList = result.toObjects(Request::class.java)
+        } catch (e: Exception) {
+            errorMessage = "Error fetching requests: ${e.message}"
+            Log.e("YourRequests", errorMessage ?: "Unknown error")
+        } finally {
+            isLoading = false
+        }
+    }
+
+    // UI to display the list of requests
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Your Requests",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else if (errorMessage != null) {
+            Text(
+                text = errorMessage ?: "Something went wrong.",
+                color = MaterialTheme.colorScheme.error
+            )
+        } else if (requestsList.isEmpty()) {
+            Text(
+                text = "You have no requests.",
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(requestsList) { request ->
+                    RequestItem(request = request)
+                }
+            }
+        }
+    }
+}
+
+// Composable to display individual request
+@Composable
+fun RequestItem(request: Request) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        shadowElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = request.description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Created at: ${request.timestamp ?: "Unknown"}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        }
+    }
 }
 
 // responses you made feed section

@@ -47,12 +47,10 @@ class UserViewModel : ViewModel() {
             email = email,
             displayName = displayName,
             photoURL = "",
-            likedOutfits = emptyList(),
             bookmarkedOutfits = emptyList(),
             followers = emptyList(),
             following = emptyList(),
             likesGiven = emptyList(),
-            likesReceived = emptyList(),
             followersCount = 0,
             followingCount = 0,
             likesCount = 0
