@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp
 
 data class Request(
     val id: String = "",
+    val title: String = "",
     val description: String = "",
     val ownerId: String = "",
     val ownerName: String = "",

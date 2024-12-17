@@ -76,6 +76,8 @@ import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
 import com.pyco.app.navigation.Routes
+import com.pyco.app.screens.home.components.requests.RequestCard
+import com.pyco.app.screens.home.components.requests.RequestDetailDialog
 import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -304,7 +306,7 @@ fun AccountScreen(
                 when (page) {
                     0 -> LikedFits(currentUserId = userProfile?.uid ?: "")
                     1 -> TopFits(userPublicOutfits = profileUserOutfits)
-                    2 -> YourRequests(currentUserId = userProfile?.uid ?: "")
+                    2 -> YourRequests(userViewModel = userViewModel, navController = navController, currentUserId = userProfile?.uid ?: "")
                     3 -> YourResponses()
                 }
             }
@@ -449,6 +451,8 @@ fun LikedOutfitItem(outfit: Outfit) {
 
 @Composable
 fun YourRequests (
+    userViewModel: UserViewModel,
+    navController: NavHostController,
     currentUserId: String
 ) {
     // State to hold the list of requests
@@ -456,7 +460,8 @@ fun YourRequests (
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    // Fetch the user's requests from Firestore
+    var selectedRequest by remember { mutableStateOf<Request?>(null) }
+
     LaunchedEffect(Unit) {
         try {
             val db = FirebaseFirestore.getInstance()
@@ -474,7 +479,6 @@ fun YourRequests (
         }
     }
 
-    // UI to display the list of requests
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -482,34 +486,65 @@ fun YourRequests (
     ) {
         Text(
             text = "Your Requests",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            color = customColor,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        if (isLoading) {
-            CircularProgressIndicator()
-        } else if (errorMessage != null) {
-            Text(
-                text = errorMessage ?: "Something went wrong.",
-                color = MaterialTheme.colorScheme.error
-            )
-        } else if (requestsList.isEmpty()) {
-            Text(
-                text = "You have no requests.",
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-            )
-        } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxSize()
+        when {
+            isLoading -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                items(requestsList) { request ->
-                    RequestItem(request = request)
+                CircularProgressIndicator(color = customColor)
+            }
+
+            !errorMessage.isNullOrEmpty() -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = errorMessage ?: "Something went wrong.",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            requestsList.isEmpty() -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "You have no requests.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            }
+
+            else -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(requestsList) { request ->
+                        RequestCard(
+                            request = request,
+                            userViewModel = userViewModel, // Reuse the same UI logic
+                            onCardClick = { selectedRequest = request }
+                        )
+                    }
                 }
             }
         }
+    }
+    // Show Dialog when a card is clicked
+    selectedRequest?.let { request ->
+        RequestDetailDialog(
+            request = request,
+            onDismiss = { selectedRequest = null },
+            navController = navController,
+            currentUserId = currentUserId,
+        )
     }
 }
 

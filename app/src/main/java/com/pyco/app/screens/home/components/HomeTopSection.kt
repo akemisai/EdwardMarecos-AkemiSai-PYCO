@@ -36,11 +36,13 @@ import com.pyco.app.components.customColor
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeTopSection(
     homeViewModel: HomeViewModel,
+    userViewModel: UserViewModel,
     navController: NavHostController
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
@@ -133,6 +135,7 @@ fun HomeTopSection(
             when (page) {
                 0 -> RequestsFeed(
                     homeViewModel = homeViewModel,
+                    userViewModel = userViewModel,
                     navController = navController,
                     currentUserId = currentUserId,
                     )

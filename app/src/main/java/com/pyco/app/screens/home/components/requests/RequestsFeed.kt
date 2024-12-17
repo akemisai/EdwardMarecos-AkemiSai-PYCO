@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -46,10 +47,12 @@ import com.pyco.app.components.customColor
 import com.pyco.app.models.Request
 import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.UserViewModel
 
 @Composable
 fun RequestsFeed(
     homeViewModel: HomeViewModel,
+    userViewModel: UserViewModel,
     navController: NavHostController,
     currentUserId: String,
     ) {
@@ -113,6 +116,7 @@ fun RequestsFeed(
                     items(requests) { request ->
                         RequestCard(
                             request = request,
+                            userViewModel = userViewModel,
                             onCardClick = { selectedRequest = request }
                         )
                     }
@@ -135,12 +139,21 @@ fun RequestsFeed(
 @Composable
 fun RequestCard(
     request: Request,
+    userViewModel: UserViewModel,
     onCardClick: () -> Unit
 ) {
+
+    // Observe the current user's following list
+    val currentUser by userViewModel.userProfile.collectAsState()
+
+    // Determine if the current user follows the owner of this request
+    val isFollowed = currentUser?.following?.contains(request.ownerId) == true
+
+
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            containerColor = Color(0xfff2f2f2),
+            contentColor = backgroundColor
         ),
         elevation = CardDefaults.cardElevation(4.dp),
         modifier = Modifier
@@ -157,9 +170,9 @@ fun RequestCard(
         ) {
             // Request Title
             Text(
-                text = request.description,
+                text = request.title.ifBlank { "Error fetching request Title" },
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = customColor
+                color = backgroundColor
             )
 
             // Creator Row
@@ -170,7 +183,7 @@ fun RequestCard(
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Owner",
-                    tint = customColor,
+                    tint = if (isFollowed) Color(0xFFFFD700) else if (request.ownerId == currentUser?.uid) Color(0xff89cff0) else backgroundColor, // Gold if followed and blue if u
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
@@ -205,87 +218,196 @@ fun RequestDetailDialog(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalAlignment = Alignment.Start
+                verticalArrangement = Arrangement.SpaceBetween // Space content and buttons apart
             ) {
-                Text(
-                    text = request.description,
-                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                    color = customColor
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp)
-                        .then(
-                        if (request.ownerId != currentUserId) {
-                            Modifier.clickable {
-                                // Navigate only if it's not the current user's profile
-                                navController.navigate("user_profile/${request.ownerId}")
-                            }
-                        } else {
-                            Modifier // Non-clickable for the current user cause why would u wanna see ur public profile like this?
-                        }
-                    )
+                // top content
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.weight(1f) // Allow the column to fill available space
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Owner",
-                        tint = customColor,
-                        modifier = Modifier
-                            .size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Created by: ${request.ownerName}",
+                        text = request.title.ifBlank { "Error fetching request Title" },
+                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                        color = customColor
+                    )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                            .then(
+                                if (request.ownerId != currentUserId) {
+                                    Modifier.clickable {
+                                        // Navigate only if it's not the current user's profile
+                                        navController.navigate("user_profile/${request.ownerId}")
+                                    }
+                                } else {
+                                    Modifier // Non-clickable for the current user cause why would u wanna see ur public profile like this?
+                                }
+                            )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Owner",
+                            tint = customColor,
+                            modifier = Modifier
+                                .size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Created by: ${request.ownerName}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = customColor
+                        )
+                    }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.CalendarToday,
+                            contentDescription = "Timestamp",
+                            tint = customColor,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Requested at: ${request.timestamp.toDate()}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                    }
+
+                    // request description section
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Text(
+                        text = "Request Description:",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = customColor
+                    )
+
+                    Text(
+                        text = request.description.ifBlank{ "Error fetching request Description" },
                         style = MaterialTheme.typography.bodyMedium,
                         color = customColor
                     )
-                }
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.CalendarToday,
-                        contentDescription = "Timestamp",
-                        tint = customColor,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Top Responses Section
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     Text(
-                        text = "Requested at: ${request.timestamp.toDate()}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.7f)
+                        text = "Top Responses",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = customColor
                     )
+
+                    // Display responses or "Be the first to respond!" message
+                    if (currentUserId == request.ownerId && request.responses.isEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Go touch grass, people will respond soon :)",
+                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                color = Color.White.copy(alpha = 0.7f)
+                            )
+                        }
+                    } else if (request.responses.isEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Be the first to respond!",
+                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                color = Color.White.copy(alpha = 0.7f)
+                            )
+                        }
+                    } else {
+                        // Horizontal Pager for responses
+                        androidx.compose.foundation.lazy.LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp) // Fixed height for the row
+                        ) {
+                            items(request.responses) { response ->
+                                Card(
+                                    shape = MaterialTheme.shapes.medium,
+                                    elevation = CardDefaults.cardElevation(4.dp),
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(200.dp) // Each card takes a fixed width
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(8.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = response,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = customColor,
+                                            maxLines = 2
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                // Buttons at the Bottom
+                if (request.ownerId == currentUserId) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "U cannot respond to your own request :3",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                            color = customColor
+                        )
+                    }
+                } else {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(
+                            onClick = {
+                                navController.navigate("${Routes.CREATE_RESPONSE}?requestId=${request.id}&ownerId=${request.ownerId}")
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = customColor,
+                                contentColor = backgroundColor
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Respond to this Request")
+                        }
 
-                // Respond Button
-                Button(
-                    onClick = {
-                        navController.navigate("${Routes.CREATE_RESPONSE}?requestId=${request.id}&ownerId=${request.ownerId}")
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = customColor,
-                        contentColor = backgroundColor
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Respond to this Request")
-                }
-
-                // Close Button
-                Button(
-                    onClick = { onDismiss() },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Close")
+                        Button(
+                            onClick = { onDismiss() },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Close")
+                        }
+                    }
                 }
             }
         }
