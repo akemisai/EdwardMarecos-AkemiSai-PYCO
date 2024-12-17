@@ -186,7 +186,7 @@ fun LoginScreen(
                 onClick = { authViewModel.login(email, password) },
                 enabled = true,
                 modifier = Modifier
-                    .offset(x = -90.dp) // my plan was to offset by half the width of the password field i did (240.dp / 2) then adjusted as needed
+                    .offset(x = (-90).dp) // my plan was to offset by half the width of the password field i did (240.dp / 2) then adjusted as needed
                     .align(Alignment.CenterHorizontally) // Align to the left under the password input
             ) {
                 Text(
