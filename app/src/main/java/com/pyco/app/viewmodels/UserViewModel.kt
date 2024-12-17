@@ -196,17 +196,23 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    suspend fun fetchUserPublicOutfits(userId: String): List<Outfit> {
-        return try {
-            val snapshot = firestore.collection("public_outfits")
-                .whereEqualTo("creatorId", userId)
-                .get()
-                .await()
+    fun fetchUserPublicOutfits(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
+            try {
+                val snapshot = firestore.collection("public_outfits")
+                    .whereEqualTo("creatorId", userId)
+                    .get()
+                    .await()
 
-            snapshot.documents.mapNotNull { it.toObject(Outfit::class.java) }
-        } catch (e: Exception) {
-            Log.e("UserViewModel", "Error fetching public outfits for $userId: ${e.message}")
-            emptyList()
+                val outfits = snapshot.documents.mapNotNull { it.toObject(Outfit::class.java) }
+                _userPublicOutfits.value = outfits
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error fetching user public outfits: ${e.message}")
+                _errorMessage.value = "Error fetching user public outfits: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 

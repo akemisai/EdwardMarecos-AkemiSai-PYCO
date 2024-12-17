@@ -87,21 +87,8 @@ fun AccountScreen(
     navController: NavHostController
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
-    var profileUserOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) } // Localize the user's public outfits
-    var isLoading by remember { mutableStateOf(true) }
-
-    LaunchedEffect(userProfile?.uid) {
-        if (userProfile?.uid != null) {
-            isLoading = true
-            try {
-                profileUserOutfits = userViewModel.fetchUserPublicOutfits(userProfile!!.uid)
-            } catch (e: Exception) {
-                Log.e("AccountScreen", "Error fetching user public outfits: ${e.message}")
-            } finally {
-                isLoading = false
-            }
-        }
-    }
+    val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
+    val isLoading by userViewModel.isLoading.collectAsState()
 
     Scaffold(
         containerColor = backgroundColor,
@@ -296,7 +283,7 @@ fun AccountScreen(
                 }
                 1 -> {
                     TopFits(
-                        userPublicOutfits = profileUserOutfits,
+                        userPublicOutfits = userPublicOutfits,
                     )
                 }
                 2 -> {
