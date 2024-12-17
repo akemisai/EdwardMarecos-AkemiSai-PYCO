@@ -111,34 +111,43 @@ class UserViewModel : ViewModel() {
 
     // Follow or unfollow a user
     fun toggleFollowUser(targetUserId: String, isFollowing: Boolean) {
-        val currentUserId = getCurrentUserId() ?: return
+        val currentUserId = getCurrentUserId() ?: run {
+            _errorMessage.value = "User not authenticated. Cannot follow user."
+            return
+        }
 
-        // Prevent following oneself
-        if (currentUserId == targetUserId) return
+        if (currentUserId == targetUserId) {
+            _errorMessage.value = "You cannot follow yourself."
+            return // Prevent following oneself
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 firestore.runTransaction { transaction ->
+                    // **References for the two user documents**
                     val currentUserRef = firestore.collection("users").document(currentUserId)
                     val targetUserRef = firestore.collection("users").document(targetUserId)
 
-                    val currentUser = transaction.get(currentUserRef).toObject(User::class.java) ?: return@runTransaction
-                    val targetUser = transaction.get(targetUserRef).toObject(User::class.java) ?: return@runTransaction
+                    // **Update the "followers" list and "followersCount" for the target user**
+                    if (isFollowing) {
+                        transaction.update(targetUserRef, "followers", FieldValue.arrayUnion(currentUserId))
+                        transaction.update(targetUserRef, "followersCount", FieldValue.increment(1))
+                    } else {
+                        transaction.update(targetUserRef, "followers", FieldValue.arrayRemove(currentUserId))
+                        transaction.update(targetUserRef, "followersCount", FieldValue.increment(-1))
+                    }
 
-                    val updatedFollowing = if (isFollowing) currentUser.following + targetUserId else currentUser.following - targetUserId
-                    val updatedFollowers = if (isFollowing) targetUser.followers + currentUserId else targetUser.followers - currentUserId
-
-                    transaction.update(currentUserRef, mapOf(
-                        "following" to updatedFollowing,
-                        "followingCount" to updatedFollowing.size
-                    ))
-                    transaction.update(targetUserRef, mapOf(
-                        "followers" to updatedFollowers,
-                        "followersCount" to updatedFollowers.size
-                    ))
+                    // **Update the "following" list and "followingCount" for the current user**
+                    if (isFollowing) {
+                        transaction.update(currentUserRef, "following", FieldValue.arrayUnion(targetUserId))
+                        transaction.update(currentUserRef, "followingCount", FieldValue.increment(1))
+                    } else {
+                        transaction.update(currentUserRef, "following", FieldValue.arrayRemove(targetUserId))
+                        transaction.update(currentUserRef, "followingCount", FieldValue.increment(-1))
+                    }
                 }
 
-                // Update local state to reflect changes immediately
+                // **Update local state for the current user (profile of the person following)**
                 _userProfile.update { currentUser ->
                     currentUser?.copy(
                         following = if (isFollowing) currentUser.following + targetUserId else currentUser.following - targetUserId,
@@ -146,10 +155,10 @@ class UserViewModel : ViewModel() {
                     )
                 }
 
-                Log.d("UserViewModel", "Toggled follow for $targetUserId: now following=$isFollowing")
+                Log.d("UserViewModel", "Toggled follow for user: $targetUserId. Following status: $isFollowing")
             } catch (e: Exception) {
-                Log.e("UserViewModel", "Error toggling follow: ${e.message}")
-                _errorMessage.value = "Error toggling follow: ${e.message}"
+                Log.e("UserViewModel", "Error toggling follow for user: ${e.message}")
+                _errorMessage.value = "Error toggling follow for user: ${e.message}"
             }
         }
     }

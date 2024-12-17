@@ -48,6 +48,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
+import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,6 +107,7 @@ fun UpdateProfileScreen(
                         if (newDisplayName.isNotBlank()) {
                             userViewModel.updateDisplayName(newDisplayName)
                         }
+                        navController.navigate(Routes.ACCOUNT)
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = customColor,
@@ -118,7 +120,6 @@ fun UpdateProfileScreen(
                 ) {
                     Text(text = "Save Changes")
                 }
-
                 Spacer(modifier = Modifier.height(32.dp)) // Space between the bottom of the screen and button
             }
         },

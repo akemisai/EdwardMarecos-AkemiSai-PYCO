@@ -51,7 +51,7 @@ import com.pyco.app.viewmodels.UserViewModel
 fun UserProfileScreen(
     userId: String,
     navController: NavHostController,
-    userViewModel: UserViewModel = viewModel()
+    userViewModel: UserViewModel
 ) {
     val currentUserId = userViewModel.userProfile.value?.uid ?: ""
     var userProfile by remember { mutableStateOf<User?>(null) }

@@ -1,6 +1,5 @@
 package com.pyco.app.screens.outfits
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,13 +8,10 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -34,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
@@ -42,19 +37,12 @@ import com.pyco.app.models.ClothingItem
 import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.outfits.components.OutfitCardGridItem
 import com.pyco.app.viewmodels.OutfitsViewModel
-import com.pyco.app.viewmodels.UserViewModel
-import com.pyco.app.viewmodels.factories.OutfitsViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutfitsScreen(
     navController: NavHostController,
-    outfitsViewModel: OutfitsViewModel = viewModel(
-        factory = OutfitsViewModelFactory(
-            userViewModel = UserViewModel(),
-            firestore = FirebaseFirestore.getInstance()
-        )
-    )
+    outfitsViewModel: OutfitsViewModel
 ) {
 
     val outfits by outfitsViewModel.outfits.collectAsState()
