@@ -5,5 +5,6 @@ data class Response(
     val requestId: String = "",
     val responderId: String = "",
     val outfitId: String = "",
+    val comment: String = "",
     val timestamp: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now()
 )

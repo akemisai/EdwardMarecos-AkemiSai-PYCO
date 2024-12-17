@@ -52,7 +52,7 @@ class ClosetViewModel(
         }
     }
 
-    private suspend fun fetchClothingItems(userId: String) {
+    suspend fun fetchClothingItems(userId: String) {
         Log.d("ClosetViewModel", "Fetching items for user: $userId")
 
         // Define categories and their respective flows
