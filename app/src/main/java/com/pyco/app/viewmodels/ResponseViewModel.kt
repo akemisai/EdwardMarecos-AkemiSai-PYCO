@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class ResponseViewModel(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : ViewModel() {
 
     private val _responses = MutableStateFlow<List<Response>>(emptyList())
