@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.Timestamp
+
 
 class ResponseViewModelFactory(
     private val firestore: FirebaseFirestore,
@@ -52,7 +54,8 @@ class ResponseViewModel(
                     requestId = requestId,
                     responderId = responderId,
                     outfitId = outfitId,
-                    comment = comment
+                    comment = comment,
+                    timestamp = Timestamp.now()
                 )
 
                 firestore.runTransaction { transaction ->
