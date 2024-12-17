@@ -8,5 +8,5 @@ data class Response(
     val responderId: String = "",
     val outfitId: String = "",
     val comment: String = "",
-    val timestamp: Timestamp
+    val timestamp: Timestamp = Timestamp.now()
 )
