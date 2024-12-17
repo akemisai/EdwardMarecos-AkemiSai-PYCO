@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -83,6 +84,9 @@ dependencies {
     implementation(libs.play.services.auth.v2070)
     //firestore
     implementation(libs.firebase.firestore)
+    // crashlytics
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 
     // camerax
     // CameraX core library using the camera2 implementation
