@@ -93,7 +93,7 @@ fun ResponseCreationScreen(
                         )
                         Log.d("ResponseCreationScreen", "Outfit ID set as: ${newOutfit.id}")
 
-                        outfitsViewModel.addOutfit(newOutfit)
+                        outfitsViewModel.addOutfit(newOutfit, request.ownerId)
                         Log.d("ResponseCreationScreen", "Outfit added to ViewModel: ${newOutfit.id}")
 
                         coroutineScope.launch {

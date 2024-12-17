@@ -108,14 +108,13 @@ class OutfitsViewModel(
         }
     }
 
-    fun addOutfit(outfit: Outfit) {
+    fun addOutfit(outfit: Outfit, userId: String) {
         val user = userViewModel.userProfile.value
         if (user == null) {
             _errorMessage.value = "User not authenticated. Cannot add outfit."
             return
         }
 
-        val userId = user.uid
         val creatorName = user.displayName ?: ""
         val creatorPhotoUrl = user.photoURL ?: ""
 
