@@ -47,7 +47,7 @@ fun HomeTopSection(
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
-    val userProfile by homeViewModel.userViewModel.userProfile.collectAsState()
+    val userProfile by userViewModel.userProfile.collectAsState()
     val currentUserId = userProfile?.uid ?: ""
 
     val tabs = listOf("Requests", "Top Outfits", "Responses")
