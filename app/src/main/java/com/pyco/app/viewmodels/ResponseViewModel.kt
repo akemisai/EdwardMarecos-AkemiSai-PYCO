@@ -72,7 +72,15 @@ class ResponseViewModel(
         }
     }
 
-    fun createResponse(requestId: String, responderId: String, outfitId: String, comment: String) {
+    fun createResponse(
+        requestId: String,
+        title: String,
+        requestDescription: String,
+        responderId: String,
+        outfitId: String,
+        outfitName: String,
+        comment: String
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
@@ -80,9 +88,12 @@ class ResponseViewModel(
 
                 val newResponse = Response(
                     id = newResponseRef.id,
+                    title = title,
                     requestId = requestId,
+                    requestDescription = requestDescription,
                     responderId = responderId,
                     outfitId = outfitId,
+                    outfitName = outfitName,
                     comment = comment,
                     timestamp = Timestamp.now()
                 )

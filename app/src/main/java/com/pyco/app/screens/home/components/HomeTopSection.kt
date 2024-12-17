@@ -82,22 +82,23 @@ fun HomeTopSection(
             )
 
             // Chat and Notification Icons
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.mis_chat),
-                    contentDescription = "Chat",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .padding(end = 4.dp),
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.mis_alert),
-                    contentDescription = "Notification",
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+//            didnt implement
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.mis_chat),
+//                    contentDescription = "Chat",
+//                    modifier = Modifier
+//                        .size(24.dp)
+//                        .padding(end = 4.dp),
+//                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.mis_alert),
+//                    contentDescription = "Notification",
+//                    modifier = Modifier.size(24.dp)
+//                )
+//            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
