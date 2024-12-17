@@ -29,10 +29,13 @@ class RequestViewModel (
 
 
     fun createRequest(
+        title: String,
         description: String,
         ownerId: String,
         ownerName: String,
-        ownerPhotoUrl: String) {
+        ownerPhotoUrl: String,
+        tags: List<String>
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
@@ -40,12 +43,14 @@ class RequestViewModel (
 
                 val newRequest = Request(
                     id = newRequestRef.id,
+                    title = title,
                     description = description,
                     ownerId = ownerId,
                     ownerName = ownerName,
                     ownerPhotoUrl = ownerPhotoUrl,
                     responses = emptyList(),
-                    timestamp = Timestamp.now()
+                    timestamp = Timestamp.now(),
+                    tags = tags
                 )
 
                 firestore.runTransaction { transaction ->

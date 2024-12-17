@@ -10,5 +10,6 @@ data class Request(
     val ownerName: String = "",
     val ownerPhotoUrl: String = "",
     val responses: List<String> = emptyList(),
+    val tags: List<String> = emptyList(),
     val timestamp: Timestamp = Timestamp.now()
 )

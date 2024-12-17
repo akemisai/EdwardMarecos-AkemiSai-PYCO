@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Person
@@ -23,6 +26,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -45,6 +50,7 @@ import androidx.navigation.NavHostController
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.Request
+import com.pyco.app.models.Tags
 import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.UserViewModel
@@ -64,19 +70,20 @@ fun RequestsFeed(
     var selectedTags by remember { mutableStateOf<List<String>>(emptyList()) } // State for active filter
     var showTagsPopup by remember { mutableStateOf(false) }
 
-    val availableTags = listOf("Following")
+    val availableTags = listOf("Following") +Tags.entries.map { it.displayName } // Use all tags from the enum
 
     LaunchedEffect(Unit) {
         homeViewModel.fetchGlobalRequests()
     }
 
-    // Filter logic: if no selected tags, show all requests.
+    // Logic for filtering requests based on selected tags
     val filteredRequests = requests.filter { request ->
-        selectedTags.isEmpty() ||
-                (selectedTags.contains("Following") && request.ownerId in (userViewModel.userProfile.value?.following ?: emptyList())) ||
-                // we need more tags
-                // for this demo, we only have logic for "Following"
-                (selectedTags.any { it != "Following" })
+        selectedTags.isEmpty() || selectedTags.all { tag ->
+            when (tag) {
+                "Following" -> request.ownerId in (userViewModel.userProfile.value?.following ?: emptyList())
+                else -> request.tags.contains(tag)
+            }
+        }
     }
 
     // If the Tags popup is triggered, show it
@@ -162,6 +169,7 @@ fun RequestsFeed(
         RequestDetailDialog(
             request = request,
             onDismiss = { selectedRequest = null },
+            userViewModel = userViewModel,
             navController = navController,
             currentUserId = currentUserId,
         )
@@ -229,13 +237,21 @@ fun RequestCard(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RequestDetailDialog(
     request: Request,
     onDismiss: () -> Unit,
     navController: NavHostController,
+    userViewModel: UserViewModel,
     currentUserId: String,
     ) {
+    // Observe the current user's following list
+    val currentUser by userViewModel.userProfile.collectAsState()
+
+    // Determine if the current user follows the owner of this request
+    val isFollowed = currentUser?.following?.contains(request.ownerId) == true
+
     Dialog(
         onDismissRequest = { onDismiss() },
         properties = DialogProperties(usePlatformDefaultWidth = false) // no more skinny dialogue
@@ -324,6 +340,53 @@ fun RequestDetailDialog(
                         style = MaterialTheme.typography.bodyMedium,
                         color = customColor
                     )
+
+                    Spacer(modifier = Modifier.height(18.dp))
+
+                    // tags section
+                    Text(
+                        text = "Tags:",
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                        color = customColor
+                    )
+
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp), // Add spacing between chips
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        // Generate tag list, ensure "Following" appears first if its applicable
+                        val tags = buildList {
+                            if (isFollowed) {
+                                add("Following")
+                            }
+                            addAll(request.tags.filter { it != "Following" }) // Add remaining tags excluding "Following" duplicates
+                        }
+
+                        tags.forEach { tag ->
+                            FilterChip(
+                                selected = false, // Static display, no selection behavior
+                                modifier = Modifier
+                                    .height(26.dp)
+                                    .padding(vertical = 0.dp, horizontal = 2.dp),
+                                onClick = { /* Optionally handle chip click (we prob arent) */ },
+                                label = {
+                                    Text(
+                                        text = tag,
+                                        color = backgroundColor,
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                },
+                                shape = RoundedCornerShape(6.dp), // Rounded style
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = customColor,
+                                    labelColor = backgroundColor
+                                )
+                            )
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
