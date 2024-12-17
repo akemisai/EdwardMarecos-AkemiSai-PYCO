@@ -15,6 +15,7 @@ coilCompose = "2.5.0"
 credentials = "1.3.1"
 firebaseAppcheckPlayintegrity = "16.0.0"
 firebaseBom = "33.6.0"
+firebaseMessaging = "23.0.0"
 foundation = "1.8.0-alpha06"
 foundationPager = "1.4.0-beta01"
 googleid = "1.1.1"
@@ -67,6 +68,7 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-appcheck-playintegrity = { module = "com.google.firebase:firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 google-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }

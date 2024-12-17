@@ -10,6 +10,8 @@
 
     <!-- Internet permission for Firestore -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- notif perms   -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name=".MyApplication"
@@ -47,5 +49,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- firebase messaging notifs stuff-->
+        <service
+            android:name=".PycoFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>

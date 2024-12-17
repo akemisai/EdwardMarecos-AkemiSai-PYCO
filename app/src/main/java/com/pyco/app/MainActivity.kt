@@ -1,10 +1,20 @@
 package com.pyco.app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.messaging
 import com.pyco.app.navigation.AppNavigation
 import com.pyco.app.ui.theme.PycoTheme
 import com.pyco.app.viewmodels.AuthViewModel
@@ -73,6 +83,27 @@ class MainActivity : BaseActivity() {
                     )
                 )
 
+                // Launcher to request POST_NOTIFICATIONS permission if needed
+                val requestNotificationPermissionLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.RequestPermission(),
+                    onResult = { granted ->
+                        if (granted) {
+                            Log.d("MainActivity", "POST_NOTIFICATIONS permission granted.")
+                        } else {
+                            Log.w("MainActivity", "POST_NOTIFICATIONS permission denied.")
+                        }
+                    }
+                )
+
+                // Request POST_NOTIFICATIONS permission on Android 13+ if not granted
+                LaunchedEffect(Unit) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                            requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    }
+                }
+
                 // Provide all ViewModels to AppNavigation
                 AppNavigation(
                     authViewModel = authViewModel,
@@ -85,5 +116,22 @@ class MainActivity : BaseActivity() {
                 )
             }
         }
+
+        // Create notification channel for notifications
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(
+            "new_followers_channel",
+            "New Followers",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "Notifications for new followers"
+        }
+
+        val notificationManager: NotificationManager =
+            getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
     }
 }
