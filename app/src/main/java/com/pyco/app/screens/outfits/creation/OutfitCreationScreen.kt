@@ -102,7 +102,7 @@ fun OutfitCreationScreen(
                             public = public
                         )
 
-                        outfitsViewModel.addOutfit(newOutfit)  // make new outfit
+                        outfitsViewModel.addOutfit(newOutfit, FirebaseAuth.getInstance().currentUser?.uid ?: "")  // make new outfit
 
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
