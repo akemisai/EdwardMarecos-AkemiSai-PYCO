@@ -87,8 +87,8 @@ fun AccountScreen(
     navController: NavHostController
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
-    val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
-    val isLoading by userViewModel.isLoading.collectAsState()
+    var profileUserOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) } // Store the user's public outfits for this specific profile
+    var isLoading by remember { mutableStateOf(true) }
 
     val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
     val pagerState = rememberPagerState(
@@ -96,6 +96,19 @@ fun AccountScreen(
         pageCount = { tabs.size }
     )
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(userProfile?.uid) {
+        if (userProfile?.uid != null) {
+            isLoading = true
+            try {
+                profileUserOutfits = userViewModel.fetchUserPublicOutfits(userProfile!!.uid)
+            } catch (e: Exception) {
+                Log.e("AccountScreen", "Error fetching user public outfits: ${e.message}")
+            } finally {
+                isLoading = false
+            }
+        }
+    }
 
     Scaffold(
         containerColor = backgroundColor,
@@ -290,7 +303,7 @@ fun AccountScreen(
             ) { page ->
                 when (page) {
                     0 -> LikedFits(currentUserId = userProfile?.uid ?: "")
-                    1 -> TopFits(userPublicOutfits = userPublicOutfits)
+                    1 -> TopFits(userPublicOutfits = profileUserOutfits)
                     2 -> YourRequests(currentUserId = userProfile?.uid ?: "")
                     3 -> YourResponses()
                 }

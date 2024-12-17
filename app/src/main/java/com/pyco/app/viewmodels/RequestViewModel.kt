@@ -62,10 +62,9 @@ class RequestViewModel (
         }
     }
 
-    /**
-     * Fetch all requests from Firestore and update the StateFlow.
-     * You can call this in init or whenever you need to refresh the requests feed.
-     */
+
+    // Fetch all requests from Firestore and update the StateFlow.
+
     fun fetchRequests() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
@@ -90,10 +89,6 @@ class RequestViewModel (
         }
     }
 
-    /**
-     * Optionally, you can have a method to update responses for a request if needed later.
-     * This would involve using FieldValue.arrayUnion/arrayRemove or a transaction to update the 'responses' array.
-     */
     fun addResponseToRequest(requestId: String, responseId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
