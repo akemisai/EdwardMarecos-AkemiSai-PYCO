@@ -3,6 +3,7 @@ package com.pyco.app.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.models.Response
 import kotlinx.coroutines.Dispatchers
@@ -10,9 +11,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import androidx.lifecycle.ViewModelProvider
+
+class ResponseViewModelFactory(
+    private val firestore: FirebaseFirestore,
+    private val requestViewModel: RequestViewModel,
+    private val userViewModel: UserViewModel
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ResponseViewModel::class.java)) {
+            return ResponseViewModel(firestore, requestViewModel, userViewModel) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
 
 class ResponseViewModel(
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val firestore: FirebaseFirestore,
+    private val requestViewModel: RequestViewModel,
+    private val userViewModel: UserViewModel
 ) : ViewModel() {
 
     private val _responses = MutableStateFlow<List<Response>>(emptyList())
@@ -24,7 +41,7 @@ class ResponseViewModel(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    fun createResponse(requestId: String, responderId: String, outfitId: String) {
+    fun createResponse(requestId: String, responderId: String, outfitId: String, comment: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
@@ -34,11 +51,17 @@ class ResponseViewModel(
                     id = newResponseRef.id,
                     requestId = requestId,
                     responderId = responderId,
-                    outfitId = outfitId
+                    outfitId = outfitId,
+                    comment = comment
                 )
 
                 firestore.runTransaction { transaction ->
+                    // Add the new response
                     transaction.set(newResponseRef, newResponse)
+
+                    // Update the request's responses list
+                    val requestRef = firestore.collection("requests").document(requestId)
+                    transaction.update(requestRef, "responses", FieldValue.arrayUnion(outfitId))
                 }.await()
 
                 Log.d("ResponseViewModel", "Response created successfully for request: $requestId")
@@ -61,7 +84,7 @@ class ResponseViewModel(
                     .await()
 
                 val responsesList = snapshot.documents.mapNotNull { doc ->
-                    doc.toObject(Response::class.java)?.copy(id = doc.id)
+                    doc.toObject(Response::class.java)
                 }
 
                 _responses.value = responsesList

@@ -29,6 +29,7 @@ import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.HomeViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
 import com.pyco.app.viewmodels.RequestViewModel
+import com.pyco.app.viewmodels.ResponseViewModel
 import com.pyco.app.viewmodels.UserViewModel
 
 @Composable
@@ -39,6 +40,7 @@ fun AppNavigation(
     closetViewModel: ClosetViewModel,
     outfitsViewModel: OutfitsViewModel,
     requestViewModel: RequestViewModel,
+    responseViewModel: ResponseViewModel
 ) {
     val navController = rememberNavController()
 
@@ -180,6 +182,7 @@ fun AppNavigation(
             val ownerId = backStackEntry.arguments?.getString("ownerId")
             Log.d("AppNavigation", "Navigating to ResponseCreationScreen with requestId: $requestId and ownerId: $ownerId")
             ResponseCreationScreen(
+                responseViewModel = responseViewModel,
                 navController = navController,
                 request = Request(id = requestId ?: "", ownerId = ownerId ?: ""),
                 closetViewModel = closetViewModel,

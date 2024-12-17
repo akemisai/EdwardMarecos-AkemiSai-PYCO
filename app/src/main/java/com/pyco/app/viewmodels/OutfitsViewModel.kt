@@ -122,10 +122,19 @@ class OutfitsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
-                val newOutfitRef = firestore.collection("outfits")
-                    .document(userId)
-                    .collection("user_outfits")
-                    .document()
+                val newOutfitRef = if (outfit.id.isEmpty()) {
+                    // Create a new document reference if the outfit ID is empty
+                    firestore.collection("outfits")
+                        .document(userId)
+                        .collection("user_outfits")
+                        .document()
+                } else {
+                    // Use the existing outfit ID
+                    firestore.collection("outfits")
+                        .document(userId)
+                        .collection("user_outfits")
+                        .document(outfit.id)
+                }
 
                 val preparedOutfit = outfit.copy(
                     id = newOutfitRef.id,
