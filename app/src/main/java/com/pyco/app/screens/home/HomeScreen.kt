@@ -16,13 +16,15 @@ import com.pyco.app.components.BottomNavigationBar
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.screens.home.components.HomeTopSection
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.ResponseViewModel
 import com.pyco.app.viewmodels.UserViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     homeViewModel: HomeViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    responseViewModel: ResponseViewModel
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
@@ -44,7 +46,8 @@ fun HomeScreen(
                 HomeTopSection(
                     homeViewModel = homeViewModel,
                     navController = navController,
-                    userViewModel = userViewModel
+                    userViewModel = userViewModel,
+                    responseViewModel = responseViewModel
                 )
             }
         }

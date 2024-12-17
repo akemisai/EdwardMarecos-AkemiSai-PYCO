@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Timestamp
-
+import com.pyco.app.models.Outfit
+import com.pyco.app.models.Request
 
 class ResponseViewModelFactory(
     private val firestore: FirebaseFirestore,
@@ -37,11 +38,35 @@ class ResponseViewModel(
     private val _responses = MutableStateFlow<List<Response>>(emptyList())
     val responses: StateFlow<List<Response>> = _responses
 
+    private val _requests = MutableStateFlow<List<Request>>(emptyList())
+    val requests: StateFlow<List<Request>> = _requests
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
+
+    private val _outfits = MutableStateFlow<List<Outfit>>(emptyList())
+    val outfits: StateFlow<List<Outfit>> = _outfits
+
+    fun fetchOutfitsForResponses(responseIds: List<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val outfitsList = responseIds.mapNotNull { responseId ->
+                    val responseSnapshot = firestore.collection("responses").document(responseId).get().await()
+                    val response = responseSnapshot.toObject(Response::class.java)
+                    response?.outfitId?.let { outfitId ->
+                        val outfitSnapshot = firestore.collection("outfits").document(outfitId).get().await()
+                        outfitSnapshot.toObject(Outfit::class.java)
+                    }
+                }
+                _outfits.value = outfitsList
+            } catch (e: Exception) {
+                Log.e("ResponseViewModel", "Error fetching outfits: ${e.message}")
+            }
+        }
+    }
 
     fun createResponse(requestId: String, responderId: String, outfitId: String, comment: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -59,12 +84,9 @@ class ResponseViewModel(
                 )
 
                 firestore.runTransaction { transaction ->
-                    // Add the new response
                     transaction.set(newResponseRef, newResponse)
-
-                    // Update the request's responses list
                     val requestRef = firestore.collection("requests").document(requestId)
-                    transaction.update(requestRef, "responses", FieldValue.arrayUnion(outfitId))
+                    transaction.update(requestRef, "responses", FieldValue.arrayUnion(newResponseRef.id))
                 }.await()
 
                 Log.d("ResponseViewModel", "Response created successfully for request: $requestId")
@@ -92,11 +114,35 @@ class ResponseViewModel(
 
                 _responses.value = responsesList
                 Log.d("ResponseViewModel", "Fetched ${responsesList.size} responses for request: $requestId")
+                responsesList.forEach { response ->
+                    Log.d("ResponseViewModel", "Response: $response")
+                }
+
+
             } catch (e: Exception) {
                 Log.e("ResponseViewModel", "Error fetching responses: ${e.message}")
                 _errorMessage.value = "Error fetching responses: ${e.message}"
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+
+    fun fetchRequestsForUser(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val snapshot = firestore.collection("requests")
+                    .whereEqualTo("ownerId", userId)
+                    .get()
+                    .await()
+
+                val requestsList = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(Request::class.java)
+                }
+
+                _requests.value = requestsList
+            } catch (e: Exception) {
+                // Handle error
             }
         }
     }
