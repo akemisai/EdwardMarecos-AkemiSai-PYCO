@@ -11,7 +11,6 @@ import com.pyco.app.models.Request
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.UpdateProfileScreen
 import com.pyco.app.screens.account.components.FollowOrFollowing
-import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.account.others.UserProfileScreen
 import com.pyco.app.screens.authentication.LoginScreen
 import com.pyco.app.screens.authentication.SignUpScreen
@@ -86,15 +85,8 @@ fun AppNavigation(
         composable(Routes.ACCOUNT) {
             AccountScreen(
                 userViewModel = userViewModel,
-                navController = navController
-            )
-        }
-
-        // Account related navigation
-        composable(Routes.SETTINGS) {
-            SettingsScreen(
-                authViewModel = authViewModel,
-                navController = navController
+                navController = navController,
+                authViewModel = authViewModel
             )
         }
 
