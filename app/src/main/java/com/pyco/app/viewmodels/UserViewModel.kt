@@ -270,6 +270,22 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    // for user notifs
+    fun updateUserFcmToken(token: String) {
+        val userId = getCurrentUserId() ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                firestore.collection("users").document(userId)
+                    .update("fcmToken", token)
+                    .await()
+                Log.d("UserViewModel", "FCM token updated for user: $userId")
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Error updating FCM token: ${e.message}")
+            }
+        }
+    }
+
+
     fun clearUserData() {
         _userProfile.value = null
         _isLoading.value = false
