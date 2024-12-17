@@ -1,6 +1,10 @@
 package com.pyco.app.screens.outfits.creation
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +18,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,19 +33,24 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
+import com.pyco.app.models.Tags
 import com.pyco.app.screens.outfits.creation.components.ClothingItemSelector
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
@@ -67,6 +78,10 @@ fun OutfitCreationScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val displayName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown User" // Fetch displayName
+
+    // Selected Tags
+    val selectedTags = remember { mutableStateListOf<Tags>() }
+    val allTags = Tags.entries // Predefined tags
 
     Scaffold(
         topBar = {
@@ -99,7 +114,8 @@ fun OutfitCreationScreen(
                             accessory = selectedAccessory?.let {
                                 FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
                             },
-                            public = public
+                            public = public,
+                            tags = selectedTags.map { it.displayName } // Ensure tags are included
                         )
 
                         outfitsViewModel.addOutfit(newOutfit, FirebaseAuth.getInstance().currentUser?.uid ?: "")  // make new outfit
@@ -209,7 +225,60 @@ fun OutfitCreationScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
+                item{
+                    Text(
+                        text = "Tags:",
+                        color = customColor,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    com.pyco.app.screens.outfits.creation.TagsSelectionSection(
+                        allTags = allTags,
+                        selectedTags = selectedTags
+                    )
+                }
             }
         }
     )
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun TagsSelectionSection(
+    allTags: List<Tags>,
+    selectedTags: MutableList<Tags>
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            allTags.forEach { tag ->
+                FilterChip(
+                    selected = selectedTags.contains(tag),
+                    onClick = {
+                        if (selectedTags.contains(tag)) {
+                            selectedTags.remove(tag)
+                        } else {
+                            selectedTags.add(tag)
+                        }
+                    },
+                    label = {
+                        Text(
+                            text = tag.displayName,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = Color.Gray,
+                        selectedLabelColor = backgroundColor,
+                        containerColor = customColor,
+                        labelColor = Color.Gray
+                    )
+                )
+            }
+        }
+    }
 }

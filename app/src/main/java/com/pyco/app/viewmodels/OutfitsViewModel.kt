@@ -140,7 +140,8 @@ class OutfitsViewModel(
                     ownerId = userId,
                     creatorId = userId,
                     createdBy = creatorName,
-                    creatorPhotoUrl = creatorPhotoUrl
+                    creatorPhotoUrl = creatorPhotoUrl,
+                    tags = outfit.tags
                 )
 
                 firestore.runTransaction { transaction ->

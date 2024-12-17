@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -73,11 +75,11 @@ fun ClosetScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("add_wardrobe_item") },
-                containerColor = Color(0xFFB0BEC5),
-                contentColor = Color.White
+                containerColor = customColor,
+                contentColor = backgroundColor
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.upload),
+                    Icons.Filled.Add,
                     contentDescription = "Add Fashion Item",
                     modifier = Modifier.size(32.dp),
                     tint = backgroundColor
