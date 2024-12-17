@@ -97,7 +97,7 @@ fun AppNavigation(
                 navController = navController
             )
         }
-        composable("user_profile/{userId}") { backStackEntry ->
+        composable("${Routes.USER_PROFILE}/{userId}") { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             UserProfileScreen(
                 userId = userId,
