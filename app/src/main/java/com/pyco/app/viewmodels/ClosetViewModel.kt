@@ -94,6 +94,37 @@ class ClosetViewModel(
             _isLoading.value = false
         }
     }
+    suspend fun fetchRequestOwnerItems(ownerId: String): Map<String, List<ClothingItem>> {
+        Log.d("ClosetViewModel", "Fetching items for request owner: $ownerId")
+
+        val categories = listOf("tops", "bottoms", "shoes", "accessories")
+        val ownerItems = mutableMapOf<String, List<ClothingItem>>()
+
+        try {
+            categories.forEach { category ->
+                val snapshot = firestore.collection("wardrobes")
+                    .document(ownerId)
+                    .collection(category)
+                    .get()
+                    .await()
+
+                val items = snapshot.documents.mapNotNull { doc ->
+                    try {
+                        doc.toObject(ClothingItem::class.java)?.copy(id = doc.id)
+                    } catch (e: Exception) {
+                        Log.e("ClosetViewModel", "Error deserializing document ${doc.id} in $category", e)
+                        null
+                    }
+                }
+
+                ownerItems[category] = items
+            }
+        } catch (e: Exception) {
+            Log.e("ClosetViewModel", "Error fetching request owner items: ${e.message}", e)
+        }
+
+        return ownerItems
+    }
 
     fun addClothingItem(item: ClothingItem, userId: String, category: String) {
         if (userId.isBlank()) {

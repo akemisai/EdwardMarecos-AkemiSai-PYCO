@@ -31,10 +31,7 @@ fun ResponseCreationScreen(
     closetViewModel: ClosetViewModel = viewModel(),
     outfitsViewModel: OutfitsViewModel = viewModel()
 ) {
-    val tops by closetViewModel.tops.collectAsState()
-    val bottoms by closetViewModel.bottoms.collectAsState()
-    val shoes by closetViewModel.shoes.collectAsState()
-    val accessories by closetViewModel.accessories.collectAsState()
+    var ownerItems by remember { mutableStateOf<Map<String, List<ClothingItem>>>(emptyMap()) }
 
     var outfitName by remember { mutableStateOf("") }
     var public by remember { mutableStateOf(false) }
@@ -46,10 +43,9 @@ fun ResponseCreationScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val displayName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown User"
-
     LaunchedEffect(request.ownerId) {
         Log.d("ResponseCreationScreen", "Fetching wardrobe for owner: ${request.ownerId}")
-        closetViewModel.fetchClothingItems(request.ownerId)
+        ownerItems = closetViewModel.fetchRequestOwnerItems(request.ownerId)
     }
 
     Scaffold(
@@ -141,7 +137,7 @@ fun ResponseCreationScreen(
                     Text(text = "Select Top", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
-                        items = tops,
+                        items = ownerItems["tops"] ?: emptyList(),
                         selectedItem = selectedTop,
                         onItemSelected = {
                             selectedTop = it
@@ -155,7 +151,7 @@ fun ResponseCreationScreen(
                     Text(text = "Select Bottom", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
-                        items = bottoms,
+                        items = ownerItems["bottoms"] ?: emptyList(),
                         selectedItem = selectedBottom,
                         onItemSelected = {
                             selectedBottom = it
@@ -169,7 +165,7 @@ fun ResponseCreationScreen(
                     Text(text = "Select Shoes", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
-                        items = shoes,
+                        items = ownerItems["shoes"] ?: emptyList(),
                         selectedItem = selectedShoe,
                         onItemSelected = {
                             selectedShoe = it
@@ -183,7 +179,7 @@ fun ResponseCreationScreen(
                     Text(text = "Select Accessory (Optional)", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
-                        items = accessories,
+                        items = ownerItems["accessories"] ?: emptyList(),
                         selectedItem = selectedAccessory,
                         onItemSelected = {
                             selectedAccessory = it
