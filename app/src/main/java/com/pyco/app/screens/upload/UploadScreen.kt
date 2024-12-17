@@ -50,6 +50,7 @@ import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.MainActivity
+import com.pyco.app.components.customColor
 import com.pyco.app.screens.upload.components.CameraUI
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -61,9 +62,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
-
-val customColor = Color(0xFFF7F7F7) // Light text color
-val backgroundColor = Color(0xFF333333) // Dark background color
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable

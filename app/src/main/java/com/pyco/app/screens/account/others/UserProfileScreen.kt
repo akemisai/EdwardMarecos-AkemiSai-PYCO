@@ -1,5 +1,6 @@
 package com.pyco.app.screens.account.others
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
+import com.pyco.app.models.Outfit
 import com.pyco.app.models.User
 import com.pyco.app.screens.account.TopFits
 import com.pyco.app.viewmodels.UserViewModel
@@ -55,15 +57,25 @@ fun UserProfileScreen(
 ) {
     val currentUserId = userViewModel.userProfile.value?.uid ?: ""
     var userProfile by remember { mutableStateOf<User?>(null) }
-    val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
+    var profileUserOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) } // Store the user's public outfits for this specific profile
     var isLoading by remember { mutableStateOf(true) }
 
     var followerCount by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(userId) {
-        userProfile = userViewModel.fetchUserProfileById(userId)
-        followerCount = userProfile?.followers?.size ?: 0
-        isLoading = false
+        isLoading = true
+        try {
+            // Step 1: Fetch profile user data
+            userProfile = userViewModel.fetchUserProfileById(userId)
+            followerCount = userProfile?.followers?.size ?: 0
+
+            // Step 2: Fetch the public outfits for THIS user (not the logged-in user)
+            profileUserOutfits = userViewModel.fetchUserPublicOutfits(userId)
+        } catch (e: Exception) {
+            Log.e("UserProfileScreen", "Error fetching user profile or outfits: ${e.message}")
+        } finally {
+            isLoading = false
+        }
     }
 
     val currentUserProfile = userViewModel.userProfile.collectAsState().value
@@ -153,7 +165,9 @@ fun UserProfileScreen(
                     HorizontalDivider()
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    TopFits(userPublicOutfits = userPublicOutfits)
+                    TopFits(
+                        userPublicOutfits = profileUserOutfits,
+                    )
                 }
             }
         }
