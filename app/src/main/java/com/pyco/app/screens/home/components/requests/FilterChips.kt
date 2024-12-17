@@ -1,7 +1,17 @@
 package com.pyco.app.screens.home.components.requests
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -12,8 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -72,6 +80,7 @@ fun FilterChipItem(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RequestsFilterSection(
     filters: List<String>,
@@ -133,8 +142,8 @@ fun RequestsFilterSection(
                 )
             }
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        FlowRow(
+            verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .fillMaxWidth()
@@ -156,14 +165,14 @@ fun FilterChipWithClose(
     text: String,
     onRemove: () -> Unit
 ) {
-    // Here we use a FilterChip again.
-    // We just consider "selected" as true for styling, and when the chip is clicked, we remove it.
+
     FilterChip(
         elevation = FilterChipDefaults.filterChipElevation(
             elevation = 6.dp
         ),
         modifier = Modifier
-            .height(26.dp),
+            .height(26.dp)
+            .padding(3.dp),
         selected = true,
         onClick = { onRemove() }, // Entire chip click removes filter, simpler than focusing on x
         label = {
@@ -178,7 +187,7 @@ fun FilterChipWithClose(
                     painter = painterResource(id = R.drawable.tag_out),
                     contentDescription = "Remove",
                     tint = Color(0xff6A6A6A),
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(14.dp)
                 )
             }
         },

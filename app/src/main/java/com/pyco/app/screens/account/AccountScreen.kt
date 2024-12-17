@@ -566,6 +566,7 @@ fun YourRequests (
             request = request,
             onDismiss = { selectedRequest = null },
             navController = navController,
+            userViewModel = userViewModel,
             currentUserId = currentUserId,
         )
     }
