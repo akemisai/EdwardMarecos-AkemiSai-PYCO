@@ -64,7 +64,8 @@ fun AppNavigation(
         composable(Routes.HOME) {
             HomeScreen(
                 navController = navController,
-                homeViewModel = homeViewModel
+                homeViewModel = homeViewModel,
+                userViewModel = userViewModel
             )
         }
         composable(Routes.CLOSET) {

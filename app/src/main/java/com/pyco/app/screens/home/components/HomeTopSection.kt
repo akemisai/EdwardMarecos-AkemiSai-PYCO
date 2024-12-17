@@ -1,6 +1,6 @@
 package com.pyco.app.screens.home.components
 
-import RequestsFeed
+import com.pyco.app.screens.home.components.requests.RequestsFeed
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,10 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -39,11 +36,13 @@ import com.pyco.app.components.customColor
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeTopSection(
     homeViewModel: HomeViewModel,
+    userViewModel: UserViewModel,
     navController: NavHostController
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
@@ -136,15 +135,17 @@ fun HomeTopSection(
             when (page) {
                 0 -> RequestsFeed(
                     homeViewModel = homeViewModel,
-                    navController = navController
-                )
+                    userViewModel = userViewModel,
+                    navController = navController,
+                    currentUserId = currentUserId,
+                    )
                 1 -> TopOutfitsFeed(
                     outfits = publicOutfits,
                     onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },
                     fetchResolvedClothingItems = { outfit -> homeViewModel.fetchResolvedClothingItems(outfit) },
                     currentUserId = currentUserId,
                     navController = navController
-                )
+                    )
                 2 -> ResponsesFeed()
             }
         }
