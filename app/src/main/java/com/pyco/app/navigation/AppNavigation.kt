@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.pyco.app.models.Request
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.UpdateProfileScreen
+import com.pyco.app.screens.account.components.FollowOrFollowing
 import com.pyco.app.screens.account.components.SettingsScreen
 import com.pyco.app.screens.account.others.UserProfileScreen
 import com.pyco.app.screens.authentication.LoginScreen
@@ -93,6 +94,26 @@ fun AppNavigation(
                 navController = navController
             )
         }
+
+        // follow / followers list display screen
+        // this guy chonky cause i want it to go to the same screen just a different section
+        composable(
+            route = "${Routes.FOLLOW_OR_FOLLOWING}/{type}/{userId}",
+            arguments = listOf(
+                navArgument("type") { type = NavType.StringType },
+                navArgument("userId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val type = backStackEntry.arguments?.getString("type") ?: "followers"
+            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+            FollowOrFollowing(
+                navController = navController,
+                userViewModel = userViewModel,
+                selectedTab = type, // Pass type to set the initial tab
+                userId = userId
+            )
+        }
+
         // Add Update Profile Screen
         composable(Routes.UPDATE_PROFILE) {
             UpdateProfileScreen(

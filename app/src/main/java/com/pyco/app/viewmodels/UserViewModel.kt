@@ -163,23 +163,50 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun fetchUserPublicOutfits(userId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
-            try {
-                val snapshot = firestore.collection("public_outfits")
-                    .whereEqualTo("creatorId", userId)
-                    .get()
-                    .await()
+    // fetch the followers or following lists of a user
+    suspend fun getFollowers(userId: String): List<User> {
+        return try {
+            // get the "followers" list directly from the user document
+            val userDoc = firestore.collection("users").document(userId).get().await()
 
-                val outfits = snapshot.documents.mapNotNull { it.toObject(Outfit::class.java) }
-                _userPublicOutfits.value = outfits
-            } catch (e: Exception) {
-                Log.e("UserViewModel", "Error fetching user public outfits: ${e.message}")
-                _errorMessage.value = "Error fetching user public outfits: ${e.message}"
-            } finally {
-                _isLoading.value = false
-            }
+            // Extract the list of follower IDs (if it exists) or return an empty list
+            val followerIds = userDoc.get("followers") as? List<String> ?: emptyList()
+
+            // fetch User objects for each follower ID using fetchUserProfileById
+            followerIds.mapNotNull { fetchUserProfileById(it) }
+        } catch (e: Exception) {
+            Log.e("UserViewModel", "Error fetching followers for $userId: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun getFollowing(userId: String): List<User> {
+        return try {
+            // get the "following" list directly from the user document
+            val userDoc = firestore.collection("users").document(userId).get().await()
+
+            // Extract the list of following IDs (if it exists) or return an empty list
+            val followingIds = userDoc.get("following") as? List<String> ?: emptyList()
+
+            // fetch User objects for each following ID using fetchUserProfileById
+            followingIds.mapNotNull { fetchUserProfileById(it) }
+        } catch (e: Exception) {
+            Log.e("UserViewModel", "Error fetching following for $userId: ${e.message}")
+            emptyList()
+        }
+    }
+
+    suspend fun fetchUserPublicOutfits(userId: String): List<Outfit> {
+        return try {
+            val snapshot = firestore.collection("public_outfits")
+                .whereEqualTo("creatorId", userId)
+                .get()
+                .await()
+
+            snapshot.documents.mapNotNull { it.toObject(Outfit::class.java) }
+        } catch (e: Exception) {
+            Log.e("UserViewModel", "Error fetching public outfits for $userId: ${e.message}")
+            emptyList()
         }
     }
 

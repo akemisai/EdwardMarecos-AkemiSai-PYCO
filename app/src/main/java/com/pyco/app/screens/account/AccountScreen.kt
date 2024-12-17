@@ -76,6 +76,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
+import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.tasks.await
 
@@ -86,8 +87,21 @@ fun AccountScreen(
     navController: NavHostController
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
-    val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
-    val isLoading by userViewModel.isLoading.collectAsState()
+    var profileUserOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) } // Localize the user's public outfits
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(userProfile?.uid) {
+        if (userProfile?.uid != null) {
+            isLoading = true
+            try {
+                profileUserOutfits = userViewModel.fetchUserPublicOutfits(userProfile!!.uid)
+            } catch (e: Exception) {
+                Log.e("AccountScreen", "Error fetching user public outfits: ${e.message}")
+            } finally {
+                isLoading = false
+            }
+        }
+    }
 
     Scaffold(
         containerColor = backgroundColor,
@@ -176,9 +190,9 @@ fun AccountScreen(
                         .padding(start = 40.dp, end = 40.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor)
-                    EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor)
-                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xff852221))
+                    EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/followers/${userProfile?.uid}")})
+                    EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/following/${userProfile?.uid}")})
+                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xff852221), onClick = {})    // no click action just look at the like count
                 }
             }
 
@@ -282,7 +296,7 @@ fun AccountScreen(
                 }
                 1 -> {
                     TopFits(
-                        userPublicOutfits = userPublicOutfits,
+                        userPublicOutfits = profileUserOutfits,
                     )
                 }
                 2 -> {
@@ -661,13 +675,15 @@ fun TopFits(
 fun EngagementStat(
     count: Int,
     label: String,
-    iconColor: Color = MaterialTheme.colorScheme.onBackground
+    iconColor: Color = MaterialTheme.colorScheme.onBackground,
+    onClick: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         // Row for count and icon
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.clickable(onClick = onClick) // Make it clickable to view followers / following
         ) {
             Text(
                 text = "$count",
