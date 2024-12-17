@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,9 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +33,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.screens.closet.components.ClosetTopSection
 import com.pyco.app.screens.closet.components.ClothingItemList
 import com.pyco.app.viewmodels.ClosetViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun ClosetScreen(
@@ -46,7 +47,11 @@ fun ClosetScreen(
     val shoes by closetViewModel.shoes.collectAsState()
     val accessories by closetViewModel.accessories.collectAsState()
 
-    // Log collected data
+    val tabs = listOf("Tops", "Bottoms", "Shoes", "Accessories")
+    val pagerState = rememberPagerState(pageCount = { tabs.size })
+    val coroutineScope = rememberCoroutineScope()
+
+    // Log collected data // debugging purposes
     LaunchedEffect(tops) {
         Log.d("ClosetScreen", "Tops size: ${tops.size}")
     }
@@ -59,12 +64,6 @@ fun ClosetScreen(
     LaunchedEffect(accessories) {
         Log.d("ClosetScreen", "Accessories size: ${accessories.size}")
     }
-
-    // Tab titles
-    val tabs = listOf("Tops", "Bottoms", "Shoes", "Accessories")
-
-    // Tab index state
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     Scaffold(
         containerColor = backgroundColor,
@@ -80,8 +79,7 @@ fun ClosetScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.upload),
                     contentDescription = "Add Fashion Item",
-                    modifier = Modifier
-                        .size(32.dp),
+                    modifier = Modifier.size(32.dp),
                     tint = backgroundColor
                 )
             }
@@ -92,35 +90,38 @@ fun ClosetScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
-            // ClosetTopSection here
+            // Top Section with Scrollable Tabs
             ClosetTopSection(
                 tabs = tabs,
-                selectedTabIndex = selectedTabIndex,
-                onTabSelected = { index -> selectedTabIndex = index },
+                pagerState = pagerState,
+                onTabSelected = { index ->
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                },
                 userViewModel = closetViewModel.userViewModel
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            val items = when (selectedTabIndex) {
-                0 -> tops
-                1 -> bottoms
-                2 -> shoes
-                3 -> accessories
-                else -> emptyList()
-            }
+            // HorizontalPager to allow swiping between categories
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                val items = when (page) {
+                    0 -> tops
+                    1 -> bottoms
+                    2 -> shoes
+                    3 -> accessories
+                    else -> emptyList()
+                }
 
-            // Log selected category and items
-            LaunchedEffect(selectedTabIndex) {
-                Log.d("ClosetScreen", "Selected Tab: ${tabs[selectedTabIndex]}")
-                Log.d("ClosetScreen", "Items count: ${items.size}")
-            }
-
-            if (items.isEmpty()) {
-                NoItemsMessage(message = "No ${tabs[selectedTabIndex]} to Show")
-            } else {
-                ClothingItemList(items = items)
+                if (items.isEmpty()) {
+                    NoItemsMessage(message = "No ${tabs[page]} to Show")
+                } else {
+                    ClothingItemList(items = items)
+                }
             }
         }
     }

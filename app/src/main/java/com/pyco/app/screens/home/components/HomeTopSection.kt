@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -20,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +39,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeTopSection(
@@ -45,6 +50,13 @@ fun HomeTopSection(
 
     val userProfile by homeViewModel.userViewModel.userProfile.collectAsState()
     val currentUserId = userProfile?.uid ?: ""
+
+    val tabs = listOf("Requests", "Top Outfits", "Responses")
+    val pagerState = rememberPagerState(
+        initialPage = 1,
+        pageCount = { tabs.size }
+    )
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -87,25 +99,26 @@ fun HomeTopSection(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Tab Navigation
-        var selectedTabIndex by remember { mutableIntStateOf(1) }
-        val tabs = listOf("Requests", "Top Outfits", "Responses")
-
+        // TabRow with swipe support
         TabRow(
-            selectedTabIndex = selectedTabIndex,
+            selectedTabIndex = pagerState.currentPage,
             containerColor = backgroundColor,
             contentColor = customColor,
             indicator = { tabPositions ->
                 SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                     color = customColor
                 )
             }
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index },
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
                     text = { Text(title) },
                     selectedContentColor = customColor,
                     unselectedContentColor = customColor.copy(alpha = 0.5f)
@@ -115,20 +128,25 @@ fun HomeTopSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Display Content Based on Selected Tab
-        when (selectedTabIndex) {
-            0 -> RequestsFeed(
-                homeViewModel = homeViewModel,
-                navController = navController
-            )
-            1 -> TopOutfitsFeed(
-                outfits = publicOutfits,
-                onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },
-                fetchResolvedClothingItems = { outfit -> homeViewModel.fetchResolvedClothingItems(outfit) },
-                currentUserId = currentUserId,
-                navController = navController
-            )
-            2 -> ResponsesFeed()
+        // Display Content Based on Selected Tab ( now supports swipe :D )
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            when (page) {
+                0 -> RequestsFeed(
+                    homeViewModel = homeViewModel,
+                    navController = navController
+                )
+                1 -> TopOutfitsFeed(
+                    outfits = publicOutfits,
+                    onLikeClick = { outfitId, isLiked -> homeViewModel.toggleLikeOutfit(outfitId, isLiked) },
+                    fetchResolvedClothingItems = { outfit -> homeViewModel.fetchResolvedClothingItems(outfit) },
+                    currentUserId = currentUserId,
+                    navController = navController
+                )
+                2 -> ResponsesFeed()
+            }
         }
     }
 }
