@@ -140,13 +140,6 @@ fun AccountScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO: Navigate to notifications */ }) {
-                        Icon(
-                            imageVector = Icons.Default.Notifications,
-                            contentDescription = "Notifications",
-                            tint = customColor
-                        )
-                    }
                     IconButton(onClick = {
                          showLogoutDialog = true
                         }
