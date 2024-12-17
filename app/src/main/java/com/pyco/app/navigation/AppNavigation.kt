@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.pyco.app.models.Request
 import com.pyco.app.screens.account.AccountScreen
 import com.pyco.app.screens.account.UpdateProfileScreen
 import com.pyco.app.screens.account.components.SettingsScreen
@@ -18,6 +19,7 @@ import com.pyco.app.screens.home.HomeScreen
 import com.pyco.app.screens.outfits.OutfitDetailScreen
 import com.pyco.app.screens.outfits.OutfitsScreen
 import com.pyco.app.screens.outfits.creation.OutfitCreationScreen
+import com.pyco.app.screens.reponses.creation.ResponseCreationScreen
 import com.pyco.app.screens.requests.creation.MakeRequestScreen
 import com.pyco.app.screens.upload.UploadScreen
 import com.pyco.app.viewmodels.AuthViewModel
@@ -144,6 +146,20 @@ fun AppNavigation(
                 requestViewModel = requestViewModel,
                 userViewModel = userViewModel,
                 navController = navController
+            )
+        }
+
+        // Response related Nav
+        composable(
+            route = "${Routes.CREATE_RESPONSE}?requestId={requestId}",
+            arguments = listOf(navArgument("requestId") { type = NavType.StringType; nullable = true })
+        ) { backStackEntry ->
+            val requestId = backStackEntry.arguments?.getString("requestId")
+            ResponseCreationScreen(
+                navController = navController,
+                request = requestId?.let { Request(id = it) } ?: Request(),
+                closetViewModel = closetViewModel,
+                outfitsViewModel = outfitsViewModel
             )
         }
     }
