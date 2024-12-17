@@ -102,9 +102,9 @@ dependencies {
     // some icons for ui
     implementation(libs.androidx.material.icons.extended)
 
-    // accompanist pager library for the horizontal pager on outfit feeds.
+    // accompanist pager library for the horizontal pager on outfit feeds // among other screen like followers etc
     implementation(libs.androidx.foundation)
-    
+
     // guava
     implementation(libs.guava)
 
