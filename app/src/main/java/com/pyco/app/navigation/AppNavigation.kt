@@ -101,7 +101,8 @@ fun AppNavigation(
             val userId = backStackEntry.arguments?.getString("userId") ?: ""
             UserProfileScreen(
                 userId = userId,
-                navController = navController
+                navController = navController,
+                userViewModel = userViewModel
             )
         }
 

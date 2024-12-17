@@ -45,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -66,6 +67,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import coil.request.Disposable
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
@@ -80,7 +82,7 @@ import kotlinx.coroutines.tasks.await
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(
-    userViewModel: UserViewModel = viewModel(),
+    userViewModel: UserViewModel,
     navController: NavHostController
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
@@ -167,13 +169,13 @@ fun AccountScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             // Followers, Following, and Likes stats
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 40.dp, end = 40.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                userProfile?.let { profile ->
+            userProfile?.let { profile ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 40.dp, end = 40.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor)
                     EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor)
                     EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xff852221))
