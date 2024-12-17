@@ -2,6 +2,8 @@
 accompanistNavigationAnimation = "0.36.0"
 accompanistPager = "0.30.1"
 accompanistPagerIndicators = "0.30.1"
+accompanistPagerIndicatorsVersion = "0.31.2-alpha"
+accompanistPagerVersion = "0.31.2-alpha"
 agp = "8.6.0"
 cameraCamera2 = "1.5.0-alpha03"
 cameraCore = "1.4.0"
@@ -40,6 +42,8 @@ firebaseStorageKtx = "21.0.1"
 [libraries]
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators-v0312alpha = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicatorsVersion" }
+accompanist-pager-v0312alpha = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
 androidx-camera-camera2-v150alpha03 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
 androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }

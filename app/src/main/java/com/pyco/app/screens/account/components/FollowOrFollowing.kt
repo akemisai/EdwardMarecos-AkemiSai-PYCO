@@ -3,18 +3,48 @@ package com.pyco.app.screens.account.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccessibilityNew
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,12 +54,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.User
 import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.UserViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,19 +69,22 @@ fun FollowOrFollowing(
     selectedTab: String, // "followers" or "following" - sets the initial tab
     userId: String
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(if (selectedTab == "followers") 0 else 1) }
+    val tabs = listOf("Followers", "Following")
+    val pagerState = rememberPagerState(
+        initialPage = if (selectedTab == "followers") 0 else 1,
+        pageCount = { tabs.size }
+    )
     var usersList by remember { mutableStateOf<List<User>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val coroutineScope = rememberCoroutineScope()
 
-    val tabs = listOf("Followers", "Following")
-
-    // Fetch data whenever the tab changes
-    LaunchedEffect(selectedTabIndex) {
+    // Fetch data when the page changes
+    LaunchedEffect(pagerState.currentPage) {
         isLoading = true
         errorMessage = null
         try {
-            usersList = if (selectedTabIndex == 0) {
+            usersList = if (pagerState.currentPage == 0) {
                 userViewModel.getFollowers(userId)
             } else {
                 userViewModel.getFollowing(userId)
@@ -102,12 +135,12 @@ fun FollowOrFollowing(
         ) {
             // Tabs
             TabRow(
-                selectedTabIndex = selectedTabIndex,
+                selectedTabIndex = pagerState.currentPage,
                 containerColor = backgroundColor,
                 contentColor = customColor,
                 indicator = { tabPositions ->
                     SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                         color = customColor
                     )
                 },
@@ -115,8 +148,13 @@ fun FollowOrFollowing(
             ) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            // Animate to the selected tab
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
                         text = { Text(title, color = customColor) },
                         selectedContentColor = customColor,
                         unselectedContentColor = customColor.copy(alpha = 0.5f)
@@ -126,34 +164,42 @@ fun FollowOrFollowing(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Content
-            when {
-                isLoading -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = customColor)
-                }
-                errorMessage != null -> Text(
-                    text = errorMessage ?: "Error",
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(16.dp)
-                )
-                usersList.isEmpty() -> Text(
-                    text = "No users found.",
-                    color = customColor.copy(alpha = 0.7f),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    textAlign = TextAlign.Center
-                )
-                else -> LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(usersList) { user ->
-                        UserListItem(user = user, onClick = {
-                            navController.navigate("${Routes.USER_PROFILE}/${user.uid}")
-                        })
+            // HorizontalPager for swipeable tabs
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when {
+                    isLoading -> Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = customColor)
+                    }
+                    errorMessage != null -> Text(
+                        text = errorMessage ?: "Error",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    usersList.isEmpty() -> Text(
+                        text = "No users found.",
+                        color = customColor.copy(alpha = 0.7f),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    else -> LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(usersList) { user ->
+                            UserListItem(user = user, onClick = {
+                                navController.navigate("${Routes.USER_PROFILE}/${user.uid}")
+                            })
+                        }
                     }
                 }
             }
