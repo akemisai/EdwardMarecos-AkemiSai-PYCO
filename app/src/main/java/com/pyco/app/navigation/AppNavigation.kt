@@ -1,5 +1,6 @@
 package com.pyco.app.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -151,13 +152,15 @@ fun AppNavigation(
 
         // Response related Nav
         composable(
-            route = "${Routes.CREATE_RESPONSE}?requestId={requestId}",
-            arguments = listOf(navArgument("requestId") { type = NavType.StringType; nullable = true })
+            route = "${Routes.CREATE_RESPONSE}?requestId={requestId}&ownerId={ownerId}",
+            arguments = listOf(navArgument("requestId") { type = NavType.StringType; nullable = true }, navArgument("ownerId") { type = NavType.StringType; nullable = true })
         ) { backStackEntry ->
             val requestId = backStackEntry.arguments?.getString("requestId")
+            val ownerId = backStackEntry.arguments?.getString("ownerId")
+            Log.d("AppNavigation", "Navigating to ResponseCreationScreen with requestId: $requestId and ownerId: $ownerId")
             ResponseCreationScreen(
                 navController = navController,
-                request = requestId?.let { Request(id = it) } ?: Request(),
+                request = Request(id = requestId ?: "", ownerId = ownerId ?: ""),
                 closetViewModel = closetViewModel,
                 outfitsViewModel = outfitsViewModel
             )

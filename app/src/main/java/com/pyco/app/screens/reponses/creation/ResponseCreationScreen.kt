@@ -48,6 +48,7 @@ fun ResponseCreationScreen(
     val displayName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown User"
 
     LaunchedEffect(request.ownerId) {
+        Log.d("ResponseCreationScreen", "Fetching wardrobe for owner: ${request.ownerId}")
         closetViewModel.fetchClothingItems(request.ownerId)
     }
 

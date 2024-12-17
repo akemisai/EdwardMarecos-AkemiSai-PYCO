@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -109,8 +110,10 @@ fun RequestCard(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             )
             Button(
+
                 onClick = {
-                    navController.navigate("${Routes.CREATE_RESPONSE}?requestId=${request.id}")
+                    Log.d("RequestCard", "Respond button clicked for requestId: ${request.id}, ownerId: ${request.ownerId}")
+                    navController.navigate("${Routes.CREATE_RESPONSE}?requestId=${request.id}&ownerId=${request.ownerId}")
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {

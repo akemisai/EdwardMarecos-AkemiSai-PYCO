@@ -50,7 +50,7 @@ class OutfitsViewModel(
         }
     }
 
-    private suspend fun fetchWardrobeItems(userId: String) {
+    suspend fun fetchWardrobeItems(userId: String) {
         Log.d("OutfitsViewModel", "Fetching wardrobe items for user: $userId")
 
         val categories = listOf("tops", "bottoms", "shoes", "accessories")
