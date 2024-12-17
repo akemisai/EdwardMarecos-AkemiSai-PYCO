@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,10 +26,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -65,6 +69,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.firestore.FirebaseFirestore
@@ -78,6 +83,7 @@ import com.pyco.app.models.Request
 import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.home.components.requests.RequestCard
 import com.pyco.app.screens.home.components.requests.RequestDetailDialog
+import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -86,11 +92,13 @@ import kotlinx.coroutines.tasks.await
 @Composable
 fun AccountScreen(
     userViewModel: UserViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    authViewModel: AuthViewModel
 ) {
     val userProfile by userViewModel.userProfile.collectAsState()
     var profileUserOutfits by remember { mutableStateOf<List<Outfit>>(emptyList()) } // Store the user's public outfits for this specific profile
     var isLoading by remember { mutableStateOf(true) }
+    var showLogoutDialog by remember { mutableStateOf(false) } // Control dialog visibility here
 
     val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
     val pagerState = rememberPagerState(
@@ -137,10 +145,13 @@ fun AccountScreen(
                             tint = customColor
                         )
                     }
-                    IconButton(onClick = { navController.navigate("settings") }) {
+                    IconButton(onClick = {
+                         showLogoutDialog = true
+                        }
+                    ) {
                         Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings",
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "Logout",
                             tint = customColor
                         )
                     }
@@ -203,6 +214,18 @@ fun AccountScreen(
                     EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor, spacing = 0.dp, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/following/${userProfile?.uid}")})
                     EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xffff1e1e), spacing = 0.dp)    // no click action just look at the like count
                 }
+            }
+            if (showLogoutDialog) {
+                LogoutConfirmationDialog(
+                    onConfirm = {
+                        showLogoutDialog = false
+                        authViewModel.logOut()
+                        navController.navigate("login") {
+                            popUpTo("home") { inclusive = true } // Clear back stack
+                        }
+                    },
+                    onDismiss = { showLogoutDialog = false }
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -945,6 +968,73 @@ fun OutfitPreviewDialog(
                     )
                 ) {
                     Text("Close")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LogoutConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = { onDismiss() },
+        properties = DialogProperties(usePlatformDefaultWidth = false) // Use wide dialog like the RequestDetailDialog
+    ) {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = backgroundColor,
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .fillMaxHeight(0.4f)
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Log Out",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = customColor
+                )
+
+                Text(
+                    text = "Are you sure you want to log out?",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = customColor,
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = { onConfirm() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xff852221),
+                            contentColor = customColor
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Log Out")
+                    }
+
+                    Button(
+                        onClick = { onDismiss() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Gray
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Cancel")
+                    }
                 }
             }
         }

@@ -20,7 +20,6 @@ object Routes {
     const val ADD_WARDROBE_ITEM = "add_wardrobe_item"
 
     // account related navigation
-    const val SETTINGS = "settings"
     const val UPDATE_PROFILE = "update_profile"
 
     // request related navigation
