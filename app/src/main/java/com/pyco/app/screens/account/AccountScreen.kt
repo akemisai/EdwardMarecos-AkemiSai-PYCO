@@ -45,6 +45,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
@@ -80,6 +81,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
+import com.pyco.app.models.Response
 import com.pyco.app.navigation.Routes
 import com.pyco.app.screens.home.components.requests.RequestCard
 import com.pyco.app.screens.home.components.requests.RequestDetailDialog
@@ -100,7 +102,7 @@ fun AccountScreen(
     var isLoading by remember { mutableStateOf(true) }
     var showLogoutDialog by remember { mutableStateOf(false) } // Control dialog visibility here
 
-    val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
+    val tabs = listOf("<3", "Your Top Outfits", "Your Responses")
     val pagerState = rememberPagerState(
         initialPage = 1,
         pageCount = { tabs.size }
@@ -292,11 +294,10 @@ fun AccountScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             // TabRow for navigation
-            ScrollableTabRow(
+            TabRow(
                 selectedTabIndex = pagerState.currentPage,
                 containerColor = backgroundColor,
                 contentColor = customColor,
-                edgePadding = 0.dp,
                 indicator = { tabPositions ->
                     SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
@@ -329,8 +330,8 @@ fun AccountScreen(
                 when (page) {
                     0 -> LikedFits(currentUserId = userProfile?.uid ?: "")
                     1 -> TopFits(userPublicOutfits = profileUserOutfits)
-                    2 -> YourRequests(userViewModel = userViewModel, navController = navController, currentUserId = userProfile?.uid ?: "")
-                    3 -> YourResponses()
+//                    2 -> YourRequests(userViewModel = userViewModel, navController = navController, currentUserId = userProfile?.uid ?: "")
+                    2 -> YourResponses(currentUserId = userProfile?.uid ?: "")
                 }
             }
         }
@@ -470,7 +471,7 @@ fun LikedOutfitItem(outfit: Outfit) {
 }
 
 
-// requests you made section
+// requests you made section ( still can salvage ui )
 
 @Composable
 fun YourRequests (
@@ -606,13 +607,131 @@ fun RequestItem(request: Request) {
 // responses you made feed section
 
 @Composable
-fun YourResponses (
-
+fun YourResponses(
+    currentUserId: String // Pass the current user's ID
 ) {
-    Text(
-        text = "your responses",
-        color = customColor
-    )
+    // State to hold the list of responses
+    var responsesList by remember { mutableStateOf<List<Response>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        try {
+            val db = FirebaseFirestore.getInstance()
+
+            // Fetch responses where 'responderId' matches the current user ID
+            val result = db.collection("responses")
+                .whereEqualTo("responderId", currentUserId)
+                .get()
+                .await()
+
+            responsesList = result.toObjects(Response::class.java)
+        } catch (e: Exception) {
+            errorMessage = "Error fetching responses: ${e.message}"
+            Log.e("YourResponses", errorMessage ?: "Unknown error")
+        } finally {
+            isLoading = false
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Your Responses",
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            color = customColor,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        when {
+            isLoading -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = customColor)
+            }
+
+            !errorMessage.isNullOrEmpty() -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = errorMessage ?: "Something went wrong.",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            responsesList.isEmpty() -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "You have no responses yet.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            }
+
+            else -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(responsesList) { response ->
+                        ResponseCard(response = response)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ResponseCard(response: Response) {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable {
+                // Handle card click logic, if necessary
+            }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = response.outfitName ?: "Untitled Response",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = backgroundColor
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = response.requestDescription ?: "No description provided.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Created at: ${response.timestamp ?: "Unknown"}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        }
+    }
 }
 
 

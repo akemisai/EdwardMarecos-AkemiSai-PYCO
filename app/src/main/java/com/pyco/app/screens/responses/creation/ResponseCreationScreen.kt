@@ -14,6 +14,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.pyco.app.components.backgroundColor
+import com.pyco.app.components.customColor
 import com.pyco.app.models.ClothingItem
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
@@ -60,9 +62,15 @@ fun ResponseCreationScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = backgroundColor,
+                    titleContentColor = customColor,
+                    navigationIconContentColor = customColor
+                )
             )
         },
+        containerColor = backgroundColor,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -90,6 +98,7 @@ fun ResponseCreationScreen(
                             },
                             public = false
                         )
+
                         Log.d("ResponseCreationScreen", "Outfit ID set as: ${newOutfit.id}")
 
                         outfitsViewModel.addOutfit(newOutfit, request.ownerId)
@@ -97,7 +106,15 @@ fun ResponseCreationScreen(
 
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
-                            responseViewModel.createResponse(request.id, responderId, newOutfit.id, comment)
+                            responseViewModel.createResponse(
+                                requestId = request.id,
+                                title = request.title,
+                                requestDescription = request.description, // Pass request description
+                                responderId = responderId,
+                                outfitId = newOutfit.id,
+                                outfitName = outfitName,
+                                comment = comment
+                            )
                             navController.navigateUp()
                         }
                     } else {
@@ -108,7 +125,9 @@ fun ResponseCreationScreen(
                 },
                 content = {
                     Icon(Icons.Filled.Save, contentDescription = "Save Outfit")
-                }
+                },
+                containerColor = customColor,
+                contentColor = backgroundColor
             )
         },
         snackbarHost = {
@@ -128,7 +147,18 @@ fun ResponseCreationScreen(
                         label = { Text("Outfit Name") },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = customColor,
+                            unfocusedBorderColor = customColor,
+                            cursorColor = customColor,
+                            focusedPlaceholderColor = customColor,
+                            unfocusedPlaceholderColor = customColor,
+                            focusedTextColor = customColor,
+                            unfocusedTextColor = customColor,
+                            focusedLabelColor = customColor,
+                            unfocusedLabelColor = customColor
+                        )
                     )
                 }
 
@@ -139,12 +169,23 @@ fun ResponseCreationScreen(
                         label = { Text("Comment") },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = customColor,
+                            unfocusedBorderColor = customColor,
+                            cursorColor = customColor,
+                            focusedPlaceholderColor = customColor,
+                            unfocusedPlaceholderColor = customColor,
+                            focusedTextColor = customColor,
+                            unfocusedTextColor = customColor,
+                            focusedLabelColor = customColor,
+                            unfocusedLabelColor = customColor
+                        )
                     )
                 }
 
                 item {
-                    Text(text = "Select Top", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "Select Top", color = customColor, style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
                         items = ownerItems["tops"] ?: emptyList(),
@@ -158,7 +199,7 @@ fun ResponseCreationScreen(
                 }
 
                 item {
-                    Text(text = "Select Bottom", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "Select Bottom", color = customColor, style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
                         items = ownerItems["bottoms"] ?: emptyList(),
@@ -172,7 +213,7 @@ fun ResponseCreationScreen(
                 }
 
                 item {
-                    Text(text = "Select Shoes", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "Select Shoes", color = customColor, style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
                         items = ownerItems["shoes"] ?: emptyList(),
@@ -180,13 +221,13 @@ fun ResponseCreationScreen(
                         onItemSelected = {
                             selectedShoe = it
                             Log.d("ResponseCreation", "Selected Shoe: ${it.id}")
-                        }
+                        },
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 item {
-                    Text(text = "Select Accessory (Optional)", style = MaterialTheme.typography.titleMedium)
+                    Text(text = "Select Accessory (Optional)", color = customColor, style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     ClothingItemSelector(
                         items = ownerItems["accessories"] ?: emptyList(),

@@ -1,5 +1,6 @@
 package com.pyco.app.screens.home.components.requests
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,11 +43,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
+import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
 import com.pyco.app.models.Request
@@ -448,11 +451,11 @@ fun RequestDetailDialog(
                                             .padding(8.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        Text(
-                                            text = response,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = customColor,
-                                            maxLines = 2
+                                        Image(
+                                            painter = painterResource(id = R.drawable.placeholder_image),
+                                            contentDescription = "Response Image",
+                                            modifier = Modifier
+                                                .fillMaxSize()
                                         )
                                     }
                                 }
