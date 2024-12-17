@@ -87,6 +87,9 @@ dependencies {
     // crashlytics
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
+    // messaging
+    implementation(libs.firebase.messaging)
+
 
     // camerax
     // CameraX core library using the camera2 implementation

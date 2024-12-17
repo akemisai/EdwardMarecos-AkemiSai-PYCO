@@ -12,5 +12,7 @@ data class User(
 
     val followersCount: Int = 0,                            // Count of followers
     val followingCount: Int = 0,                            // Count of following
-    val likesCount: Int = 0                                 // Total number of likes received
+    val likesCount: Int = 0,                                // Total number of likes received
+
+    val fcmToken: String? = null                            // store the user’s FCM token
 )
