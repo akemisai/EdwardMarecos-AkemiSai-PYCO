@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Timestamp
 import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
+import com.pyco.app.models.User
 
 class ResponseViewModelFactory(
     private val firestore: FirebaseFirestore,
@@ -49,6 +50,9 @@ class ResponseViewModel(
 
     private val _outfits = MutableStateFlow<List<Outfit>>(emptyList())
     val outfits: StateFlow<List<Outfit>> = _outfits
+
+    private val _userDetails = MutableStateFlow<Map<String, User>>(emptyMap())
+    val userDetails: StateFlow<Map<String, User>> = _userDetails
 
     fun fetchOutfitsForResponses(responseIds: List<String>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -116,6 +120,7 @@ class ResponseViewModel(
                 Log.d("ResponseViewModel", "Fetched ${responsesList.size} responses for request: $requestId")
                 responsesList.forEach { response ->
                     Log.d("ResponseViewModel", "Response: $response")
+                    fetchUserDetails(response.responderId)
                 }
 
 
@@ -124,6 +129,15 @@ class ResponseViewModel(
                 _errorMessage.value = "Error fetching responses: ${e.message}"
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+
+    private fun fetchUserDetails(userId: String) {
+        viewModelScope.launch {
+            val user = userViewModel.fetchUserProfileById(userId)
+            if (user != null) {
+                _userDetails.value = _userDetails.value + (userId to user)
             }
         }
     }

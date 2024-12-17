@@ -187,13 +187,21 @@ fun AppNavigation(
         }
 
         // ResponseListScreen Nav
-        composable("${Routes.RESPONSES_LIST}/{requestId}") { backStackEntry ->
+        composable(
+            route ="${Routes.RESPONSES_LIST}/{requestId}/{title}",
+            arguments = listOf(
+                navArgument("requestId") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
             val requestId = backStackEntry.arguments?.getString("requestId") ?: ""
+            val title = backStackEntry.arguments?.getString("title") ?: ""
             Log.d("AppNavigation", "Navigating to ResponseListScreen with requestId: $requestId")
             ResponsesListScreen(
                 responseViewModel = responseViewModel,
                 navController = navController,
                 requestId = requestId,
+                title = title
             )
         }
     }

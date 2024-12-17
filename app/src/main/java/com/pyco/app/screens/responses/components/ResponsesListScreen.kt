@@ -8,22 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -35,14 +29,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.google.firebase.firestore.DocumentReference
 import com.pyco.app.components.backgroundColor
 import com.pyco.app.components.customColor
-import com.pyco.app.models.ClothingItem
-import com.pyco.app.models.Outfit
 import com.pyco.app.models.Response
-import com.pyco.app.navigation.Routes
-import com.pyco.app.screens.outfits.components.OutfitCardGridItem
+import com.pyco.app.models.User
 import com.pyco.app.viewmodels.ResponseViewModel
 
 
@@ -51,9 +41,11 @@ import com.pyco.app.viewmodels.ResponseViewModel
 fun ResponsesListScreen(
     navController: NavHostController,
     requestId: String,
+    title: String,
     responseViewModel: ResponseViewModel = viewModel()
 ) {
     val responses by responseViewModel.responses.collectAsState()
+    val userDetails by responseViewModel.userDetails.collectAsState()
 
     LaunchedEffect(requestId) {
         responseViewModel.fetchResponsesForRequest(requestId)
@@ -62,7 +54,7 @@ fun ResponsesListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Responses") },
+                title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -70,16 +62,25 @@ fun ResponsesListScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = backgroundColor,
-                    titleContentColor = customColor
+                    titleContentColor = customColor,
+                    navigationIconContentColor = customColor
                 )
             )
         },
-        content = { padding ->
+        containerColor = backgroundColor
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .padding(16.dp)
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (responses.isEmpty()) {
                     Box(
@@ -102,22 +103,24 @@ fun ResponsesListScreen(
                                 response = response,
                                 onClick = {
                                     navController.navigate("outfit_detail/${response.outfitId}")
-                                }
+                                },
+                                userDetails = userDetails
                             )
                         }
                     }
                 }
             }
         }
-    )
+    }
 }
-
 @Composable
 fun ResponseCard(
     response: Response,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    userDetails: Map<String, User>
 ) {
+    val responderName = userDetails[response.responderId]?.displayName ?: "Unknown"
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color(0xfff2f2f2),
@@ -142,7 +145,7 @@ fun ResponseCard(
                 color = backgroundColor
             )
             Text(
-                text = "Responder: ${response.responderId}",
+                text = "Responder: $responderName",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )

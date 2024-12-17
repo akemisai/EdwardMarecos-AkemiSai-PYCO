@@ -83,7 +83,7 @@ fun ResponsesFeed(
                     RequestCard(
                         request = request,
                         onClick = {
-                            navController.navigate("responses_list/${request.id}")
+                            navController.navigate("responses_list/${request.id}/${request.title}")
                         }
                     )
                 }
