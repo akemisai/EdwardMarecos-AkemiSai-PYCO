@@ -1,4 +1,3 @@
-// ClosetTopSection.kt
 package com.pyco.app.screens.closet.components
 
 import android.util.Log
@@ -12,10 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +37,7 @@ import com.pyco.app.viewmodels.UserViewModel
 @Composable
 fun ClosetTopSection(
     tabs: List<String>,
-    selectedTabIndex: Int,
+    pagerState: PagerState,
     onTabSelected: (Int) -> Unit,
     userViewModel: UserViewModel
 ) {
@@ -81,7 +81,7 @@ fun ClosetTopSection(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column (
+            Column(
                 modifier = Modifier.fillMaxWidth(), // Tabs take remaining space
                 verticalArrangement = Arrangement.Center // Position tabs in line with profile picture
             ) {
@@ -89,23 +89,22 @@ fun ClosetTopSection(
 
                 // Scrollable Tabs
                 ScrollableTabRow(
-                    selectedTabIndex = selectedTabIndex,
+                    selectedTabIndex = pagerState.currentPage,
                     containerColor = backgroundColor,
                     contentColor = customColor,
                     edgePadding = 8.dp,
                     indicator = { tabPositions ->
-                        TabRowDefaults.SecondaryIndicator(
-                            Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        SecondaryIndicator(
+                            Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                             height = 2.dp,
                             color = customColor
                         )
                     },
-                    modifier = Modifier
-                        .padding(start = 16.dp) // Slightly move tabs to the left
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     tabs.forEachIndexed { index, title ->
                         Tab(
-                            selected = selectedTabIndex == index,
+                            selected = pagerState.currentPage == index,
                             onClick = { onTabSelected(index) },
                             text = { Text(title) },
                             selectedContentColor = customColor,

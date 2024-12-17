@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,23 +38,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,10 +65,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import coil.request.Disposable
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pyco.app.R
 import com.pyco.app.components.BottomNavigationBar
@@ -78,6 +77,7 @@ import com.pyco.app.models.Outfit
 import com.pyco.app.models.Request
 import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.UserViewModel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,6 +89,13 @@ fun AccountScreen(
     val userProfile by userViewModel.userProfile.collectAsState()
     val userPublicOutfits by userViewModel.userPublicOutfits.collectAsState()
     val isLoading by userViewModel.isLoading.collectAsState()
+
+    val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
+    val pagerState = rememberPagerState(
+        initialPage = 1,
+        pageCount = { tabs.size }
+    )
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         containerColor = backgroundColor,
@@ -246,25 +253,27 @@ fun AccountScreen(
             HorizontalDivider()
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Tab Navigation
-            var selectedTabIndex by remember { mutableIntStateOf(1) }
-            val tabs = listOf("<3", "Your Top Outfits", "Your Requests", "Your Responses")
-
-            TabRow(
-                selectedTabIndex = selectedTabIndex,
+            // TabRow for navigation
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
                 containerColor = backgroundColor,
                 contentColor = customColor,
+                edgePadding = 0.dp,
                 indicator = { tabPositions ->
                     SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                         color = customColor
                     )
                 }
             ) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
                         text = { Text(title) },
                         selectedContentColor = customColor,
                         unselectedContentColor = customColor.copy(alpha = 0.5f)
@@ -274,27 +283,16 @@ fun AccountScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Display Content Based on Selected Tab
-            when (selectedTabIndex) {
-                0 -> {
-                    LikedFits(
-                        currentUserId = userProfile?.uid ?: ""
-                    )
-                }
-                1 -> {
-                    TopFits(
-                        userPublicOutfits = userPublicOutfits,
-                    )
-                }
-                2 -> {
-                    YourRequests(
-                        currentUserId = userProfile?.uid ?: ""
-                    )
-                }
-                3 -> {
-                    YourResponses(
-
-                    )
+            // Swipeable Pager Content
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                when (page) {
+                    0 -> LikedFits(currentUserId = userProfile?.uid ?: "")
+                    1 -> TopFits(userPublicOutfits = userPublicOutfits)
+                    2 -> YourRequests(currentUserId = userProfile?.uid ?: "")
+                    3 -> YourResponses()
                 }
             }
         }
