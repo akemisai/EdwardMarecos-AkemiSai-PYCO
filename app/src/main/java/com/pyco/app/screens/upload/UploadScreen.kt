@@ -190,7 +190,7 @@ fun Context.createImageFile(): File {
 }
 
 fun removeBackgroundAndUpload(context: Context, imageUri: Uri, onComplete: (Uri) -> Unit) {
-    val apiKey = "PaaXzUsVC9srkjC1ra8GpNv2"
+    val apiKey = "MRjZ3aEcuxZbZtjY4YAppPz4"
     val file = context.createImageFile()
     val inputStream = context.contentResolver.openInputStream(imageUri)
     val outputStream = FileOutputStream(file)
