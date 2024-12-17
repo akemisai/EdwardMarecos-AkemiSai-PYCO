@@ -199,9 +199,9 @@ fun AccountScreen(
                         .padding(start = 40.dp, end = 40.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/followers/${userProfile?.uid}")})
-                    EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/following/${userProfile?.uid}")})
-                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xff852221), onClick = {})    // no click action just look at the like count
+                    EngagementStat(count = profile.followersCount, label = "followers", iconColor = customColor, spacing = 0.dp, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/followers/${userProfile?.uid}")})
+                    EngagementStat(count = profile.followingCount, label = "following", iconColor = customColor, spacing = 0.dp, onClick = {navController.navigate("${Routes.FOLLOW_OR_FOLLOWING}/following/${userProfile?.uid}")})
+                    EngagementStat(count = profile.likesCount, label = "likes", iconColor = Color(0xffff1e1e), spacing = 0.dp)    // no click action just look at the like count
                 }
             }
 
@@ -709,18 +709,25 @@ fun EngagementStat(
     count: Int,
     label: String,
     iconColor: Color = MaterialTheme.colorScheme.onBackground,
-    onClick: () -> Unit
+    textSize: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyMedium,     // Default smaller text
+    labelSize: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.labelSmall,    // Default smaller label
+    iconSize: androidx.compose.ui.unit.Dp = 12.dp,                                          // Default icon size
+    spacing: androidx.compose.ui.unit.Dp = 2.dp,                                            // Default spacing
+    onClick: () -> Unit = {}
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(spacing),
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         // Row for count and icon
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.clickable(onClick = onClick) // Make it clickable to view followers / following
+            horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 text = "$count",
-                style = MaterialTheme.typography.titleMedium,
+                style = textSize,
                 fontWeight = FontWeight.Bold,
                 color = iconColor
             )
@@ -730,15 +737,15 @@ fun EngagementStat(
                     contentDescription = "Heart Icon",
                     tint = iconColor,
                     modifier = Modifier
-                        .size(16.dp)
-                        .padding(start = 4.dp)
+                        .size(iconSize)
+                        .padding(start = spacing) // Adjust based on spacing
                 )
             }
         }
         Text(
             text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = customColor
+            style = labelSize,
+            color = iconColor.copy(alpha = 0.7f)
         )
     }
 }
@@ -809,7 +816,7 @@ fun PodiumSpot(
             Text(
                 text = "${outfit.likes.size} Likes",
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color(0xffff4081)
+                color = Color(0xffff1e1e)
             )
         }
     }
