@@ -49,8 +49,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun OutfitCreationScreen(
     navController: NavHostController,
-    closetViewModel: ClosetViewModel = viewModel(),
-    outfitsViewModel: OutfitsViewModel = viewModel()
+    closetViewModel: ClosetViewModel,
+    outfitsViewModel: OutfitsViewModel
 ) {
     val tops by closetViewModel.tops.collectAsState()
     val bottoms by closetViewModel.bottoms.collectAsState()
