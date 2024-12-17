@@ -2,6 +2,7 @@ package com.pyco.app.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,8 +21,9 @@ import com.pyco.app.screens.home.HomeScreen
 import com.pyco.app.screens.outfits.OutfitDetailScreen
 import com.pyco.app.screens.outfits.OutfitsScreen
 import com.pyco.app.screens.outfits.creation.OutfitCreationScreen
-import com.pyco.app.screens.reponses.creation.ResponseCreationScreen
+import com.pyco.app.screens.responses.creation.ResponseCreationScreen
 import com.pyco.app.screens.requests.creation.MakeRequestScreen
+import com.pyco.app.screens.responses.components.ResponsesListScreen
 import com.pyco.app.screens.upload.UploadScreen
 import com.pyco.app.viewmodels.AuthViewModel
 import com.pyco.app.viewmodels.ClosetViewModel
@@ -39,7 +41,7 @@ fun AppNavigation(
     closetViewModel: ClosetViewModel,
     outfitsViewModel: OutfitsViewModel,
     requestViewModel: RequestViewModel,
-    responseViewModel: ResponseViewModel
+    responseViewModel: ResponseViewModel,
 ) {
     val navController = rememberNavController()
 
@@ -64,7 +66,8 @@ fun AppNavigation(
             HomeScreen(
                 navController = navController,
                 homeViewModel = homeViewModel,
-                userViewModel = userViewModel
+                userViewModel = userViewModel,
+                responseViewModel = responseViewModel
             )
         }
         composable(Routes.CLOSET) {
@@ -180,6 +183,17 @@ fun AppNavigation(
                 request = Request(id = requestId ?: "", ownerId = ownerId ?: ""),
                 closetViewModel = closetViewModel,
                 outfitsViewModel = outfitsViewModel
+            )
+        }
+
+        // ResponseListScreen Nav
+        composable("${Routes.RESPONSES_LIST}/{requestId}") { backStackEntry ->
+            val requestId = backStackEntry.arguments?.getString("requestId") ?: ""
+            Log.d("AppNavigation", "Navigating to ResponseListScreen with requestId: $requestId")
+            ResponsesListScreen(
+                responseViewModel = responseViewModel,
+                navController = navController,
+                requestId = requestId,
             )
         }
     }

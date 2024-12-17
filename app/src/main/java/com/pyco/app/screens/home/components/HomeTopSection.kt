@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pyco.app.R
 import com.pyco.app.components.backgroundColor
@@ -36,6 +37,7 @@ import com.pyco.app.components.customColor
 import com.pyco.app.screens.home.components.responses.ResponsesFeed
 import com.pyco.app.screens.home.components.top_outfits.TopOutfitsFeed
 import com.pyco.app.viewmodels.HomeViewModel
+import com.pyco.app.viewmodels.ResponseViewModel
 import com.pyco.app.viewmodels.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -43,7 +45,9 @@ import kotlinx.coroutines.launch
 fun HomeTopSection(
     homeViewModel: HomeViewModel,
     userViewModel: UserViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    responseViewModel: ResponseViewModel
+
 ) {
     val publicOutfits by homeViewModel.publicOutfits.collectAsState()
 
@@ -146,7 +150,11 @@ fun HomeTopSection(
                     currentUserId = currentUserId,
                     navController = navController
                     )
-                2 -> ResponsesFeed()
+                2 -> ResponsesFeed(
+                    responseViewModel = responseViewModel,
+                    currentUserId = currentUserId,
+                    navController = navController
+                )
             }
         }
     }

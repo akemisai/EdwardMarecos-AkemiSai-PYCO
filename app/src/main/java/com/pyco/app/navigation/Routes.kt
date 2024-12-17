@@ -27,6 +27,7 @@ object Routes {
 
     // response related navigation
     const val CREATE_RESPONSE = "create_response"
+    const val RESPONSES_LIST = "responses_list"
 
     // related to accounts that arent yours
     const val USER_PROFILE = "user_profile"
