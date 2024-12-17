@@ -118,7 +118,8 @@ fun HomeTopSection(
         // Display Content Based on Selected Tab
         when (selectedTabIndex) {
             0 -> RequestsFeed(
-                homeViewModel = homeViewModel
+                homeViewModel = homeViewModel,
+                navController = navController
             )
             1 -> TopOutfitsFeed(
                 outfits = publicOutfits,

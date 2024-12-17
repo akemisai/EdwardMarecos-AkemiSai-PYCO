@@ -26,6 +26,9 @@ object Routes {
     // request related navigation
     const val MAKE_REQUEST = "make_request"
 
+    // response related navigation
+    const val CREATE_RESPONSE = "create_response"
+
     // related to accounts that arent yours
     const val USER_PROFILE = "user_profile"
     const val FOLLOW_OR_FOLLOWING = "follow_or_following"

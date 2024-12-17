@@ -1,6 +1,7 @@
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -9,13 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.pyco.app.components.customColor
 import com.pyco.app.models.Request
+import com.pyco.app.navigation.Routes
 import com.pyco.app.viewmodels.HomeViewModel
 
 @Composable
 fun RequestsFeed(
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    navController: NavHostController
 ) {
     val requests by homeViewModel.globalRequests.collectAsState()
     val isLoading by homeViewModel.isLoadingRequests.collectAsState()
@@ -63,13 +67,19 @@ fun RequestsFeed(
         ) { page ->
             val request = requests[page]
 
-            RequestCard(request = request)
+            RequestCard(
+                request = request,
+                navController = navController
+            )
         }
     }
 }
 
 @Composable
-fun RequestCard(request: Request) {
+fun RequestCard(
+    request: Request,
+    navController: NavHostController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -98,6 +108,14 @@ fun RequestCard(request: Request) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             )
+            Button(
+                onClick = {
+                    navController.navigate("${Routes.CREATE_RESPONSE}?requestId=${request.id}")
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Respond to this Request")
+            }
         }
     }
 }
