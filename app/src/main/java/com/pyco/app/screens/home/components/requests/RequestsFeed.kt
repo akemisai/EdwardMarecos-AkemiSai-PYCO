@@ -61,21 +61,53 @@ fun RequestsFeed(
     val errorMessage by homeViewModel.requestError.collectAsState()
 
     var selectedRequest by remember { mutableStateOf<Request?>(null) }
+    var selectedTags by remember { mutableStateOf<List<String>>(emptyList()) } // State for active filter
+    var showTagsPopup by remember { mutableStateOf(false) }
+
+    val availableTags = listOf("Following")
 
     LaunchedEffect(Unit) {
         homeViewModel.fetchGlobalRequests()
     }
 
-    Column(
+    // Filter logic: if no selected tags, show all requests.
+    val filteredRequests = requests.filter { request ->
+        selectedTags.isEmpty() ||
+                (selectedTags.contains("Following") && request.ownerId in (userViewModel.userProfile.value?.following ?: emptyList())) ||
+                // we need more tags
+                // for this demo, we only have logic for "Following"
+                (selectedTags.any { it != "Following" })
+    }
+
+    // If the Tags popup is triggered, show it
+    if (showTagsPopup) {
+        TagsPopupDialog(
+            availableTags = availableTags,
+            selectedTags = selectedTags,
+            onTagSelected = { tag ->
+                // Toggle the tag: if already selected, remove it; if not, add it
+                selectedTags = if (selectedTags.contains(tag)) {
+                    selectedTags - tag
+                } else {
+                    selectedTags + tag
+                }
+            },
+            onDismiss = { showTagsPopup = false }
+        )
+    }
+
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
-        Text(
-            text = "Latest Requests",
-            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-            color = customColor,
-            modifier = Modifier.padding(bottom = 16.dp)
+        // Filter section at the top
+        RequestsFilterSection(
+            filters = availableTags,
+            selectedFilters = selectedTags,
+            onFilterRemoved = { tag -> selectedTags = selectedTags - tag },
+            onClearAll = { selectedTags = emptyList() },
+            onShowTagsPopup = { showTagsPopup = true }
         )
 
         when {
@@ -113,7 +145,7 @@ fun RequestsFeed(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(requests) { request ->
+                    items(filteredRequests) { request ->
                         RequestCard(
                             request = request,
                             userViewModel = userViewModel,
