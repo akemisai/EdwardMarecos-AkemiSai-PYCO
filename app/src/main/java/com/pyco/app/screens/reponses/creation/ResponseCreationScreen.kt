@@ -21,6 +21,7 @@ import com.pyco.app.models.Request
 import com.pyco.app.screens.outfits.creation.components.ClothingItemSelector
 import com.pyco.app.viewmodels.ClosetViewModel
 import com.pyco.app.viewmodels.OutfitsViewModel
+import com.pyco.app.viewmodels.ResponseViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +30,8 @@ fun ResponseCreationScreen(
     navController: NavHostController,
     request: Request,
     closetViewModel: ClosetViewModel = viewModel(),
-    outfitsViewModel: OutfitsViewModel = viewModel()
+    outfitsViewModel: OutfitsViewModel = viewModel(),
+    responseViewModel: ResponseViewModel = viewModel()
 ) {
     var ownerItems by remember { mutableStateOf<Map<String, List<ClothingItem>>>(emptyMap()) }
 
@@ -39,10 +41,13 @@ fun ResponseCreationScreen(
     var selectedBottom by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedShoe by remember { mutableStateOf<ClothingItem?>(null) }
     var selectedAccessory by remember { mutableStateOf<ClothingItem?>(null) }
+    var comment by remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val displayName = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown User"
+    val responderId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
     LaunchedEffect(request.ownerId) {
         Log.d("ResponseCreationScreen", "Fetching wardrobe for owner: ${request.ownerId}")
         ownerItems = closetViewModel.fetchRequestOwnerItems(request.ownerId)
@@ -68,8 +73,14 @@ fun ResponseCreationScreen(
                         selectedShoe != null
                     ) {
                         val wardrobePath = "users/${request.ownerId}/wardrobe"
+                        val newOutfitRef = FirebaseFirestore.getInstance().collection("outfits")
+                            .document(responderId)
+                            .collection("user_outfits")
+                            .document()
+                        Log.d("ResponseCreationScreen", "New outfit ref ID: ${newOutfitRef.id}")
 
                         val newOutfit = Outfit(
+                            id = newOutfitRef.id,
                             name = outfitName,
                             createdBy = displayName,
                             top = FirebaseFirestore.getInstance().document("$wardrobePath/${selectedTop!!.id}"),
@@ -78,13 +89,16 @@ fun ResponseCreationScreen(
                             accessory = selectedAccessory?.let {
                                 FirebaseFirestore.getInstance().document("$wardrobePath/${it.id}")
                             },
-                            public = public
+                            public = false
                         )
+                        Log.d("ResponseCreationScreen", "Outfit ID set as: ${newOutfit.id}")
 
                         outfitsViewModel.addOutfit(newOutfit)
+                        Log.d("ResponseCreationScreen", "Outfit added to ViewModel: ${newOutfit.id}")
 
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("Outfit created successfully!")
+                            responseViewModel.createResponse(request.id, responderId, newOutfit.id, comment)
                             navController.navigateUp()
                         }
                     } else {
@@ -120,17 +134,14 @@ fun ResponseCreationScreen(
                 }
 
                 item {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Checkbox(
-                            checked = public,
-                            onCheckedChange = { public = it }
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Make this outfit public")
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = comment,
+                        onValueChange = { comment = it },
+                        label = { Text("Comment") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
                 }
 
                 item {
